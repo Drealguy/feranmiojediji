@@ -52,17 +52,13 @@ export default function Hero({ data }: { data?: HeroData }) {
 
           {/* Left */}
           <div>
-            {/* Star rating badge */}
-            <div className="inline-flex items-center gap-2 mb-8">
-              <div className="flex items-center gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#c8f53c">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                  </svg>
-                ))}
-              </div>
-              <span className="text-sm font-medium" style={{ color: "var(--txt)" }}>4.9</span>
-              <span className="text-sm" style={{ color: "var(--mut)" }}>· 120+ happy clients</span>
+            {/* Available badge */}
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-8"
+              style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--acc)" }} />
+              <span className="text-xs tracking-wider uppercase" style={{ color: "var(--mut)" }}>{d.badgeText}</span>
             </div>
 
             <h1 className="text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight mb-6" style={{ color: "var(--txt)" }}>
