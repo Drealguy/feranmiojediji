@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
-import ThemeProvider from "@/components/ThemeProvider";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +19,6 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable} h-full`} suppressHydrationWarning>
-      {/* Prevent flash of wrong theme */}
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -32,12 +27,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col antialiased" style={{ background: "var(--bg)", color: "var(--txt)" }}>
-        <ThemeProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <WhatsAppButton />
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );
