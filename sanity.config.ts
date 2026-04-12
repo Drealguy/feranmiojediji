@@ -3,7 +3,7 @@ import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./sanity/schemaTypes";
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "placeholder";
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
 
 export default defineConfig({
@@ -11,6 +11,7 @@ export default defineConfig({
   title: "Feranmi Portfolio — CMS",
   projectId,
   dataset,
+  basePath: "/studio",
   plugins: [
     structureTool({
       structure: (S) =>
