@@ -95,7 +95,7 @@ export default function Hero({ data }: { data?: HeroData }) {
           </div>
 
           {/* Right: image or placeholder card */}
-          <div className="relative hidden lg:block">
+          <div className="relative">
             <div
               className="relative rounded-3xl overflow-hidden aspect-[4/5]"
               style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
