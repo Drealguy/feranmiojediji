@@ -1,0 +1,100 @@
+"use client";
+
+import Link from "next/link";
+
+const links = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Works", href: "/works" },
+  { label: "Courses", href: "/courses" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Contact", href: "/contact" },
+];
+
+const socials = [
+  { label: "Twitter / X", href: "#" },
+  { label: "LinkedIn", href: "#" },
+  { label: "Dribbble", href: "#" },
+  { label: "Instagram", href: "#" },
+];
+
+export default function Footer() {
+  return (
+    <footer style={{ borderTop: "1px solid var(--bdr)" }} className="mt-24">
+      <div className="mx-auto max-w-6xl px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+          {/* Brand */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <span
+                className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold"
+                style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
+              >
+                FO
+              </span>
+              <span className="font-semibold text-sm" style={{ color: "var(--txt)" }}>Feranmi</span>
+            </div>
+            <p className="text-sm leading-relaxed max-w-[240px]" style={{ color: "var(--mut)" }}>
+              Web designer crafting purposeful online presence for brands that want to stand out.
+            </p>
+          </div>
+
+          {/* Navigation */}
+          <div>
+            <p className="text-xs uppercase tracking-widest mb-5" style={{ color: "var(--dim)" }}>
+              Navigation
+            </p>
+            <ul className="flex flex-col gap-3">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm transition-colors duration-200"
+                    style={{ color: "var(--mut)" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--txt)")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--mut)")}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Socials */}
+          <div>
+            <p className="text-xs uppercase tracking-widest mb-5" style={{ color: "var(--dim)" }}>
+              Connect
+            </p>
+            <ul className="flex flex-col gap-3">
+              {socials.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    className="text-sm transition-colors duration-200 group flex items-center gap-2"
+                    style={{ color: "var(--mut)" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--txt)")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--mut)")}
+                  >
+                    {s.label}
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: "var(--acc)" }}>↗</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4" style={{ borderTop: "1px solid var(--bdr)" }}>
+          <p className="text-xs" style={{ color: "var(--dim)" }}>
+            © {new Date().getFullYear()} Feranmi Ojediji. All rights reserved.
+          </p>
+          <p className="text-xs" style={{ color: "var(--dim)" }}>
+            Built with intent. Designed with purpose.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
