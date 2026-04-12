@@ -44,24 +44,25 @@ export default function Hero({ data }: { data?: HeroData }) {
     <section className="relative min-h-screen flex flex-col justify-center pt-28 pb-16 overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(200,245,60,0.07) 0%, transparent 70%)",
-        }}
+        style={{ background: "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(200,245,60,0.06) 0%, transparent 70%)" }}
       />
 
       <div className="relative mx-auto max-w-6xl px-6 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
           {/* Left */}
           <div>
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-8"
-              style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--acc)" }} />
-              <span className="text-xs tracking-wider uppercase" style={{ color: "var(--mut)" }}>
-                {d.badgeText}
-              </span>
+            {/* Star rating badge */}
+            <div className="inline-flex items-center gap-2 mb-8">
+              <div className="flex items-center gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#c8f53c">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                ))}
+              </div>
+              <span className="text-sm font-medium" style={{ color: "var(--txt)" }}>4.9</span>
+              <span className="text-sm" style={{ color: "var(--mut)" }}>· 120+ happy clients</span>
             </div>
 
             <h1 className="text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight mb-6" style={{ color: "var(--txt)" }}>
@@ -70,22 +71,23 @@ export default function Hero({ data }: { data?: HeroData }) {
               {d.headlineSuffix}
             </h1>
 
-            <p className="text-lg leading-relaxed mb-10 max-w-[440px]" style={{ color: "var(--mut)" }}>
+            <p className="text-base leading-relaxed mb-10 max-w-[420px]" style={{ color: "var(--mut)" }}>
               {d.subtitle}
             </p>
 
-            <div className="flex items-center gap-4 flex-wrap">
+            {/* Buttons */}
+            <div className="flex items-center gap-3 flex-wrap">
               <Link
                 href={d.primaryCtaHref}
-                className="px-6 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 hover:opacity-90 active:scale-95"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-95"
                 style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
               >
                 {d.primaryCtaText}
               </Link>
               <Link
                 href={d.secondaryCtaHref}
-                className="px-6 py-3.5 rounded-xl text-sm font-medium transition-all duration-200"
-                style={{ color: "var(--txt)", border: "1px solid var(--bdr)" }}
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-medium transition-all duration-200 hover:opacity-80"
+                style={{ color: "var(--txt)", border: "1.5px solid var(--bdr)" }}
                 onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "var(--mut)")}
                 onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "var(--bdr)")}
               >
@@ -94,66 +96,61 @@ export default function Hero({ data }: { data?: HeroData }) {
             </div>
           </div>
 
-          {/* Right: image or placeholder card */}
-          <div className="relative">
-            <div
-              className="relative rounded-3xl overflow-hidden aspect-[4/5]"
-              style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
-            >
-              {d.heroImage ? (
+          {/* Right: photo */}
+          <div className="relative flex justify-center lg:justify-end">
+            <div className="relative">
+              <div
+                className="relative rounded-3xl overflow-hidden"
+                style={{
+                  width: "380px",
+                  height: "460px",
+                  background: "var(--surf)",
+                  border: "1px solid var(--bdr)",
+                }}
+              >
                 <Image
-                  src={d.heroImage}
+                  src={d.heroImage || "/feranmi.jpg"}
                   alt="Feranmi Ojediji"
                   fill
-                  className="object-cover"
+                  sizes="380px"
+                  className="object-cover object-top"
                   priority
                 />
-              ) : (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-8">
-                  <div className="w-full h-2 rounded-full" style={{ background: "var(--bdr)" }} />
-                  <div className="w-4/5 h-2 rounded-full" style={{ background: "var(--bdr)" }} />
-                  <div className="w-3/5 h-2 rounded-full" style={{ background: "var(--bdr)" }} />
-                  <div className="mt-4 w-24 h-8 rounded-lg" style={{ background: "var(--acc)" }} />
-                </div>
-              )}
+              </div>
+
+              {/* Floating card — top left */}
               <div
-                className="absolute top-0 right-0 w-32 h-32 opacity-20 rounded-bl-full"
-                style={{ background: "var(--acc)" }}
-              />
-            </div>
+                className="absolute -top-4 -left-6 rounded-2xl px-4 py-3 shadow-lg"
+                style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
+              >
+                <p className="text-xs mb-1" style={{ color: "var(--mut)" }}>Latest project</p>
+                <p className="text-sm font-medium" style={{ color: "var(--txt)" }}>Brand Identity ↗</p>
+              </div>
 
-            <div
-              className="absolute -top-4 -left-8 rounded-2xl px-4 py-3"
-              style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
-            >
-              <p className="text-xs mb-1" style={{ color: "var(--mut)" }}>Latest project</p>
-              <p className="text-sm font-medium" style={{ color: "var(--txt)" }}>Brand Identity ↗</p>
-            </div>
-
-            <div
-              className="absolute -bottom-4 -right-6 rounded-2xl px-5 py-4"
-              style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
-            >
-              <p className="text-3xl font-bold" style={{ color: "var(--acc)" }}>99%</p>
-              <p className="text-xs mt-0.5" style={{ color: "var(--mut)" }}>Client satisfaction</p>
+              {/* Floating card — bottom right */}
+              <div
+                className="absolute -bottom-4 -right-6 rounded-2xl px-5 py-4 shadow-lg"
+                style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
+              >
+                <p className="text-3xl font-bold" style={{ color: "var(--acc)" }}>99%</p>
+                <p className="text-xs mt-0.5" style={{ color: "var(--mut)" }}>Client satisfaction</p>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Stats bar */}
         <div
-          className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden"
+          className="mt-28 grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden"
           style={{ background: "var(--bdr)" }}
         >
           {d.stats.map((stat) => (
             <div
-              key={stat.value}
+              key={stat.label}
               className="flex flex-col items-center justify-center py-8 px-4 text-center"
               style={{ background: "var(--surf2)" }}
             >
-              <span className="text-3xl font-bold mb-1" style={{ color: "var(--acc)" }}>
-                {stat.value}
-              </span>
+              <span className="text-3xl font-bold mb-1" style={{ color: "var(--acc)" }}>{stat.value}</span>
               <span className="text-xs" style={{ color: "var(--mut)" }}>{stat.label}</span>
             </div>
           ))}
