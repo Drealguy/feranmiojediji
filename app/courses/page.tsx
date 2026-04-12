@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { sanityFetch } from "@/sanity/lib/client";
-import { coursesQuery } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: "Courses — Feranmi Ojediji",
@@ -87,10 +85,8 @@ const LEVEL_COLORS: Record<string, string> = {
   "All levels": "#a78bfa",
 };
 
-export default async function Courses() {
-  const raw = await sanityFetch<Course[]>(coursesQuery).catch(() => null);
-  const courses: Course[] = raw?.length ? raw : FALLBACK;
-
+export default function Courses() {
+  const courses: Course[] = FALLBACK;
   const totalLessons = courses.reduce((sum, c) => sum + (c.lessons ?? 0), 0);
 
   return (

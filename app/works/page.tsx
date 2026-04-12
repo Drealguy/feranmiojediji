@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { sanityFetch } from "@/sanity/lib/client";
-import { projectsQuery } from "@/sanity/lib/queries";
 import WorksGrid from "@/components/WorksGrid";
 
 export const metadata: Metadata = {
@@ -8,9 +6,7 @@ export const metadata: Metadata = {
   description: "Selected projects by Feranmi Ojediji — web design, branding, UI/UX, and more.",
 };
 
-export default async function Works() {
-  const projects = await sanityFetch(projectsQuery).catch(() => []);
-
+export default function Works() {
   return (
     <div className="pt-36 pb-24">
       <div className="mx-auto max-w-6xl px-6">
@@ -29,7 +25,7 @@ export default async function Works() {
           </div>
         </div>
 
-        <WorksGrid data={projects as never[]} />
+        <WorksGrid />
 
         <div className="text-center">
           <p className="text-sm mb-6" style={{ color: "var(--dim)" }}>Have a project in mind?</p>

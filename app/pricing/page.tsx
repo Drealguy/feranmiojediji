@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Check } from "lucide-react";
-import { sanityFetch } from "@/sanity/lib/client";
-import { pricingQuery } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: "Pricing — Feranmi Ojediji",
@@ -91,9 +89,8 @@ const addons = [
   { name: "Monthly retainer", price: "From $1,200/mo" },
 ];
 
-export default async function Pricing() {
-  const raw = await sanityFetch<PricingPlan[]>(pricingQuery).catch(() => null);
-  const plans: PricingPlan[] = raw?.length ? raw : FALLBACK;
+export default function Pricing() {
+  const plans: PricingPlan[] = FALLBACK;
 
   return (
     <div className="pt-36 pb-24">
