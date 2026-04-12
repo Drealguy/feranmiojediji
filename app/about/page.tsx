@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import ToolChips from "@/components/ToolChips";
 
 export const metadata: Metadata = {
@@ -50,13 +51,7 @@ export default function About() {
               className="relative rounded-3xl overflow-hidden aspect-square max-w-sm mx-auto lg:mx-0 lg:ml-auto"
               style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
             >
-              <div
-                className="absolute inset-0"
-                style={{ background: "radial-gradient(ellipse 70% 70% at 50% 30%, rgba(200,245,60,0.07) 0%, transparent 70%)" }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-8xl font-semibold" style={{ color: "var(--bdr)" }}>FO</span>
-              </div>
+              <Image src="/feranmi.jpg" alt="Feranmi Ojediji" fill className="object-cover object-top" />
               <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: "var(--acc)" }} />
             </div>
             <div

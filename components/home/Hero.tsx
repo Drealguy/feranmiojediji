@@ -28,7 +28,7 @@ const DEFAULTS: Required<HeroData> = {
   primaryCtaHref: "/works",
   secondaryCtaText: "Book a call",
   secondaryCtaHref: "/contact",
-  heroImage: "",
+  heroImage: "/feranmi.jpg",
   stats: [
     { value: "8+", label: "Years of experience" },
     { value: "120+", label: "Projects delivered" },
