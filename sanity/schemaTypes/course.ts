@@ -22,7 +22,7 @@ export const course = defineType({
           { title: "Website Design", value: "Website Design" },
           { title: "Branding", value: "Branding" },
           { title: "UI/UX Design", value: "UI/UX Design" },
-          { title: "AI Automation", value: "AI Automation" },
+          { title: "Social Media Design", value: "Social Media Design" },
           { title: "Strategy & Growth", value: "Strategy & Growth" },
         ],
       },
