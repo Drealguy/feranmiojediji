@@ -162,7 +162,7 @@ export default function Hero({ data }: { data?: HeroData }) {
 
               {/* Floating card — top left */}
               <div
-                className="absolute -top-4 left-3 sm:-left-6 rounded-2xl px-4 py-3 shadow-lg"
+                className="absolute -top-4 left-2 sm:left-3 rounded-2xl px-4 py-3 shadow-lg"
                 style={{
                   background: "var(--surf)",
                   border: "1px solid var(--bdr)",
@@ -181,7 +181,7 @@ export default function Hero({ data }: { data?: HeroData }) {
 
               {/* Floating card — bottom right */}
               <div
-                className="absolute -bottom-4 right-3 sm:-right-6 rounded-2xl px-5 py-4 shadow-lg"
+                className="absolute -bottom-4 right-2 sm:right-3 rounded-2xl px-5 py-4 shadow-lg"
                 style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
               >
                 <p className="text-3xl font-bold" style={{ color: "var(--acc)" }}>99%</p>

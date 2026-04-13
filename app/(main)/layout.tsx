@@ -6,10 +6,12 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
-      <Navbar />
-      <main className="flex-1">{children}</main>
-      <Footer />
-      <WhatsAppButton />
+      <div className="overflow-x-hidden w-full">
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
+        <WhatsAppButton />
+      </div>
     </ThemeProvider>
   );
 }
