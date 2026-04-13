@@ -15,10 +15,16 @@ import PortfolioPreview from "@/components/home/PortfolioPreview";
 import Testimonials from "@/components/home/Testimonials";
 import FAQ from "@/components/home/FAQ";
 
+interface HomePageData {
+  videoUrl?: string;
+  videoLabel?: string;
+  [key: string]: unknown;
+}
+
 export default async function Home() {
   const [heroData, servicesData, projectsData, testimonialsData, faqData] =
     await Promise.all([
-      sanityFetch(homePageQuery).catch(() => null),
+      sanityFetch<HomePageData>(homePageQuery).catch(() => null),
       sanityFetch(servicesQuery).catch(() => []),
       sanityFetch(featuredProjectsQuery).catch(() => []),
       sanityFetch(testimonialsQuery).catch(() => []),
@@ -28,7 +34,7 @@ export default async function Home() {
   return (
     <>
       <Hero data={heroData ?? undefined} />
-      <VideoSection videoUrl={(heroData as any)?.videoUrl} videoLabel={(heroData as any)?.videoLabel} />
+      <VideoSection videoUrl={heroData?.videoUrl} videoLabel={heroData?.videoLabel} />
       <Services data={(servicesData as never[]) ?? []} />
       <PortfolioPreview data={(projectsData as never[]) ?? []} />
       <Testimonials data={(testimonialsData as never[]) ?? []} />
