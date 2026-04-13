@@ -94,12 +94,11 @@ export default function Hero({ data }: { data?: HeroData }) {
 
           {/* Right: photo */}
           <div className="relative flex justify-center lg:justify-end">
-            <div className="relative">
+            <div className="relative w-full max-w-[380px]">
               <div
-                className="relative rounded-3xl overflow-hidden"
+                className="relative rounded-3xl overflow-hidden w-full"
                 style={{
-                  width: "380px",
-                  height: "460px",
+                  aspectRatio: "380/460",
                   background: "var(--surf)",
                   border: "1px solid var(--bdr)",
                 }}
@@ -108,7 +107,7 @@ export default function Hero({ data }: { data?: HeroData }) {
                   src={d.heroImage || "/feranmi.jpg"}
                   alt="Feranmi Ojediji"
                   fill
-                  sizes="380px"
+                  sizes="(max-width: 768px) 90vw, 380px"
                   className="object-cover object-top"
                   priority
                 />
@@ -116,7 +115,7 @@ export default function Hero({ data }: { data?: HeroData }) {
 
               {/* Floating card — top left */}
               <div
-                className="absolute -top-4 -left-6 rounded-2xl px-4 py-3 shadow-lg"
+                className="absolute -top-4 left-3 sm:-left-6 rounded-2xl px-4 py-3 shadow-lg"
                 style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
               >
                 <p className="text-xs mb-1" style={{ color: "var(--mut)" }}>Latest project</p>
@@ -125,7 +124,7 @@ export default function Hero({ data }: { data?: HeroData }) {
 
               {/* Floating card — bottom right */}
               <div
-                className="absolute -bottom-4 -right-6 rounded-2xl px-5 py-4 shadow-lg"
+                className="absolute -bottom-4 right-3 sm:-right-6 rounded-2xl px-5 py-4 shadow-lg"
                 style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
               >
                 <p className="text-3xl font-bold" style={{ color: "var(--acc)" }}>99%</p>

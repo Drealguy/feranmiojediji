@@ -1,7 +1,7 @@
 export default function VideoSection() {
   return (
-    <section className="py-24">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="py-24 overflow-hidden">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>
             Behind the scenes
