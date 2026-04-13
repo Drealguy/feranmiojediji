@@ -38,7 +38,7 @@ export default function VideoSection() {
           />
 
           {/* Play button */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
+          <div className="absolute inset-0 flex items-center justify-center">
             <button
               className="rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
               style={{ background: "var(--acc)", width: "72px", height: "72px" }}
@@ -48,11 +48,10 @@ export default function VideoSection() {
                 <polygon points="5,3 19,12 5,21" />
               </svg>
             </button>
-            <p className="text-sm" style={{ color: "var(--mut)" }}>Watch the process — 4 min</p>
           </div>
 
           {/* Corner label */}
-          <div className="absolute bottom-6 left-6">
+          <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6">
             <span
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs"
               style={{
@@ -66,6 +65,11 @@ export default function VideoSection() {
             </span>
           </div>
         </div>
+
+        {/* Caption below video */}
+        <p className="mt-4 text-sm text-center sm:text-left" style={{ color: "var(--mut)" }}>
+          Watch the process — 4 min
+        </p>
       </div>
     </section>
   );
