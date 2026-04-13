@@ -162,9 +162,19 @@ export default function Hero({ data }: { data?: HeroData }) {
               {/* Floating card — top left */}
               <div
                 className="absolute -top-4 left-3 sm:-left-6 rounded-2xl px-4 py-3 shadow-lg"
-                style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
+                style={{
+                  background: "var(--surf)",
+                  border: "1px solid var(--bdr)",
+                  animation: "float 3s ease-in-out infinite",
+                }}
               >
-                <p className="text-xs mb-1" style={{ color: "var(--mut)" }}>Latest project</p>
+                <div className="flex items-center gap-1.5 mb-1">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full"
+                    style={{ background: "var(--acc)", animation: "ping-slow 1.5s ease-in-out infinite" }}
+                  />
+                  <p className="text-xs" style={{ color: "var(--mut)" }}>Latest project</p>
+                </div>
                 <p className="text-sm font-medium" style={{ color: "var(--txt)" }}>Brand Identity ↗</p>
               </div>
 
