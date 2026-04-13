@@ -20,6 +20,6 @@ export async function sanityFetch<T>(
     throw new Error("Sanity not configured — using fallback data");
   }
   return client.fetch<T>(query, params ?? {}, {
-    next: { revalidate: 60 },
+    next: { revalidate: 30 },
   });
 }
