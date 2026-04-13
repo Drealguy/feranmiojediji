@@ -87,7 +87,7 @@ export const pricingQuery = groq`*[_type == "pricingPlan"] | order(order asc){
   name,
   tagline,
   price,
-  currency,
+  priceNGN,
   featured,
   accentColor,
   features,

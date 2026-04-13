@@ -20,15 +20,15 @@ export const pricingPlan = defineType({
     }),
     defineField({
       name: "price",
-      title: "Price",
+      title: "Price (USD)",
       type: "string",
       description: 'Numeric part only, e.g. "1,500"',
     }),
     defineField({
-      name: "currency",
-      title: "Currency",
+      name: "priceNGN",
+      title: "Price (NGN / Naira)",
       type: "string",
-      initialValue: "USD",
+      description: 'Numeric part only, e.g. "2,400,000"',
     }),
     defineField({
       name: "featured",
