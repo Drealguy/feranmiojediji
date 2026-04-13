@@ -107,14 +107,3 @@ export const aboutQuery = groq`*[_type == "about"][0]{
   ctaText,
   ctaSubtext
 }`;
-
-export const siteSettingsQuery = groq`*[_type == "siteSettings"][0]{
-  siteName,
-  tagline,
-  email,
-  phone,
-  location,
-  available,
-  availabilityText,
-  socials
-}`;
