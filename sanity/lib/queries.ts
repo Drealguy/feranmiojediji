@@ -12,6 +12,7 @@ export const homePageQuery = groq`*[_type == "homePage"][0]{
   secondaryCtaHref,
   "heroImage": heroImage.asset->url,
   stats,
+  videoUrl,
   videoLabel
 }`;
 

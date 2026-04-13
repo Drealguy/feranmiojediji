@@ -96,6 +96,12 @@ export const homePage = defineType({
       ],
     }),
     defineField({
+      name: "videoUrl",
+      title: "Video URL (YouTube)",
+      type: "url",
+      description: "Paste your full YouTube URL, e.g. https://www.youtube.com/watch?v=XXXXXXX",
+    }),
+    defineField({
       name: "videoLabel",
       title: "Video section label",
       type: "string",

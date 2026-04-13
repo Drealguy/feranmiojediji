@@ -26,7 +26,7 @@ export default async function Home() {
   return (
     <>
       <Hero data={heroData ?? undefined} />
-      <VideoSection />
+      <VideoSection videoUrl={(heroData as any)?.videoUrl} videoLabel={(heroData as any)?.videoLabel} />
       <Services data={(servicesData as never[]) ?? []} />
       <PortfolioPreview data={(projectsData as never[]) ?? []} />
       <Testimonials data={(testimonialsData as never[]) ?? []} />
