@@ -1,3 +1,6 @@
+// ⚠️  WARNING: This script uses createOrReplace — it OVERWRITES existing Sanity data.
+// Only run this on a fresh/empty dataset. Never run it if you have live content you want to keep.
+
 import { createClient } from "@sanity/client";
 import * as dotenv from "dotenv";
 import { resolve } from "path";
