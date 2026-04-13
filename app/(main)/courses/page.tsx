@@ -18,6 +18,7 @@ interface Course {
   accentColor?: string;
   description: string;
   topics?: string[];
+  purchaseUrl?: string;
   available: boolean;
 }
 
@@ -101,7 +102,12 @@ export default async function Courses() {
                         <span className="text-xs" style={{ color: "var(--dim)" }}>one-time</span>
                       </div>
                       {course.available ? (
-                        <a href="/contact" className="block w-full text-center py-3.5 rounded-xl text-sm font-medium hover:opacity-90" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>Enroll now →</a>
+                        <a
+                          href={course.purchaseUrl ?? "/contact"}
+                          {...(course.purchaseUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                          className="block w-full text-center py-3.5 rounded-xl text-sm font-medium hover:opacity-90"
+                          style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
+                        >Enroll now →</a>
                       ) : (
                         <button disabled className="block w-full text-center py-3.5 rounded-xl text-sm font-medium cursor-not-allowed" style={{ background: "var(--surf2)", color: "var(--dim)", border: "1px solid var(--bdr)" }}>Notify me when live</button>
                       )}

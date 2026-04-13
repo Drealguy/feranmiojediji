@@ -78,6 +78,7 @@ export const coursesQuery = groq`*[_type == "course"] | order(order asc){
   price,
   topics,
   accentColor,
+  purchaseUrl,
   available
 }`;
 

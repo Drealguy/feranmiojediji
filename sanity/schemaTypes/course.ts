@@ -83,6 +83,12 @@ export const course = defineType({
       initialValue: "#c8f53c",
     }),
     defineField({
+      name: "purchaseUrl",
+      title: "Purchase / enrol link",
+      type: "url",
+      description: "External link where students can buy this course (e.g. Selar, Gumroad, Udemy). Leave blank to use the contact page.",
+    }),
+    defineField({
       name: "available",
       title: "Live / available to enrol?",
       type: "boolean",
