@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
@@ -107,19 +108,15 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <span
-              className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold"
-              style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
-            >
-              FO
-            </span>
-            <span
-              className="font-semibold tracking-tight text-sm"
-              style={{ color: "var(--txt)" }}
-            >
-              Feranmi
-            </span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/feranmilogo.png"
+              alt="Feranmi Ojediji"
+              width={36}
+              height={36}
+              className="object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop links */}

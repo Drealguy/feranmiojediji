@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 const links = [
   { label: "Home", href: "/" },
@@ -24,14 +25,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <span
-                className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold"
-                style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
-              >
-                FO
-              </span>
-              <span className="font-semibold text-sm" style={{ color: "var(--txt)" }}>Feranmi</span>
+            <div className="mb-4">
+              <Image
+                src="/feranmilogo.png"
+                alt="Feranmi Ojediji"
+                width={36}
+                height={36}
+                className="object-contain"
+              />
             </div>
             <p className="text-sm leading-relaxed max-w-[240px]" style={{ color: "var(--mut)" }}>
               Web designer crafting purposeful online presence for brands that want to stand out.
