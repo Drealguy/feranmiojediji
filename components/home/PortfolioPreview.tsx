@@ -82,10 +82,7 @@ export default function PortfolioPreview({ data }: { data?: ProjectItem[] }) {
           </div>
           <Link
             href="/works"
-            className="text-sm flex items-center gap-2 group shrink-0 transition-colors duration-200"
-            style={{ color: "var(--mut)" }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--txt)")}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--mut)")}
+            className="footer-link text-sm flex items-center gap-2 group shrink-0 transition-colors duration-200"
           >
             View all work
             <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
