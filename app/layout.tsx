@@ -22,13 +22,15 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://api.fontshare.com" />
         {/* Preload hero image so LCP fires fast */}
         <link rel="preload" as="image" href="/feranmi.jpg" />
+        {/* Anti-FOUC: apply saved theme before first paint */}
+        <script
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col antialiased" style={{ background: "var(--bg)", color: "var(--txt)" }}>
-        {/* Anti-FOUC: set theme before first paint */}
-        <Script id="theme-init" strategy="beforeInteractive">
-          {`(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();`}
-        </Script>
-
         {children}
 
         {/* Load font non-blocking after page is interactive */}
