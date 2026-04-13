@@ -92,7 +92,7 @@ export default async function Pricing() {
 
   return (
     <div className="pt-36 pb-24">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Header */}
         <div className="text-center mb-16 max-w-2xl mx-auto">
           <div
@@ -101,7 +101,7 @@ export default async function Pricing() {
           >
             <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>Pricing</span>
           </div>
-          <h1 className="text-5xl font-semibold tracking-tight leading-[1.1] mb-5" style={{ color: "var(--txt)" }}>
+          <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight leading-[1.1] mb-5" style={{ color: "var(--txt)" }}>
             Simple, transparent pricing
           </h1>
           <p className="text-base leading-relaxed" style={{ color: "var(--mut)" }}>

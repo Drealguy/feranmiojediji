@@ -21,7 +21,7 @@ const socials = [
 export default function Footer() {
   return (
     <footer style={{ borderTop: "1px solid var(--bdr)" }} className="mt-24">
-      <div className="mx-auto max-w-6xl px-6 py-16">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           {/* Brand */}
           <div>

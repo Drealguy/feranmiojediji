@@ -38,7 +38,7 @@ function DropdownMenu({
 }) {
   return (
     <div
-      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-52 rounded-2xl overflow-hidden z-50"
+      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-52 rounded-2xl overflow-hidden z-[60]"
       style={{
         background: "var(--surf)",
         border: "1px solid var(--bdr)",
@@ -98,7 +98,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="mx-auto max-w-6xl px-6 py-4">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4">
         <nav
           className="flex items-center justify-between rounded-2xl px-6 py-3"
           style={{

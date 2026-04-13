@@ -48,7 +48,7 @@ export default async function About() {
 
   return (
     <div className="pt-36 pb-24">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
 
         {/* Hero */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-28 items-start">
@@ -57,7 +57,7 @@ export default async function About() {
               <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>About me</span>
               <div className="w-12 h-px" style={{ background: "var(--bdr)" }} />
             </div>
-            <h1 className="text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8" style={{ color: "var(--txt)" }}>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8" style={{ color: "var(--txt)" }}>
               {d.headline}{" "}
               <span className="italic font-light" style={{ color: "var(--mut)" }}>{d.headlineAccent}</span>{" "}
               {d.headlineSuffix}
@@ -103,7 +103,7 @@ export default async function About() {
             </div>
             <div style={{ borderTop: "1px solid var(--bdr)" }}>
               {d.timeline.map((item) => (
-                <div key={item.year} className="grid grid-cols-[80px_1fr] gap-6 py-6" style={{ borderBottom: "1px solid var(--bdr)" }}>
+                <div key={item.year} className="grid grid-cols-[60px_1fr] sm:grid-cols-[80px_1fr] gap-4 sm:gap-6 py-6" style={{ borderBottom: "1px solid var(--bdr)" }}>
                   <span className="text-xs font-mono pt-0.5" style={{ color: "var(--acc)" }}>{item.year}</span>
                   <span className="text-sm" style={{ color: "var(--mut)" }}>{item.event}</span>
                 </div>
@@ -124,7 +124,7 @@ export default async function About() {
         )}
 
         {/* CTA */}
-        <div className="rounded-3xl p-12 text-center" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}>
+        <div className="rounded-3xl p-6 sm:p-10 md:p-12 text-center" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}>
           <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "var(--acc)" }}>Let&apos;s work together</p>
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6" style={{ color: "var(--txt)" }}>{d.ctaText}</h2>
           <p className="text-sm mb-10 max-w-md mx-auto" style={{ color: "var(--mut)" }}>{d.ctaSubtext}</p>

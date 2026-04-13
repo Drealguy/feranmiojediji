@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Contact() {
   return (
     <div className="pt-36 pb-24">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Header */}
         <div className="mb-20">
           <div className="flex items-center gap-3 mb-6">
@@ -20,7 +20,7 @@ export default function Contact() {
           </div>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
             <h1
-              className="text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] max-w-lg"
+              className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] max-w-lg"
               style={{ color: "var(--txt)" }}
             >
               Let&apos;s build something{" "}

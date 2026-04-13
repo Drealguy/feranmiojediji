@@ -28,7 +28,7 @@ const services = [
   "Website Design",
   "Branding",
   "UI/UX Design",
-  "AI Automation",
+  "Social Media Design",
   "Strategy & Growth",
   "Other",
 ];
@@ -251,16 +251,22 @@ export default function ContactForm() {
             Socials
           </p>
           <div className="flex flex-col gap-3">
-            {["Twitter / X", "LinkedIn", "Dribbble", "Instagram"].map((s) => (
+            {[
+              { label: "Instagram", href: "https://www.instagram.com/feranmi.ojediji/" },
+              { label: "Twitter / X", href: "https://x.com/feranmiojediji" },
+              { label: "Facebook", href: "https://www.facebook.com/feranmi.ojediji.3/" },
+            ].map((s) => (
               <a
-                key={s}
-                href="#"
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-sm transition-colors flex items-center justify-between group"
                 style={{ color: "var(--mut)" }}
                 onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--txt)")}
                 onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--mut)")}
               >
-                {s}
+                {s.label}
                 <span
                   className="opacity-0 group-hover:opacity-100 transition-opacity text-xs"
                   style={{ color: "var(--acc)" }}

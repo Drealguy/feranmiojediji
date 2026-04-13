@@ -34,7 +34,7 @@ function FAQItem({ item, isOpen, toggle }: { item: FaqItem; isOpen: boolean; tog
       </button>
       <div
         className="overflow-hidden transition-all duration-300"
-        style={{ maxHeight: isOpen ? "240px" : "0", paddingBottom: isOpen ? "24px" : "0" }}
+        style={{ maxHeight: isOpen ? "600px" : "0", paddingBottom: isOpen ? "24px" : "0" }}
       >
         <p className="text-sm leading-relaxed pr-10" style={{ color: "var(--mut)" }}>{item.answer}</p>
       </div>
@@ -48,7 +48,7 @@ export default function FAQ({ data }: { data?: FaqItem[] }) {
 
   return (
     <section className="py-24">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-16">
           <div>
             <div className="flex items-center gap-3 mb-4">

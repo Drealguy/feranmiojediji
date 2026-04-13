@@ -16,7 +16,7 @@ export default function WhatsAppButton() {
       aria-label="Chat on WhatsApp"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 transition-all duration-300"
+      className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center gap-3 transition-all duration-300"
       style={{ filter: "drop-shadow(0 4px 20px rgba(37,211,102,0.35))" }}
     >
       {/* Label tooltip */}

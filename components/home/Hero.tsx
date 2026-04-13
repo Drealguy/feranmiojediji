@@ -93,7 +93,7 @@ export default function Hero({ data }: { data?: HeroData }) {
         style={{ background: "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(200,245,60,0.06) 0%, transparent 70%)" }}
       />
 
-      <div className="relative mx-auto max-w-6xl px-6 w-full">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           {/* Left */}
@@ -107,7 +107,7 @@ export default function Hero({ data }: { data?: HeroData }) {
               <span className="text-xs tracking-wider uppercase" style={{ color: "var(--mut)" }}>{d.badgeText}</span>
             </div>
 
-            <h1 className="text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight mb-6" style={{ color: "var(--txt)" }}>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight mb-6" style={{ color: "var(--txt)" }}>
               {d.headline}{" "}
               <span className="italic font-light" style={{ color: "var(--mut)" }}>{d.headlineAccent}</span>{" "}
               {d.headlineSuffix}
