@@ -1,5 +1,3 @@
-"use client";
-
 export interface ServiceItem {
   _id: string;
   number: string;
@@ -41,10 +39,8 @@ export default function Services({ data }: { data?: ServiceItem[] }) {
           {services.map((service) => (
             <div
               key={service._id}
-              className="group grid grid-cols-1 md:grid-cols-[80px_1fr_auto] gap-6 py-8 items-start -mx-4 px-4 rounded-xl cursor-default transition-colors duration-200"
+              className="group grid grid-cols-1 md:grid-cols-[80px_1fr_auto] gap-6 py-8 items-start -mx-4 px-4 rounded-xl cursor-default transition-colors duration-200 hover:bg-white/[0.02]"
               style={{ borderBottom: "1px solid var(--bdr)" }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "rgba(128,128,128,0.03)")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
             >
               <span className="text-xs font-mono pt-1" style={{ color: "var(--dim)" }}>{service.number}</span>
               <div>

@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import { sanityFetch } from "@/sanity/lib/client";
 import {
   homePageQuery,

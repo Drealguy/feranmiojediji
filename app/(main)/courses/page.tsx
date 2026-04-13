@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/client";
 import { coursesQuery } from "@/sanity/lib/queries";

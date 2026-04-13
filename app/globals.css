@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 * {
-  font-family: "Clash Grotesk", system-ui, sans-serif;
+  font-family: "Clash Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
 /* ── Dark theme (default) ── */
@@ -66,7 +66,11 @@ body {
   color: var(--acc-fg);
 }
 
-/* Floating card animations */
+/* Footer hover links */
+.footer-link { color: var(--mut); }
+.footer-link:hover { color: var(--txt); }
+
+/* Floating card animations — GPU-accelerated via transform only */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-6px); }
@@ -75,6 +79,13 @@ body {
 @keyframes ping-slow {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.4; transform: scale(1.5); }
+}
+
+/* Promote animated elements to their own compositor layer */
+[style*="animation: float"],
+[style*="animation:float"] {
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 ::-webkit-scrollbar { width: 5px; }

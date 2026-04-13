@@ -48,7 +48,7 @@ export default function Testimonials({ data }: { data?: TestimonialItem[] }) {
                 <div className="flex items-center gap-3">
                   {t.avatar ? (
                     <div className="w-9 h-9 rounded-full overflow-hidden shrink-0">
-                      <Image src={t.avatar} alt={t.name} width={36} height={36} className="object-cover" />
+                      <Image src={t.avatar} alt={t.name} width={36} height={36} className="object-cover" loading="lazy" />
                     </div>
                   ) : (
                     <div

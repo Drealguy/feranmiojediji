@@ -156,6 +156,7 @@ export default function Hero({ data }: { data?: HeroData }) {
                   sizes="(max-width: 768px) 90vw, 380px"
                   className="object-cover object-top"
                   priority
+                  fetchPriority="high"
                 />
               </div>
 

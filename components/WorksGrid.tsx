@@ -80,7 +80,9 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
                     src={project.coverImage}
                     alt={project.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
                   />
                 ) : (
                   <div className="absolute inset-0 p-10 flex items-center justify-center">

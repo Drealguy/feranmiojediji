@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import type { Metadata } from "next";
 import Image from "next/image";
 import { sanityFetch } from "@/sanity/lib/client";
@@ -78,7 +80,9 @@ export default async function About() {
                 src={d.photo || "/feranmi.jpg"}
                 alt="Feranmi Ojediji"
                 fill
+                sizes="(max-width: 1024px) 80vw, 400px"
                 className="object-cover object-top"
+                loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: "var(--acc)" }} />
             </div>

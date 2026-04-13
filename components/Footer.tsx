@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 
@@ -47,13 +45,7 @@ export default function Footer() {
             <ul className="flex flex-col gap-3">
               {links.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm transition-colors duration-200"
-                    style={{ color: "var(--mut)" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--txt)")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--mut)")}
-                  >
+                  <Link href={link.href} className="footer-link text-sm transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -73,10 +65,7 @@ export default function Footer() {
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm transition-colors duration-200 group flex items-center gap-2"
-                    style={{ color: "var(--mut)" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--txt)")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--mut)")}
+                    className="footer-link text-sm transition-colors duration-200 group flex items-center gap-2"
                   >
                     {s.label}
                     <span className="opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: "var(--acc)" }}>↗</span>
