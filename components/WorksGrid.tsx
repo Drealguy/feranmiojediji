@@ -21,11 +21,11 @@ const FALLBACK: WorkProject[] = [
   { _id: "2", title: "Revive — SaaS Dashboard", category: "UI/UX Design", year: "2024", description: "End-to-end product design for a health-tech startup.", accentColor: "#a78bfa", tags: ["Product Design", "Figma", "Prototyping"] },
   { _id: "3", title: "Forma — Agency Website", category: "Website Design", year: "2024", description: "Award-nominated website for a creative agency.", accentColor: "#60a5fa", tags: ["Webflow", "Animation", "CMS"] },
   { _id: "4", title: "Cleo — E-commerce Store", category: "Website Design", year: "2024", description: "Fashion e-commerce website focused on conversion.", accentColor: "#f472b6", tags: ["E-commerce", "Webflow", "Mobile"] },
-  { _id: "5", title: "AutoFlow — AI Workflow", category: "AI Automation", year: "2025", description: "AI-powered content and lead generation system.", accentColor: "#34d399", tags: ["Make.com", "AI", "Automation"] },
+  { _id: "5", title: "AutoFlow — AI Workflow", category: "Social Media Design", year: "2025", description: "AI-powered content and lead generation system.", accentColor: "#34d399", tags: ["Make.com", "AI", "Automation"] },
   { _id: "6", title: "Meridian — Brand & Web", category: "Branding", year: "2023", description: "Brand identity and marketing site for a fintech company.", accentColor: "#fb923c", tags: ["Branding", "Web", "Fintech"] },
 ];
 
-const ALL_CATEGORIES = ["All", "Website Design", "Branding", "UI/UX Design", "AI Automation"];
+const ALL_CATEGORIES = ["All", "Website Design", "Branding", "UI/UX Design", "Social Media Design"];
 
 export default function WorksGrid({ data }: { data?: WorkProject[] }) {
   const projects = data?.length ? data : FALLBACK;
