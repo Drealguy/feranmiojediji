@@ -12,10 +12,9 @@ const links = [
 ];
 
 const socials = [
-  { label: "Twitter / X", href: "#" },
-  { label: "LinkedIn", href: "#" },
-  { label: "Dribbble", href: "#" },
-  { label: "Instagram", href: "#" },
+  { label: "Instagram", href: "https://www.instagram.com/feranmi.ojediji/" },
+  { label: "Twitter / X", href: "https://x.com/feranmiojediji" },
+  { label: "Facebook", href: "https://www.facebook.com/feranmi.ojediji.3/" },
 ];
 
 export default function Footer() {
@@ -71,6 +70,8 @@ export default function Footer() {
                 <li key={s.label}>
                   <a
                     href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-sm transition-colors duration-200 group flex items-center gap-2"
                     style={{ color: "var(--mut)" }}
                     onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--txt)")}
