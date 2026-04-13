@@ -17,6 +17,7 @@ import FAQ from "@/components/home/FAQ";
 
 interface HomePageData {
   videoUrl?: string;
+  videoThumbnail?: string;
   videoLabel?: string;
   [key: string]: unknown;
 }
@@ -34,7 +35,7 @@ export default async function Home() {
   return (
     <>
       <Hero data={heroData ?? undefined} />
-      <VideoSection videoUrl={heroData?.videoUrl} videoLabel={heroData?.videoLabel} />
+      <VideoSection videoUrl={heroData?.videoUrl} videoThumbnail={heroData?.videoThumbnail} videoLabel={heroData?.videoLabel} />
       <Services data={(servicesData as never[]) ?? []} />
       <PortfolioPreview data={(projectsData as never[]) ?? []} />
       <Testimonials data={(testimonialsData as never[]) ?? []} />

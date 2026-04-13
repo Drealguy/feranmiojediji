@@ -13,6 +13,7 @@ export const homePageQuery = groq`*[_type == "homePage"][0]{
   "heroImage": heroImage.asset->url,
   stats,
   videoUrl,
+  "videoThumbnail": videoThumbnail.asset->url,
   videoLabel
 }`;
 

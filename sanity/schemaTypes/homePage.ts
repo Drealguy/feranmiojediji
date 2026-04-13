@@ -102,6 +102,13 @@ export const homePage = defineType({
       description: "Paste your full YouTube URL, e.g. https://www.youtube.com/watch?v=XXXXXXX",
     }),
     defineField({
+      name: "videoThumbnail",
+      title: "Video thumbnail image",
+      type: "image",
+      options: { hotspot: true },
+      description: "Preview image shown before the video plays. Upload a screenshot or custom thumbnail.",
+    }),
+    defineField({
       name: "videoLabel",
       title: "Video section label",
       type: "string",
