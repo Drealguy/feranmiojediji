@@ -23,7 +23,6 @@ const FALLBACK: ServiceItem[] = [
   { _id: "5", number: "05", title: "Strategy & Growth", description: "Digital strategy that aligns design with business goals. Audits, roadmaps, and growth frameworks tailored to your brand.", tags: ["Brand strategy", "Audit & consulting", "Growth plans"] },
 ];
 
-const STICKY_TOP = 100; // all cards stick at the same top — so they fully overlap
 
 export default function Services({ data }: { data?: ServiceItem[] }) {
   const services = data?.length ? data : FALLBACK;
@@ -33,20 +32,34 @@ export default function Services({ data }: { data?: ServiceItem[] }) {
     () => {
       const cards = gsap.utils.toArray<HTMLElement>(".service-card-inner");
 
-      // As each subsequent card scrolls over, scale + dim the one beneath
       cards.forEach((card, i) => {
-        if (i === cards.length - 1) return;
-        gsap.to(card, {
-          scale: 0.94,
-          opacity: 0.5,
-          ease: "none",
+        // Slide each card up from below as it enters viewport
+        gsap.from(card, {
+          y: 60,
+          opacity: 0,
+          duration: 0.65,
+          ease: "power3.out",
           scrollTrigger: {
-            trigger: cards[i + 1],
-            start: "top 60%",
-            end: "top 10%",
-            scrub: true,
+            trigger: card,
+            start: "top 90%",
+            toggleActions: "play none none none",
           },
         });
+
+        // Scale + dim cards below as the next one slides over
+        if (i < cards.length - 1) {
+          gsap.to(card, {
+            scale: 0.97,
+            opacity: 0.55,
+            ease: "none",
+            scrollTrigger: {
+              trigger: cards[i + 1],
+              start: "top 80%",
+              end: "top 30%",
+              scrub: true,
+            },
+          });
+        }
       });
     },
     { scope: sectionRef }
@@ -72,67 +85,59 @@ export default function Services({ data }: { data?: ServiceItem[] }) {
           </p>
         </div>
 
-        {/* Stacking cards — each wrapper has scroll height, inner card is sticky */}
+        {/* Stacking cards — negative margin creates visual overlap, z-index controls layering */}
         <div>
           {services.map((service, i) => (
             <div
               key={service._id}
-              className="service-card"
+              className="service-card-inner group"
               style={{
-                height: i < services.length - 1 ? "260px" : "auto",
-                minHeight: "140px",
+                position: "relative",
+                zIndex: i + 1,
+                marginTop: i === 0 ? 0 : "-16px",
+                transformOrigin: "top center",
               }}
             >
               <div
-                className="service-card-inner group"
+                className="rounded-2xl px-6 sm:px-10 py-8 transition-all duration-300 group-hover:-translate-y-1"
                 style={{
-                  position: "sticky",
-                  top: STICKY_TOP,
-                  zIndex: i + 1,
-                  transformOrigin: "top center",
+                  background: "var(--surf)",
+                  border: "1px solid var(--bdr)",
+                  boxShadow: "0 -2px 0 0 var(--bdr), 0 8px 24px rgba(0,0,0,0.12)",
                 }}
               >
-                <div
-                  className="rounded-2xl px-6 sm:px-10 py-8 transition-colors duration-300"
-                  style={{
-                    background: "var(--surf)",
-                    border: "1px solid var(--bdr)",
-                    boxShadow: "var(--shadow)",
-                  }}
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-[80px_1fr_auto] gap-6 items-start">
-                    <span className="text-xs font-mono pt-1" style={{ color: "var(--acc)" }}>
-                      {service.number}
+                <div className="grid grid-cols-1 md:grid-cols-[80px_1fr_auto] gap-6 items-start">
+                  <span className="text-xs font-mono pt-1" style={{ color: "var(--acc)" }}>
+                    {service.number}
+                  </span>
+
+                  <div>
+                    <h3 className="text-lg font-medium mb-2" style={{ color: "var(--txt)" }}>
+                      {service.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--mut)" }}>
+                      {service.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {service.tags?.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1 rounded-full text-xs"
+                          style={{ color: "var(--dim)", border: "1px solid var(--bdr)" }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="hidden md:flex items-center pt-1">
+                    <span
+                      className="text-lg transition-all duration-200 group-hover:translate-x-1"
+                      style={{ color: "var(--dim)" }}
+                    >
+                      →
                     </span>
-
-                    <div>
-                      <h3 className="text-lg font-medium mb-2" style={{ color: "var(--txt)" }}>
-                        {service.title}
-                      </h3>
-                      <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--mut)" }}>
-                        {service.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {service.tags?.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-3 py-1 rounded-full text-xs"
-                            style={{ color: "var(--dim)", border: "1px solid var(--bdr)" }}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="hidden md:flex items-center pt-1">
-                      <span
-                        className="text-lg transition-all duration-200 group-hover:translate-x-1"
-                        style={{ color: "var(--dim)" }}
-                      >
-                        →
-                      </span>
-                    </div>
                   </div>
                 </div>
               </div>
