@@ -131,29 +131,32 @@ export default function ContactForm() {
               >
                 Budget range
               </label>
-              <select
-                id="budget"
-                className="rounded-xl px-4 py-3.5 text-sm outline-none transition-colors duration-200 appearance-none cursor-pointer"
-                style={{
-                  background: "var(--bg)",
-                  border: "1px solid var(--bdr)",
-                  color: "var(--mut)",
-                }}
-                onFocus={(e) => ((e.currentTarget).style.borderColor = "var(--mut)")}
-                onBlur={(e) => ((e.currentTarget).style.borderColor = "var(--bdr)")}
-                onChange={(e) => {
-                  if (e.currentTarget.value) {
-                    (e.currentTarget as HTMLSelectElement).style.color = "var(--txt)";
-                  }
-                }}
-              >
-                <option value="">Select a budget range</option>
-                <option>Under $1,500</option>
-                <option>$1,500 – $4,500</option>
-                <option>$4,500 – $9,000</option>
-                <option>$9,000+</option>
-                <option>Not sure yet</option>
-              </select>
+              <div className="relative">
+                <select
+                  id="budget"
+                  className="w-full rounded-xl px-4 py-3.5 text-sm outline-none transition-colors duration-200 appearance-none cursor-pointer pr-10"
+                  style={{
+                    background: "var(--bg)",
+                    border: "1px solid var(--bdr)",
+                    color: "var(--mut)",
+                  }}
+                  onFocus={(e) => ((e.currentTarget).style.borderColor = "var(--mut)")}
+                  onBlur={(e) => ((e.currentTarget).style.borderColor = "var(--bdr)")}
+                  onChange={(e) => {
+                    (e.currentTarget as HTMLSelectElement).style.color = e.currentTarget.value ? "var(--txt)" : "var(--mut)";
+                  }}
+                >
+                  <option value="">Select a budget range</option>
+                  <option>Under $1,500</option>
+                  <option>$1,500 – $4,500</option>
+                  <option>$4,500 – $9,000</option>
+                  <option>$9,000+</option>
+                  <option>Not sure yet</option>
+                </select>
+                <svg className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: "var(--dim)" }}>
+                  <path d="M6 8l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
             </div>
 
             {/* Message */}
@@ -212,10 +215,8 @@ export default function ContactForm() {
               {link ? (
                 <a
                   href={link}
-                  className="text-sm transition-colors"
+                  className="text-sm transition-colors duration-200 hover:text-[var(--acc)]"
                   style={{ color: "var(--txt)" }}
-                  onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--acc)")}
-                  onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--txt)")}
                 >
                   {value}
                 </a>
@@ -238,7 +239,7 @@ export default function ContactForm() {
             </span>
           </div>
           <p className="text-xs leading-relaxed" style={{ color: "var(--mut)" }}>
-            Taking on new projects for Q2 2025. Limited spots — reach out early to secure your slot.
+            Taking on new projects now. Limited spots — reach out early to secure your slot.
           </p>
         </div>
 
@@ -261,10 +262,7 @@ export default function ContactForm() {
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm transition-colors flex items-center justify-between group"
-                style={{ color: "var(--mut)" }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--txt)")}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--mut)")}
+                className="footer-link text-sm transition-colors duration-200 flex items-center justify-between group"
               >
                 {s.label}
                 <span

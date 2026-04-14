@@ -21,7 +21,7 @@ const FALLBACK: FaqItem[] = [
 function FAQItem({ item, isOpen, toggle }: { item: FaqItem; isOpen: boolean; toggle: () => void }) {
   return (
     <div style={{ borderBottom: "1px solid var(--bdr)" }}>
-      <button onClick={toggle} className="w-full flex items-start justify-between gap-4 py-6 text-left">
+      <button onClick={toggle} aria-expanded={isOpen} className="w-full flex items-start justify-between gap-4 py-6 text-left">
         <span className="text-sm font-medium transition-colors duration-200" style={{ color: isOpen ? "var(--txt)" : "var(--mut)" }}>
           {item.question}
         </span>
@@ -63,10 +63,8 @@ export default function FAQ({ data }: { data?: FaqItem[] }) {
             </p>
             <a
               href="/contact"
-              className="inline-flex items-center gap-2 text-sm px-5 py-3 rounded-xl transition-colors duration-200"
+              className="inline-flex items-center gap-2 text-sm px-5 py-3 rounded-xl transition-all duration-200 hover:border-[var(--mut)] hover:bg-[rgba(128,128,128,0.06)]"
               style={{ color: "var(--txt)", border: "1px solid var(--bdr)" }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "var(--mut)")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "var(--bdr)")}
             >
               Ask a question →
             </a>

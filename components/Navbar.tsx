@@ -50,18 +50,12 @@ function DropdownMenu({
           key={item.href}
           href={item.href}
           onClick={onClose}
-          className="flex flex-col gap-0.5 px-4 py-3.5 transition-colors duration-150 group"
+          className="nav-link flex flex-col gap-0.5 px-4 py-3.5 group"
           style={{
             borderBottom: i < items.length - 1 ? "1px solid var(--bdr)" : "none",
           }}
-          onMouseEnter={(e) =>
-            ((e.currentTarget as HTMLElement).style.background = "rgba(128,128,128,0.06)")
-          }
-          onMouseLeave={(e) =>
-            ((e.currentTarget as HTMLElement).style.background = "transparent")
-          }
         >
-          <span className="text-sm font-medium" style={{ color: "var(--txt)" }}>
+          <span className="text-sm font-medium transition-colors duration-150" style={{ color: "var(--txt)" }}>
             {item.label}
           </span>
           <span className="text-xs" style={{ color: "var(--mut)" }}>
@@ -149,10 +143,12 @@ export default function Navbar() {
                     </button>
 
                     {dropdownOpen && (
-                      <DropdownMenu
-                        items={link.dropdown}
-                        onClose={() => setDropdownOpen(false)}
-                      />
+                      <div className="dropdown-enter">
+                        <DropdownMenu
+                          items={link.dropdown}
+                          onClose={() => setDropdownOpen(false)}
+                        />
+                      </div>
                     )}
                   </li>
                 );
@@ -164,24 +160,7 @@ export default function Navbar() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="px-4 py-2 rounded-lg text-sm transition-all duration-200"
-                    style={{
-                      color: active ? "var(--txt)" : "var(--mut)",
-                      background: active ? "rgba(128,128,128,0.08)" : "transparent",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!active) {
-                        (e.currentTarget as HTMLElement).style.color = "var(--txt)";
-                        (e.currentTarget as HTMLElement).style.background =
-                          "rgba(128,128,128,0.05)";
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!active) {
-                        (e.currentTarget as HTMLElement).style.color = "var(--mut)";
-                        (e.currentTarget as HTMLElement).style.background = "transparent";
-                      }
-                    }}
+                    className={`nav-link px-4 py-2 rounded-lg text-sm${active ? " active" : ""}`}
                   >
                     {link.label}
                   </Link>

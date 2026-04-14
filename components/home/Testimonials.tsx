@@ -37,7 +37,7 @@ export default function Testimonials({ data }: { data?: TestimonialItem[] }) {
             return (
               <div
                 key={t._id}
-                className="group relative rounded-2xl p-7 flex flex-col gap-6 transition-all duration-300 hover:-translate-y-1"
+                className="group relative rounded-2xl p-7 flex flex-col gap-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--dim)]"
                 style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
               >
                 <span className="text-4xl font-serif leading-none opacity-40" style={{ color: accent }}>

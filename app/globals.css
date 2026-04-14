@@ -70,6 +70,31 @@ body {
 .footer-link { color: var(--mut); }
 .footer-link:hover { color: var(--txt); }
 
+/* Navbar link hover — CSS-only, no inline handlers needed */
+.nav-link {
+  color: var(--mut);
+  background: transparent;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.nav-link:hover  { color: var(--txt); background: rgba(128,128,128,0.06); }
+.nav-link.active { color: var(--txt); background: rgba(128,128,128,0.08); }
+
+/* Dropdown fade-in */
+@keyframes dropIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.dropdown-enter { animation: dropIn 0.18s ease forwards; }
+
+/* Reduced motion — disable all GSAP/CSS animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Floating card animations — GPU-accelerated via transform only */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
