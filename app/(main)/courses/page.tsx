@@ -3,6 +3,7 @@ export const revalidate = 60;
 import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/client";
 import { coursesQuery } from "@/sanity/lib/queries";
+import NotifyModal from "@/components/NotifyModal";
 
 export const metadata: Metadata = {
   title: "Courses — Feranmi Ojediji",
@@ -111,7 +112,7 @@ export default async function Courses() {
                           style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
                         >Enroll now →</a>
                       ) : (
-                        <button disabled className="block w-full text-center py-3.5 rounded-xl text-sm font-medium cursor-not-allowed" style={{ background: "var(--surf2)", color: "var(--dim)", border: "1px solid var(--bdr)" }}>Notify me when live</button>
+                        <NotifyModal courseTitle={course.title} />
                       )}
                     </div>
                   </div>
