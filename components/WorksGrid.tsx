@@ -44,20 +44,9 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
   const filtered =
     activeFilter === "All" ? projects : projects.filter((p) => p.category === activeFilter);
 
-  // Initial showcase entrance — each card triggers as it scrolls into view
+  // Card scroll animations — each card triggers individually as it enters viewport
   useGSAP(
     () => {
-      // Filter buttons slide in
-      gsap.from(".filter-btn", {
-        opacity: 0,
-        x: -16,
-        duration: 0.4,
-        ease: "power2.out",
-        stagger: 0.06,
-        delay: 0.1,
-      });
-
-      // Each card gets its own ScrollTrigger so they fire individually
       gsap.utils.toArray<HTMLElement>(".work-card").forEach((card, i) => {
         gsap.from(card, {
           clipPath: "inset(0 0 100% 0)",
@@ -65,11 +54,11 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
           y: 30,
           duration: 0.8,
           ease: "power3.out",
-          delay: i % 2 === 0 ? 0 : 0.12, // slight offset between columns
+          delay: i % 2 === 0 ? 0 : 0.12,
           clearProps: "clipPath,opacity,y",
           scrollTrigger: {
             trigger: card,
-            start: "top 88%",
+            start: "top 95%",
             toggleActions: "play none none none",
           },
         });
@@ -112,14 +101,12 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
             <button
               key={cat}
               onClick={() => setActiveFilter(cat)}
-              className="filter-btn px-4 py-2 rounded-xl text-sm transition-all duration-200"
+              className="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all duration-200"
               style={
                 active
-                  ? { background: "var(--acc)", color: "var(--acc-fg)", fontWeight: 500 }
-                  : { color: "var(--mut)", border: "1px solid var(--bdr)" }
+                  ? { background: "var(--acc)", color: "var(--acc-fg)" }
+                  : { color: "var(--txt)", border: "1px solid var(--bdr)", background: "var(--surf)" }
               }
-              onMouseEnter={(e) => { if (!active) (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--mut)"; }}
-              onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--bdr)"; }}
             >
               {cat}
             </button>

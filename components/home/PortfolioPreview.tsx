@@ -84,9 +84,10 @@ export default function PortfolioPreview({ data }: { data?: ProjectItem[] }) {
         y: 30,
         duration: 0.6,
         ease: "power3.out",
+        clearProps: "opacity,y",
         scrollTrigger: {
           trigger: ".portfolio-heading",
-          start: "top 88%",
+          start: "top 95%",
           toggleActions: "play none none none",
         },
       });
@@ -98,9 +99,10 @@ export default function PortfolioPreview({ data }: { data?: ProjectItem[] }) {
         duration: 0.65,
         ease: "power3.out",
         stagger: 0.12,
+        clearProps: "opacity,y",
         scrollTrigger: {
           trigger: ".portfolio-card",
-          start: "top 88%",
+          start: "top 95%",
           toggleActions: "play none none none",
         },
       });
