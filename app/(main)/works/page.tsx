@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/client";
 import { projectsQuery } from "@/sanity/lib/queries";
 import WorksGrid from "@/components/WorksGrid";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Works — Feranmi Ojediji",
@@ -16,7 +17,7 @@ export default async function Works() {
   return (
     <div className="pt-36 pb-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mb-20">
+        <ScrollReveal className="mb-20">
           <div className="flex items-center gap-3 mb-6">
             <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>Portfolio</span>
             <div className="w-12 h-px" style={{ background: "var(--bdr)" }} />
@@ -29,7 +30,7 @@ export default async function Works() {
               A curated selection of projects across web design, branding, UI/UX and digital strategy.
             </p>
           </div>
-        </div>
+        </ScrollReveal>
 
         <WorksGrid data={projects as never[]} />
 
