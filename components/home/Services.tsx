@@ -23,43 +23,57 @@ const FALLBACK: ServiceItem[] = [
   { _id: "5", number: "05", title: "Strategy & Growth", description: "Digital strategy that aligns design with business goals. Audits, roadmaps, and growth frameworks tailored to your brand.", tags: ["Brand strategy", "Audit & consulting", "Growth plans"] },
 ];
 
-
 export default function Services({ data }: { data?: ServiceItem[] }) {
   const services = data?.length ? data : FALLBACK;
   const sectionRef = useRef<HTMLElement>(null);
+  const stackRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      const cards = gsap.utils.toArray<HTMLElement>(".service-card-inner");
+      const cards = gsap.utils.toArray<HTMLElement>(".service-card");
+      if (!cards.length || !stackRef.current) return;
 
+      // Pin the stack container for (cards.length - 1) scroll steps
+      ScrollTrigger.create({
+        trigger: stackRef.current,
+        start: "top 15%",
+        end: `+=${(cards.length - 1) * 280}`,
+        pin: true,
+        pinSpacing: true,
+      });
+
+      // Each card after the first slides up into view one by one
       cards.forEach((card, i) => {
-        // Slide each card up from below as it enters viewport
-        gsap.from(card, {
-          y: 60,
-          opacity: 0,
-          duration: 0.65,
-          ease: "power3.out",
+        if (i === 0) return; // first card is already visible
+
+        gsap.fromTo(
+          card,
+          { y: "100%", opacity: 0 },
+          {
+            y: "0%",
+            opacity: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: stackRef.current,
+              start: `top+=${(i - 1) * 280} 15%`,
+              end: `top+=${i * 280 - 60} 15%`,
+              scrub: 0.6,
+            },
+          }
+        );
+
+        // Scale down and dim cards that get buried
+        gsap.to(cards[i - 1], {
+          scale: 0.96,
+          opacity: 0.5,
+          ease: "none",
           scrollTrigger: {
-            trigger: card,
-            start: "top 90%",
-            toggleActions: "play none none none",
+            trigger: stackRef.current,
+            start: `top+=${(i - 1) * 280} 15%`,
+            end: `top+=${i * 280 - 60} 15%`,
+            scrub: 0.6,
           },
         });
-
-        // Scale + dim cards below as the next one slides over
-        if (i < cards.length - 1) {
-          gsap.to(card, {
-            scale: 0.97,
-            opacity: 0.55,
-            ease: "none",
-            scrollTrigger: {
-              trigger: cards[i + 1],
-              start: "top 80%",
-              end: "top 30%",
-              scrub: true,
-            },
-          });
-        }
       });
     },
     { scope: sectionRef }
@@ -85,32 +99,36 @@ export default function Services({ data }: { data?: ServiceItem[] }) {
           </p>
         </div>
 
-        {/* Stacking cards — negative margin creates visual overlap, z-index controls layering */}
-        <div>
+        {/* Stack — all cards sit at position: absolute inside a fixed-height container */}
+        <div
+          ref={stackRef}
+          className="relative"
+          style={{ height: "220px" }}
+        >
           {services.map((service, i) => (
             <div
               key={service._id}
-              className="service-card-inner group"
+              className="service-card absolute inset-0 group"
               style={{
-                position: "relative",
                 zIndex: i + 1,
-                marginTop: i === 0 ? 0 : "-16px",
-                transformOrigin: "top center",
+                // First card is visible; rest start off-screen below
+                transform: i === 0 ? "none" : "translateY(100%)",
+                opacity: i === 0 ? 1 : 0,
               }}
             >
               <div
-                className="rounded-2xl px-6 sm:px-10 py-8 transition-all duration-300 group-hover:-translate-y-1"
+                className="rounded-2xl px-6 sm:px-10 py-8 h-full transition-all duration-200"
                 style={{
                   background: "var(--surf)",
                   border: "1px solid var(--bdr)",
                   boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
+                  transformOrigin: "top center",
                 }}
               >
                 <div className="grid grid-cols-1 md:grid-cols-[80px_1fr_auto] gap-6 items-start">
                   <span className="text-xs font-mono pt-1" style={{ color: "var(--acc)" }}>
                     {service.number}
                   </span>
-
                   <div>
                     <h3 className="text-lg font-medium mb-2" style={{ color: "var(--txt)" }}>
                       {service.title}
@@ -130,12 +148,8 @@ export default function Services({ data }: { data?: ServiceItem[] }) {
                       ))}
                     </div>
                   </div>
-
                   <div className="hidden md:flex items-center pt-1">
-                    <span
-                      className="text-lg transition-all duration-200 group-hover:translate-x-1"
-                      style={{ color: "var(--dim)" }}
-                    >
+                    <span className="text-lg opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200" style={{ color: "var(--acc)" }}>
                       →
                     </span>
                   </div>
@@ -144,6 +158,7 @@ export default function Services({ data }: { data?: ServiceItem[] }) {
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
