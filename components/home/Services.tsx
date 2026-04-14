@@ -97,7 +97,7 @@ export default function Services({ data }: { data?: ServiceItem[] }) {
                   style={{
                     background: "var(--surf)",
                     border: "1px solid var(--bdr)",
-                    boxShadow: "0 12px 40px rgba(0,0,0,0.3)",
+                    boxShadow: "var(--shadow)",
                   }}
                 >
                   <div className="grid grid-cols-1 md:grid-cols-[80px_1fr_auto] gap-6 items-start">

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,6 +19,11 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://api.fontshare.com" />
+        {/* Load font early — prevents flash of fallback font */}
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&display=swap"
+        />
         {/* Preload hero image so LCP fires fast */}
         <link rel="preload" as="image" href="/feranmi.jpg" />
         {/* Anti-FOUC: apply saved theme before first paint */}
@@ -33,13 +37,6 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col antialiased" style={{ background: "var(--bg)", color: "var(--txt)" }}>
         {children}
 
-        {/* Load font non-blocking after page is interactive */}
-        <Script
-          id="clash-grotesk-font"
-          strategy="afterInteractive"
-        >
-          {`(function(){var l=document.createElement('link');l.rel='stylesheet';l.href='https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&display=swap';document.head.appendChild(l);})();`}
-        </Script>
       </body>
     </html>
   );
