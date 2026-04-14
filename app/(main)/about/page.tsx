@@ -49,7 +49,7 @@ export default async function About() {
   const d = { ...DEFAULTS, ...raw };
 
   return (
-    <div className="pt-36 pb-0">
+    <div className="pt-36 pb-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
 
         {/* Hero */}
@@ -127,69 +127,17 @@ export default async function About() {
           </div>
         )}
 
-      </div>
-
-      {/* CTA — full-bleed arc section */}
-      <div className="relative overflow-hidden py-28 sm:py-36 mt-24" style={{ background: "var(--surf2)" }}>
-        {/* Left arc */}
-        <div
-          className="pointer-events-none absolute -left-48 top-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full"
-          style={{
-            border: "56px solid rgba(200,245,60,0.12)",
-            boxShadow: "0 0 80px 20px rgba(200,245,60,0.07)",
-          }}
-        />
-        {/* Right arc */}
-        <div
-          className="pointer-events-none absolute -right-48 top-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full"
-          style={{
-            border: "56px solid rgba(200,245,60,0.12)",
-            boxShadow: "0 0 80px 20px rgba(200,245,60,0.07)",
-          }}
-        />
-        {/* Subtle centre glow */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 70% at 50% 50%, rgba(200,245,60,0.05) 0%, transparent 70%)",
-          }}
-        />
-
-        {/* Content */}
-        <div className="relative z-10 flex flex-col items-center text-center px-4">
-          <span
-            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs tracking-widest uppercase mb-8"
-            style={{
-              border: "1px solid rgba(200,245,60,0.3)",
-              color: "var(--acc)",
-              background: "rgba(200,245,60,0.08)",
-            }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--acc)" }} />
-            Let&apos;s work together
-          </span>
-
-          <h2
-            className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight mb-6 max-w-2xl"
-            style={{ color: "var(--txt)" }}
-          >
-            {d.ctaText}
-          </h2>
-
-          <p className="text-base mb-10 max-w-md" style={{ color: "var(--mut)" }}>
-            {d.ctaSubtext}
-          </p>
-
+        {/* CTA */}
+        <div className="rounded-3xl p-6 sm:p-10 md:p-12 text-center" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}>
+          <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "var(--acc)" }}>Let&apos;s work together</p>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6" style={{ color: "var(--txt)" }}>{d.ctaText}</h2>
+          <p className="text-sm mb-10 max-w-md mx-auto" style={{ color: "var(--mut)" }}>{d.ctaSubtext}</p>
           <a
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-sm font-medium hover:opacity-90 transition-opacity"
             style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
           >
-            Start a project
-            <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg>
+            Start a project →
           </a>
         </div>
       </div>
