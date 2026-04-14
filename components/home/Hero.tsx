@@ -2,51 +2,42 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+/* ── Animated counter (GSAP) ── */
 function AnimatedCounter({ value }: { value: string }) {
-  // Split e.g. "120+" into numeric "120" and suffix "+"
   const match = value.match(/^(\d+)(.*)$/);
   const target = match ? parseInt(match[1], 10) : 0;
   const suffix = match ? match[2] : value;
-
-  const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const started = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          const duration = 1400;
-          const steps = 50;
-          const increment = target / steps;
-          let current = 0;
-          const interval = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-              setCount(target);
-              clearInterval(interval);
-            } else {
-              setCount(Math.floor(current));
-            }
-          }, duration / steps);
-        }
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [target]);
+    const obj = { val: 0 };
+    const ctx = gsap.context(() => {
+      gsap.to(obj, {
+        val: target,
+        duration: 1.6,
+        ease: "power2.out",
+        snap: { val: 1 },
+        onUpdate: () => { el.textContent = Math.round(obj.val) + suffix; },
+        scrollTrigger: {
+          trigger: el,
+          start: "top 90%",
+          toggleActions: "play none none none",
+        },
+      });
+    });
+    return () => ctx.revert();
+  }, [target, suffix]);
 
-  return (
-    <span ref={ref}>
-      {count}{suffix}
-    </span>
-  );
+  return <span ref={ref}>0{suffix}</span>;
 }
 
 export interface HeroData {
@@ -85,9 +76,62 @@ const DEFAULTS: Required<HeroData> = {
 
 export default function Hero({ data }: { data?: HeroData }) {
   const d = { ...DEFAULTS, ...data };
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      // Badge fades in
+      tl.from(".hero-badge", { opacity: 0, y: 16, duration: 0.5 })
+        // Headline words stagger up
+        .from(
+          ".hero-word",
+          { opacity: 0, y: 32, duration: 0.6, stagger: 0.08 },
+          "-=0.2"
+        )
+        // Subtitle
+        .from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.5 }, "-=0.3")
+        // Buttons
+        .from(
+          ".hero-btn",
+          { opacity: 0, y: 16, duration: 0.45, stagger: 0.1 },
+          "-=0.3"
+        )
+        // Photo
+        .from(
+          ".hero-photo",
+          { opacity: 0, scale: 0.96, duration: 0.7, ease: "power2.out" },
+          "-=0.7"
+        )
+        // Floating cards
+        .from(
+          ".hero-card",
+          { opacity: 0, y: 12, duration: 0.4, stagger: 0.15 },
+          "-=0.3"
+        );
+    },
+    { scope: containerRef }
+  );
+
+  // Split headline into individual word spans
+  const headlineWords = [
+    ...d.headline.split(" ").map((w, i) => (
+      <span key={`h-${i}`} className="hero-word inline-block mr-[0.3em]">{w}</span>
+    )),
+    <span key="accent" className="hero-word inline-block mr-[0.3em] italic font-light" style={{ color: "var(--mut)" }}>
+      {d.headlineAccent}
+    </span>,
+    ...d.headlineSuffix.split(" ").map((w, i) => (
+      <span key={`s-${i}`} className="hero-word inline-block mr-[0.3em]">{w}</span>
+    )),
+  ];
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center pt-28 pb-16 overflow-hidden">
+    <section
+      ref={containerRef}
+      className="relative min-h-screen flex flex-col justify-center pt-28 pb-16 overflow-hidden"
+    >
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(200,245,60,0.06) 0%, transparent 70%)" }}
@@ -98,37 +142,33 @@ export default function Hero({ data }: { data?: HeroData }) {
 
           {/* Left */}
           <div>
-            {/* Available badge */}
             <div
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-8"
+              className="hero-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-8"
               style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
             >
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--acc)" }} />
               <span className="text-xs tracking-wider uppercase" style={{ color: "var(--mut)" }}>{d.badgeText}</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight mb-6" style={{ color: "var(--txt)" }}>
-              {d.headline}{" "}
-              <span className="italic font-light" style={{ color: "var(--mut)" }}>{d.headlineAccent}</span>{" "}
-              {d.headlineSuffix}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.15] tracking-tight mb-6" style={{ color: "var(--txt)" }}>
+              {headlineWords}
             </h1>
 
-            <p className="text-base leading-relaxed mb-10 max-w-[420px]" style={{ color: "var(--mut)" }}>
+            <p className="hero-subtitle text-base leading-relaxed mb-10 max-w-[420px]" style={{ color: "var(--mut)" }}>
               {d.subtitle}
             </p>
 
-            {/* Buttons */}
             <div className="flex items-center gap-3 flex-wrap">
               <Link
                 href={d.primaryCtaHref}
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-95"
+                className="hero-btn inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-95"
                 style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
               >
                 {d.primaryCtaText}
               </Link>
               <Link
                 href={d.secondaryCtaHref}
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-medium transition-all duration-200 hover:opacity-80"
+                className="hero-btn inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-medium transition-all duration-200 hover:opacity-80"
                 style={{ color: "var(--txt)", border: "1.5px solid var(--bdr)" }}
                 onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "var(--mut)")}
                 onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "var(--bdr)")}
@@ -142,7 +182,7 @@ export default function Hero({ data }: { data?: HeroData }) {
           <div className="relative flex justify-center lg:justify-end">
             <div className="relative w-full max-w-[380px]">
               <div
-                className="relative rounded-3xl overflow-hidden w-full"
+                className="hero-photo relative rounded-3xl overflow-hidden w-full"
                 style={{
                   aspectRatio: "380/460",
                   background: "var(--surf)",
@@ -162,7 +202,7 @@ export default function Hero({ data }: { data?: HeroData }) {
 
               {/* Floating card — top left */}
               <div
-                className="absolute -top-4 left-2 sm:left-3 rounded-2xl px-4 py-3 shadow-lg"
+                className="hero-card absolute -top-4 left-2 sm:left-3 rounded-2xl px-4 py-3 shadow-lg"
                 style={{
                   background: "var(--surf)",
                   border: "1px solid var(--bdr)",
@@ -181,7 +221,7 @@ export default function Hero({ data }: { data?: HeroData }) {
 
               {/* Floating card — bottom right */}
               <div
-                className="absolute -bottom-4 right-2 sm:right-3 rounded-2xl px-5 py-4 shadow-lg"
+                className="hero-card absolute -bottom-4 right-2 sm:right-3 rounded-2xl px-5 py-4 shadow-lg"
                 style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
               >
                 <p className="text-3xl font-bold" style={{ color: "var(--acc)" }}>99%</p>

@@ -1,5 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export interface ProjectItem {
   _id: string;
@@ -21,7 +29,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
   const accent = project.accentColor ?? "#c8f53c";
   return (
     <div
-      className="group relative rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:-translate-y-1"
+      className="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:-translate-y-1"
       style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
     >
       <div className="relative aspect-[4/3] overflow-hidden">
@@ -66,11 +74,44 @@ function ProjectCard({ project }: { project: ProjectItem }) {
 
 export default function PortfolioPreview({ data }: { data?: ProjectItem[] }) {
   const projects = data?.length ? data : FALLBACK;
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      // Section heading reveal
+      gsap.from(".portfolio-heading", {
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".portfolio-heading",
+          start: "top 88%",
+          toggleActions: "play none none none",
+        },
+      });
+
+      // Cards stagger in
+      gsap.from(".portfolio-card", {
+        opacity: 0,
+        y: 50,
+        duration: 0.65,
+        ease: "power3.out",
+        stagger: 0.12,
+        scrollTrigger: {
+          trigger: ".portfolio-card",
+          start: "top 88%",
+          toggleActions: "play none none none",
+        },
+      });
+    },
+    { scope: sectionRef }
+  );
 
   return (
-    <section className="py-24">
+    <section ref={sectionRef} className="py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="portfolio-heading flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>Selected work</span>
