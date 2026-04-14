@@ -80,7 +80,7 @@ export default function Hero({ data }: { data?: HeroData }) {
 
   useGSAP(
     () => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power3.out", clearProps: "opacity,y,scale" } });
 
       // Badge fades in
       tl.from(".hero-badge", { opacity: 0, y: 16, duration: 0.5 })
