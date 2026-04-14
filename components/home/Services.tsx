@@ -23,8 +23,7 @@ const FALLBACK: ServiceItem[] = [
   { _id: "5", number: "05", title: "Strategy & Growth", description: "Digital strategy that aligns design with business goals. Audits, roadmaps, and growth frameworks tailored to your brand.", tags: ["Brand strategy", "Audit & consulting", "Growth plans"] },
 ];
 
-const STICKY_TOP = 96; // px from top when card sticks
-const SCALE_STEP = 0.03; // how much each buried card shrinks
+const STICKY_TOP = 100; // all cards stick at the same top — so they fully overlap
 
 export default function Services({ data }: { data?: ServiceItem[] }) {
   const services = data?.length ? data : FALLBACK;
@@ -32,33 +31,20 @@ export default function Services({ data }: { data?: ServiceItem[] }) {
 
   useGSAP(
     () => {
-      const cards = gsap.utils.toArray<HTMLElement>(".service-card");
+      const cards = gsap.utils.toArray<HTMLElement>(".service-card-inner");
 
+      // As each subsequent card scrolls over, scale + dim the one beneath
       cards.forEach((card, i) => {
-        // Cards after the first scale down as later cards stack over them
-        if (i < cards.length - 1) {
-          gsap.to(card, {
-            scale: 1 - (cards.length - i - 1) * SCALE_STEP,
-            ease: "none",
-            scrollTrigger: {
-              trigger: cards[i + 1],   // starts when the NEXT card begins to overlap
-              start: "top 80%",
-              end: "top 20%",
-              scrub: true,
-            },
-          });
-        }
-
-        // Entrance — slide up from below into sticky position
-        gsap.from(card, {
-          opacity: 0,
-          y: 60,
-          duration: 0.7,
-          ease: "power3.out",
+        if (i === cards.length - 1) return;
+        gsap.to(card, {
+          scale: 0.94,
+          opacity: 0.5,
+          ease: "none",
           scrollTrigger: {
-            trigger: card,
-            start: "top 90%",
-            toggleActions: "play none none none",
+            trigger: cards[i + 1],
+            start: "top 60%",
+            end: "top 10%",
+            scrub: true,
           },
         });
       });
@@ -86,69 +72,73 @@ export default function Services({ data }: { data?: ServiceItem[] }) {
           </p>
         </div>
 
-        {/* Stacking cards */}
-        <div className="flex flex-col">
+        {/* Stacking cards — each wrapper has scroll height, inner card is sticky */}
+        <div>
           {services.map((service, i) => (
             <div
               key={service._id}
-              className="service-card group"
+              className="service-card"
               style={{
-                position: "sticky",
-                top: STICKY_TOP + i * 12,
-                zIndex: i + 1,
-                marginBottom: i < services.length - 1 ? "12px" : 0,
+                height: i < services.length - 1 ? "260px" : "auto",
+                minHeight: "140px",
               }}
             >
               <div
-                className="rounded-2xl px-6 sm:px-10 py-8 transition-colors duration-300 group-hover:border-[var(--dim)]"
+                className="service-card-inner group"
                 style={{
-                  background: "var(--surf)",
-                  border: "1px solid var(--bdr)",
-                  boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
+                  position: "sticky",
+                  top: STICKY_TOP,
+                  zIndex: i + 1,
                   transformOrigin: "top center",
                 }}
               >
-                <div className="grid grid-cols-1 md:grid-cols-[80px_1fr_auto] gap-6 items-start">
-                  <span className="text-xs font-mono pt-1" style={{ color: "var(--acc)" }}>
-                    {service.number}
-                  </span>
-
-                  <div>
-                    <h3 className="text-lg font-medium mb-2" style={{ color: "var(--txt)" }}>
-                      {service.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--mut)" }}>
-                      {service.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {service.tags?.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1 rounded-full text-xs"
-                          style={{ color: "var(--dim)", border: "1px solid var(--bdr)" }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="hidden md:flex items-center pt-1">
-                    <span
-                      className="text-lg transition-all duration-200 group-hover:translate-x-1"
-                      style={{ color: "var(--dim)" }}
-                    >
-                      →
+                <div
+                  className="rounded-2xl px-6 sm:px-10 py-8 transition-colors duration-300"
+                  style={{
+                    background: "var(--surf)",
+                    border: "1px solid var(--bdr)",
+                    boxShadow: "0 12px 40px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-[80px_1fr_auto] gap-6 items-start">
+                    <span className="text-xs font-mono pt-1" style={{ color: "var(--acc)" }}>
+                      {service.number}
                     </span>
+
+                    <div>
+                      <h3 className="text-lg font-medium mb-2" style={{ color: "var(--txt)" }}>
+                        {service.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--mut)" }}>
+                        {service.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {service.tags?.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-3 py-1 rounded-full text-xs"
+                            style={{ color: "var(--dim)", border: "1px solid var(--bdr)" }}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="hidden md:flex items-center pt-1">
+                      <span
+                        className="text-lg transition-all duration-200 group-hover:translate-x-1"
+                        style={{ color: "var(--dim)" }}
+                      >
+                        →
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-
-        {/* Spacer so next section clears the sticky stack */}
-        <div style={{ height: `${services.length * 12}px` }} />
       </div>
     </section>
   );

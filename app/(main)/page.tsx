@@ -8,7 +8,7 @@ import {
   testimonialsQuery,
   faqQuery,
 } from "@/sanity/lib/queries";
-import Hero from "@/components/home/Hero";
+import Hero, { type HeroData } from "@/components/home/Hero";
 import VideoSection from "@/components/home/VideoSection";
 import Services from "@/components/home/Services";
 import PortfolioPreview from "@/components/home/PortfolioPreview";
@@ -16,11 +16,10 @@ import Testimonials from "@/components/home/Testimonials";
 import FAQ from "@/components/home/FAQ";
 import ScrollReveal from "@/components/ScrollReveal";
 
-interface HomePageData {
+interface HomePageData extends HeroData {
   videoUrl?: string;
   videoThumbnail?: string;
   videoLabel?: string;
-  [key: string]: unknown;
 }
 
 export default async function Home() {
