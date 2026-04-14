@@ -44,22 +44,10 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
   const filtered =
     activeFilter === "All" ? projects : projects.filter((p) => p.category === activeFilter);
 
-  // Initial showcase entrance — clip-path wipe + stagger
+  // Initial showcase entrance — each card triggers as it scrolls into view
   useGSAP(
     () => {
-      gsap.from(".work-card", {
-        clipPath: "inset(0 0 100% 0)",
-        opacity: 0,
-        y: 24,
-        duration: 0.75,
-        ease: "power3.out",
-        stagger: {
-          amount: 0.55,
-          from: "start",
-        },
-        clearProps: "clipPath,opacity,y",
-      });
-
+      // Filter buttons slide in
       gsap.from(".filter-btn", {
         opacity: 0,
         x: -16,
@@ -67,6 +55,24 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
         ease: "power2.out",
         stagger: 0.06,
         delay: 0.1,
+      });
+
+      // Each card gets its own ScrollTrigger so they fire individually
+      gsap.utils.toArray<HTMLElement>(".work-card").forEach((card, i) => {
+        gsap.from(card, {
+          clipPath: "inset(0 0 100% 0)",
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          ease: "power3.out",
+          delay: i % 2 === 0 ? 0 : 0.12, // slight offset between columns
+          clearProps: "clipPath,opacity,y",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 88%",
+            toggleActions: "play none none none",
+          },
+        });
       });
     },
     { scope: gridRef }
