@@ -50,6 +50,26 @@ export default function RootLayout({
         <link rel="preload" as="image" href="/feranmi.jpg" />
       </head>
       <body className="min-h-full flex flex-col antialiased" style={{ background: "var(--bg)", color: "var(--txt)" }}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Feranmi Ojediji",
+              url: "https://feranmiojediji.com",
+              image: "https://feranmiojediji.com/feranmi.jpg",
+              jobTitle: "Web Designer & Creative Director",
+              description: "Web designer crafting purposeful online presence. Specializing in website design, branding, UI/UX, AI automation, and digital strategy.",
+              address: { "@type": "PostalAddress", addressLocality: "Akure", addressCountry: "NG" },
+              sameAs: [
+                "https://www.instagram.com/feranmi.ojediji/",
+                "https://x.com/feranmiojediji",
+                "https://www.facebook.com/feranmi.ojediji.3/",
+              ],
+            }),
+          }}
+        />
         {children}
       </body>
     </html>

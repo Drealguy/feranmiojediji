@@ -8,7 +8,15 @@ import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Works — Feranmi Ojediji",
-  description: "Selected projects by Feranmi Ojediji — web design, branding, UI/UX, and more.",
+  description: "Selected projects by Feranmi Ojediji — web design, branding, UI/UX, and digital strategy.",
+  alternates: { canonical: "https://feranmiojediji.com/works" },
+  openGraph: {
+    title: "Works — Feranmi Ojediji",
+    description: "Selected projects by Feranmi Ojediji — web design, branding, UI/UX, and digital strategy.",
+    url: "https://feranmiojediji.com/works",
+    images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }],
+  },
+  twitter: { card: "summary_large_image", title: "Works — Feranmi Ojediji", images: ["/feranmi.jpg"] },
 };
 
 export default async function Works() {

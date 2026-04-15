@@ -8,7 +8,15 @@ import ToolChips from "@/components/ToolChips";
 
 export const metadata: Metadata = {
   title: "About — Feranmi Ojediji",
-  description: "Learn more about Feranmi Ojediji, web designer and digital creative.",
+  description: "Learn more about Feranmi Ojediji, web designer and digital creative based in Akure, Nigeria.",
+  alternates: { canonical: "https://feranmiojediji.com/about" },
+  openGraph: {
+    title: "About — Feranmi Ojediji",
+    description: "Learn more about Feranmi Ojediji, web designer and digital creative based in Akure, Nigeria.",
+    url: "https://feranmiojediji.com/about",
+    images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }],
+  },
+  twitter: { card: "summary_large_image", title: "About — Feranmi Ojediji", images: ["/feranmi.jpg"] },
 };
 
 interface AboutData {

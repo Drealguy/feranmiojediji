@@ -5,8 +5,9 @@ const links = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Works", href: "/works" },
-  { label: "Courses", href: "/courses" },
+  { label: "Blog", href: "/blog" },
   { label: "Pricing", href: "/pricing" },
+  { label: "Courses", href: "/courses" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -20,7 +21,7 @@ export default function Footer() {
   return (
     <footer style={{ borderTop: "1px solid var(--bdr)" }} className="mt-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-12 md:mb-16">
           {/* Brand */}
           <div>
             <div className="mb-4">
@@ -29,6 +30,7 @@ export default function Footer() {
                 alt="Feranmi Ojediji"
                 width={36}
                 height={36}
+                sizes="36px"
                 className="object-contain"
               />
             </div>

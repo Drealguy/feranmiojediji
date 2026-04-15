@@ -109,6 +109,7 @@ export default function Navbar() {
               alt="Feranmi Ojediji"
               width={36}
               height={36}
+              sizes="36px"
               className="object-contain"
               priority
             />

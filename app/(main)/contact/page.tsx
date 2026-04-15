@@ -6,6 +6,14 @@ import ContactForm from "@/components/ContactForm";
 export const metadata: Metadata = {
   title: "Contact — Feranmi Ojediji",
   description: "Get in touch to start a project. Web design, branding, UI/UX and AI automation.",
+  alternates: { canonical: "https://feranmiojediji.com/contact" },
+  openGraph: {
+    title: "Contact — Feranmi Ojediji",
+    description: "Get in touch to start a project. Web design, branding, UI/UX and AI automation.",
+    url: "https://feranmiojediji.com/contact",
+    images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }],
+  },
+  twitter: { card: "summary_large_image", title: "Contact — Feranmi Ojediji", images: ["/feranmi.jpg"] },
 };
 
 export default function Contact() {
