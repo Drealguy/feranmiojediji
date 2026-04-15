@@ -10,6 +10,23 @@ export const metadata: Metadata = {
     icon: "/feranmilogo.png",
     apple: "/feranmilogo.png",
   },
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    siteName: "Feranmi Ojediji",
+    title: "Feranmi Ojediji — Web Designer & Creative",
+    description:
+      "Web designer crafting purposeful online presence. Specializing in website design, branding, UI/UX, AI automation, and digital strategy.",
+    url: "https://feranmiojediji.com",
+    images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Feranmi Ojediji — Web Designer & Creative",
+    description:
+      "Web designer crafting purposeful online presence. Specializing in website design, branding, UI/UX, AI automation, and digital strategy.",
+    images: ["/feranmi.jpg"],
+  },
 };
 
 export default function RootLayout({

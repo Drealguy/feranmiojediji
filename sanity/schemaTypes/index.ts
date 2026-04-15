@@ -7,6 +7,7 @@ import { faqItem } from "./faqItem";
 import { course } from "./course";
 import { pricingPlan } from "./pricingPlan";
 import { about } from "./about";
+import { post } from "./post";
 
 export const schemaTypes = [
   // Singletons
@@ -15,6 +16,7 @@ export const schemaTypes = [
   about,
   // Collections
   project,
+  post,
   service,
   testimonial,
   faqItem,

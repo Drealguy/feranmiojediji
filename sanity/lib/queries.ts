@@ -96,6 +96,41 @@ export const pricingQuery = groq`*[_type == "pricingPlan"] | order(order asc){
   notIncluded
 }`;
 
+export const postsQuery = groq`*[_type == "post"] | order(publishedAt desc){
+  _id,
+  title,
+  "slug": slug.current,
+  publishedAt,
+  excerpt,
+  "coverImage": coverImage.asset->url,
+  "coverImageAlt": coverImage.alt,
+  category,
+  tags
+}`;
+
+export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{
+  _id,
+  title,
+  "slug": slug.current,
+  publishedAt,
+  excerpt,
+  "coverImage": coverImage.asset->url,
+  "coverImageAlt": coverImage.alt,
+  category,
+  tags,
+  body[]{
+    ...,
+    _type == "image" => {
+      ...,
+      "url": asset->url
+    }
+  },
+  seoTitle,
+  seoDescription
+}`;
+
+export const postSlugsQuery = groq`*[_type == "post"]{ "slug": slug.current }`;
+
 export const aboutQuery = groq`*[_type == "about"][0]{
   headline,
   headlineAccent,

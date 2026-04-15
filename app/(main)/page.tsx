@@ -1,6 +1,14 @@
 export const revalidate = 60;
 
+import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/client";
+
+export const metadata: Metadata = {
+  title: "Feranmi Ojediji — Web Designer & Creative",
+  description:
+    "Web designer crafting purposeful online presence. Specializing in website design, branding, UI/UX, AI automation, and digital strategy.",
+  alternates: { canonical: "https://feranmiojediji.com" },
+};
 import {
   homePageQuery,
   servicesQuery,
