@@ -6,7 +6,6 @@ import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/client";
 import { postsQuery } from "@/sanity/lib/queries";
 import ScrollReveal from "@/components/ScrollReveal";
-import PushSubscribeButton from "@/components/PushSubscribeButton";
 
 export const metadata: Metadata = {
   title: "Blog — Feranmi Ojediji",
@@ -106,12 +105,9 @@ export default async function Blog() {
               Thoughts on design<br />
               <span style={{ color: "var(--acc)" }}>&amp; business</span>
             </h1>
-            <div className="flex flex-col gap-4">
-              <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--mut)" }}>
-                Real insights on web design, branding, AI tools, and building a creative business.
-              </p>
-              <PushSubscribeButton />
-            </div>
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--mut)" }}>
+              Real insights on web design, branding, AI tools, and building a creative business.
+            </p>
           </div>
         </ScrollReveal>
 
