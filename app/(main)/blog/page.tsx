@@ -9,7 +9,8 @@ import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Blog — Feranmi Ojediji",
-  description: "Design insights, business strategy, and creative tips from Feranmi Ojediji — web designer and creative director based in Akure, Nigeria.",
+  description:
+    "Design insights, business strategy, and creative tips from Feranmi Ojediji — web designer and creative director based in Akure, Nigeria.",
   openGraph: {
     title: "Blog — Feranmi Ojediji",
     description: "Design insights, business strategy, and creative tips.",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   },
 };
 
-interface Post {
+export interface Post {
   _id: string;
   title: string;
   slug: string;
@@ -30,6 +31,48 @@ interface Post {
   tags?: string[];
 }
 
+export const FALLBACK_POSTS: Post[] = [
+  {
+    _id: "1",
+    title: "Why Your Website Is Losing You Clients (And How to Fix It)",
+    slug: "why-your-website-is-losing-clients",
+    publishedAt: "2025-03-10T00:00:00Z",
+    excerpt:
+      "Most small business websites make the same 5 mistakes. Here's what they are, why they kill conversions, and the exact fixes that turn visitors into paying clients.",
+    coverImage:
+      "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&q=80",
+    coverImageAlt: "Web design on a laptop screen",
+    category: "Design",
+    tags: ["Web Design", "Conversion", "Business"],
+  },
+  {
+    _id: "2",
+    title: "The Brand Identity Checklist Every Nigerian Business Needs",
+    slug: "brand-identity-checklist-nigerian-business",
+    publishedAt: "2025-02-20T00:00:00Z",
+    excerpt:
+      "Logos alone don't make a brand. This checklist covers everything — from colour psychology to typography — that makes your brand instantly recognisable and trustworthy.",
+    coverImage:
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80",
+    coverImageAlt: "Brand identity design materials",
+    category: "Branding",
+    tags: ["Branding", "Identity", "Nigeria"],
+  },
+  {
+    _id: "3",
+    title: "How I Use AI Tools to Deliver Better Design Work, Faster",
+    slug: "ai-tools-for-better-design",
+    publishedAt: "2025-01-15T00:00:00Z",
+    excerpt:
+      "AI isn't replacing designers — it's separating the good ones from the great ones. Here are the exact tools and workflows I use to save hours every week without sacrificing quality.",
+    coverImage:
+      "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&q=80",
+    coverImageAlt: "AI interface on a screen",
+    category: "AI & Automation",
+    tags: ["AI", "Workflow", "Tools"],
+  },
+];
+
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
     day: "numeric",
@@ -39,20 +82,26 @@ function formatDate(iso: string) {
 }
 
 export default async function Blog() {
-  const posts = await sanityFetch<Post[]>(postsQuery).catch(() => [] as Post[]);
+  const fetched = await sanityFetch<Post[]>(postsQuery).catch(() => [] as Post[]);
+  const posts = fetched.length ? fetched : FALLBACK_POSTS;
 
   return (
     <div className="pt-36 pb-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
 
         {/* Header */}
-        <ScrollReveal className="mb-20">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>Blog</span>
+        <ScrollReveal className="mb-16 sm:mb-20">
+          <div className="flex items-center gap-3 mb-5">
+            <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>
+              Blog
+            </span>
             <div className="w-12 h-px" style={{ background: "var(--bdr)" }} />
           </div>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] max-w-lg" style={{ color: "var(--txt)" }}>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
+            <h1
+              className="text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] max-w-lg"
+              style={{ color: "var(--txt)" }}
+            >
               Thoughts on design<br />
               <span style={{ color: "var(--acc)" }}>&amp; business</span>
             </h1>
@@ -63,88 +112,83 @@ export default async function Blog() {
         </ScrollReveal>
 
         {/* Posts grid */}
-        {posts.length === 0 ? (
-          <ScrollReveal>
-            <div
-              className="rounded-3xl p-16 text-center"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
+          {posts.map((post) => (
+            <Link
+              key={post._id}
+              href={`/blog/${post.slug}`}
+              className="group rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col"
               style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
             >
-              <div
-                className="w-14 h-14 rounded-full flex items-center justify-center text-2xl mx-auto mb-6"
-                style={{ background: "rgba(200,245,60,0.10)", color: "var(--acc)" }}
-              >
-                ✦
-              </div>
-              <h2 className="text-xl font-medium mb-3" style={{ color: "var(--txt)" }}>
-                Posts coming soon
-              </h2>
-              <p className="text-sm max-w-xs mx-auto" style={{ color: "var(--mut)" }}>
-                I&apos;m writing up insights on design, business, and AI tools. Check back soon.
-              </p>
-            </div>
-          </ScrollReveal>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-            {posts.map((post) => (
-              <Link
-                key={post._id}
-                href={`/blog/${post.slug}`}
-                className="group rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 block"
-                style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
-              >
-                {/* Cover */}
-                <div className="relative aspect-[16/9] overflow-hidden">
-                  {post.coverImage ? (
-                    <Image
-                      src={post.coverImage}
-                      alt={post.coverImageAlt ?? post.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div
-                      className="absolute inset-0 flex items-center justify-center text-3xl"
-                      style={{ background: "var(--surf2)" }}
-                    >
-                      <span style={{ color: "var(--acc)", opacity: 0.4 }}>✦</span>
-                    </div>
-                  )}
-                  {post.category && (
-                    <span
-                      className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium"
-                      style={{ background: "var(--bg)", color: "var(--txt)", border: "1px solid var(--bdr)" }}
-                    >
-                      {post.category}
-                    </span>
-                  )}
-                </div>
-
-                {/* Info */}
-                <div className="p-6" style={{ borderTop: "1px solid var(--bdr)" }}>
-                  <p className="text-xs mb-2" style={{ color: "var(--dim)" }}>
-                    {post.publishedAt ? formatDate(post.publishedAt) : ""}
-                  </p>
-                  <h2
-                    className="text-base font-medium mb-2 leading-snug group-hover:text-[var(--acc)] transition-colors duration-200"
-                    style={{ color: "var(--txt)" }}
+              {/* Cover */}
+              <div className="relative aspect-[16/9] overflow-hidden shrink-0">
+                {post.coverImage ? (
+                  <Image
+                    src={post.coverImage}
+                    alt={post.coverImageAlt ?? post.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div
+                    className="absolute inset-0 flex items-center justify-center text-3xl"
+                    style={{ background: "var(--surf2)" }}
                   >
-                    {post.title}
-                  </h2>
-                  {post.excerpt && (
-                    <p className="text-xs leading-relaxed line-clamp-2" style={{ color: "var(--mut)" }}>
-                      {post.excerpt}
-                    </p>
-                  )}
-                  <div className="mt-4 flex items-center gap-1 text-xs font-medium" style={{ color: "var(--acc)" }}>
-                    Read more <span className="transition-transform duration-200 group-hover:translate-x-1 inline-block">→</span>
+                    <span style={{ color: "var(--acc)", opacity: 0.4 }}>✦</span>
                   </div>
+                )}
+                {post.category && (
+                  <span
+                    className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-medium"
+                    style={{
+                      background: "rgba(10,10,10,0.75)",
+                      color: "var(--acc)",
+                      backdropFilter: "blur(6px)",
+                      border: "1px solid rgba(200,245,60,0.2)",
+                    }}
+                  >
+                    {post.category}
+                  </span>
+                )}
+              </div>
+
+              {/* Info */}
+              <div
+                className="flex flex-col flex-1 p-5 sm:p-6 gap-3"
+                style={{ borderTop: "1px solid var(--bdr)" }}
+              >
+                <p className="text-xs" style={{ color: "var(--dim)" }}>
+                  {post.publishedAt ? formatDate(post.publishedAt) : ""}
+                </p>
+                <h2
+                  className="text-sm sm:text-base font-medium leading-snug group-hover:text-[var(--acc)] transition-colors duration-200"
+                  style={{ color: "var(--txt)" }}
+                >
+                  {post.title}
+                </h2>
+                {post.excerpt && (
+                  <p
+                    className="text-xs leading-relaxed line-clamp-2 flex-1"
+                    style={{ color: "var(--mut)" }}
+                  >
+                    {post.excerpt}
+                  </p>
+                )}
+                <div
+                  className="mt-1 flex items-center gap-1 text-xs font-medium"
+                  style={{ color: "var(--acc)" }}
+                >
+                  Read more{" "}
+                  <span className="transition-transform duration-200 group-hover:translate-x-1 inline-block">
+                    →
+                  </span>
                 </div>
-              </Link>
-            ))}
-          </div>
-        )}
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
