@@ -37,6 +37,7 @@ export default defineConfig({
             S.divider(),
 
             // ── Collections ──────────────────────────────
+            S.documentTypeListItem("post").title("Blog Posts"),
             S.documentTypeListItem("project").title("Projects"),
             S.documentTypeListItem("service").title("Services"),
             S.documentTypeListItem("course").title("Courses"),
