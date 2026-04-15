@@ -112,16 +112,16 @@ export default async function Blog() {
         </ScrollReveal>
 
         {/* Posts grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {posts.map((post) => (
             <Link
               key={post._id}
               href={`/blog/${post.slug}`}
-              className="group rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col"
+              className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
               style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
             >
-              {/* Cover */}
-              <div className="relative aspect-[16/9] overflow-hidden shrink-0">
+              {/* Cover image */}
+              <div className="relative w-full overflow-hidden" style={{ aspectRatio: "16/9" }}>
                 {post.coverImage ? (
                   <Image
                     src={post.coverImage}
@@ -133,56 +133,59 @@ export default async function Blog() {
                   />
                 ) : (
                   <div
-                    className="absolute inset-0 flex items-center justify-center text-3xl"
+                    className="absolute inset-0 flex items-center justify-center"
                     style={{ background: "var(--surf2)" }}
                   >
-                    <span style={{ color: "var(--acc)", opacity: 0.4 }}>✦</span>
+                    <span className="text-3xl" style={{ color: "var(--acc)", opacity: 0.3 }}>✦</span>
                   </div>
-                )}
-                {post.category && (
-                  <span
-                    className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-medium"
-                    style={{
-                      background: "rgba(10,10,10,0.75)",
-                      color: "var(--acc)",
-                      backdropFilter: "blur(6px)",
-                      border: "1px solid rgba(200,245,60,0.2)",
-                    }}
-                  >
-                    {post.category}
-                  </span>
                 )}
               </div>
 
-              {/* Info */}
-              <div
-                className="flex flex-col flex-1 p-5 sm:p-6 gap-3"
-                style={{ borderTop: "1px solid var(--bdr)" }}
-              >
-                <p className="text-xs" style={{ color: "var(--dim)" }}>
-                  {post.publishedAt ? formatDate(post.publishedAt) : ""}
-                </p>
+              {/* Card body */}
+              <div className="flex flex-col flex-1 p-5 gap-3">
+                {/* Category + date row */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  {post.category && (
+                    <span
+                      className="px-2.5 py-0.5 rounded-md text-xs font-medium"
+                      style={{ background: "rgba(200,245,60,0.12)", color: "var(--acc)" }}
+                    >
+                      {post.category}
+                    </span>
+                  )}
+                  {post.publishedAt && (
+                    <span className="text-xs" style={{ color: "var(--dim)" }}>
+                      {formatDate(post.publishedAt)}
+                    </span>
+                  )}
+                </div>
+
+                {/* Title */}
                 <h2
-                  className="text-sm sm:text-base font-medium leading-snug group-hover:text-[var(--acc)] transition-colors duration-200"
+                  className="text-sm font-semibold leading-snug transition-colors duration-200 group-hover:text-[var(--acc)]"
                   style={{ color: "var(--txt)" }}
                 >
                   {post.title}
                 </h2>
+
+                {/* Excerpt */}
                 {post.excerpt && (
                   <p
-                    className="text-xs leading-relaxed line-clamp-2 flex-1"
+                    className="text-xs leading-relaxed line-clamp-3 flex-1"
                     style={{ color: "var(--mut)" }}
                   >
                     {post.excerpt}
                   </p>
                 )}
-                <div
-                  className="mt-1 flex items-center gap-1 text-xs font-medium"
-                  style={{ color: "var(--acc)" }}
-                >
-                  Read more{" "}
-                  <span className="transition-transform duration-200 group-hover:translate-x-1 inline-block">
-                    →
+
+                {/* Read more */}
+                <div className="pt-2 mt-auto">
+                  <span
+                    className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg transition-all duration-200 group-hover:gap-2.5"
+                    style={{ background: "var(--bg)", color: "var(--txt)", border: "1px solid var(--bdr)" }}
+                  >
+                    Read more
+                    <span className="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
                   </span>
                 </div>
               </div>

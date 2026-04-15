@@ -199,21 +199,20 @@ export default function Navbar() {
         {/* Mobile menu */}
         {mobileOpen && (
           <div
-            className="mt-2 rounded-2xl p-4 md:hidden"
+            className="mt-2 rounded-2xl p-3 md:hidden"
             style={{
               background: "var(--nav-bg)",
               backdropFilter: "blur(20px)",
               border: "1px solid var(--bdr)",
             }}
           >
-            <ul className="flex flex-col gap-1">
+            <ul className="flex flex-col">
               {navLinks.map((link) => {
                 if ("dropdown" in link && link.dropdown) {
                   return (
                     <li key={link.label}>
-                      {/* Dropdown label — not clickable, just a divider */}
                       <p
-                        className="px-4 pt-3 pb-1 text-xs uppercase tracking-widest"
+                        className="px-3 pt-2 pb-1 text-[10px] uppercase tracking-widest font-medium"
                         style={{ color: "var(--dim)" }}
                       >
                         {link.label}
@@ -225,16 +224,13 @@ export default function Navbar() {
                             key={sub.href}
                             href={sub.href}
                             onClick={() => setMobileOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all ml-2"
+                            className="flex items-center gap-2 px-3 pl-5 py-2 rounded-xl text-sm transition-all"
                             style={{
                               color: active ? "var(--txt)" : "var(--mut)",
-                              background: active ? "rgba(128,128,128,0.08)" : "transparent",
+                              background: active ? "rgba(128,128,128,0.07)" : "transparent",
                             }}
                           >
-                            <span
-                              className="w-1 h-1 rounded-full shrink-0"
-                              style={{ background: "var(--bdr)" }}
-                            />
+                            <span className="w-1 h-1 rounded-full shrink-0" style={{ background: "var(--bdr)" }} />
                             {sub.label}
                           </Link>
                         );
@@ -249,10 +245,11 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setMobileOpen(false)}
-                      className="block px-4 py-3 rounded-xl text-sm transition-all"
+                      className="block px-3 py-2.5 rounded-xl text-sm transition-all"
                       style={{
                         color: active ? "var(--txt)" : "var(--mut)",
-                        background: active ? "rgba(128,128,128,0.08)" : "transparent",
+                        background: active ? "rgba(128,128,128,0.07)" : "transparent",
+                        fontWeight: active ? 500 : 400,
                       }}
                     >
                       {link.label}
@@ -262,11 +259,11 @@ export default function Navbar() {
               })}
             </ul>
 
-            <div className="mt-4 pt-4" style={{ borderTop: "1px solid var(--bdr)" }}>
+            <div className="mt-3 pt-3" style={{ borderTop: "1px solid var(--bdr)" }}>
               <Link
                 href="/contact"
                 onClick={() => setMobileOpen(false)}
-                className="block w-full text-center px-4 py-3 rounded-xl text-sm font-medium"
+                className="block w-full text-center px-4 py-2.5 rounded-xl text-sm font-medium"
                 style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
               >
                 Let&apos;s Talk
