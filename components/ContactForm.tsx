@@ -13,13 +13,13 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Based in",
-    value: "Lagos, Nigeria",
+    value: "Akure, Nigeria",
     link: null,
   },
   {
     icon: Clock,
     label: "Response time",
-    value: "Within 24 hours",
+    value: "Within 4 hours",
     link: null,
   },
 ];
@@ -34,11 +34,30 @@ const services = [
 ];
 
 export default function ContactForm() {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const name    = fd.get("name") as string;
+    const email   = fd.get("email") as string;
+    const budget  = fd.get("budget") as string;
+    const message = fd.get("message") as string;
+
+    const text = [
+      `Hi Feranmi! I'd like to discuss a project with you.`,
+      ``,
+      `*Name:* ${name}`,
+      `*Email:* ${email}`,
+      `*Service needed:* ${selected.length ? selected.join(", ") : "Not specified"}`,
+      `*Budget range:* ${budget || "Not specified"}`,
+      ``,
+      `*Project details:*`,
+      message,
+    ].join("\n");
+
+    window.open(`https://wa.me/2349167802170?text=${encodeURIComponent(text)}`, "_blank");
     setSubmitted(true);
   }
 
@@ -69,8 +88,8 @@ export default function ContactForm() {
             {/* Name + Email */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {[
-                { id: "name", label: "Name", type: "text", placeholder: "Your full name" },
-                { id: "email", label: "Email", type: "email", placeholder: "your@email.com" },
+                { id: "name", label: "Name", type: "text", placeholder: "Your full name", name: "name" },
+                { id: "email", label: "Email", type: "email", placeholder: "your@email.com", name: "email" },
               ].map((field) => (
                 <div key={field.id} className="flex flex-col gap-2">
                   <label
@@ -82,6 +101,7 @@ export default function ContactForm() {
                   </label>
                   <input
                     id={field.id}
+                    name={field.name}
                     required
                     type={field.type}
                     placeholder={field.placeholder}
@@ -108,10 +128,10 @@ export default function ContactForm() {
                   <button
                     type="button"
                     key={s}
-                    onClick={() => setSelected(selected === s ? null : s)}
+                    onClick={() => setSelected((prev) => prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s])}
                     className="px-4 py-2 rounded-xl text-sm transition-all duration-200"
                     style={
-                      selected === s
+                      selected.includes(s)
                         ? { background: "var(--acc)", color: "var(--acc-fg)" }
                         : { background: "var(--bg)", color: "var(--mut)", border: "1px solid var(--bdr)" }
                     }
@@ -134,6 +154,7 @@ export default function ContactForm() {
               <div className="relative">
                 <select
                   id="budget"
+                  name="budget"
                   className="w-full rounded-xl px-4 py-3.5 text-sm outline-none transition-colors duration-200 appearance-none cursor-pointer pr-10"
                   style={{
                     background: "var(--bg)",
@@ -170,6 +191,7 @@ export default function ContactForm() {
               </label>
               <textarea
                 id="message"
+                name="message"
                 required
                 rows={5}
                 placeholder="Describe your project, goals, and timeline..."
