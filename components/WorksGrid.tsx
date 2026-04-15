@@ -118,10 +118,15 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-20">
         {filtered.map((project) => {
           const accent = project.accentColor ?? "#c8f53c";
+          const Tag = project.liveUrl ? "a" : "div";
+          const linkProps = project.liveUrl
+            ? { href: project.liveUrl, target: "_blank", rel: "noopener noreferrer" }
+            : {};
           return (
-            <div
+            <Tag
               key={project._id}
-              className="work-card group relative rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+              {...linkProps}
+              className="work-card group relative rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 cursor-pointer block"
               style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
             >
               {/* Visual */}
@@ -190,7 +195,7 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
                   >→</span>
                 </div>
               </div>
-            </div>
+            </Tag>
           );
         })}
       </div>
