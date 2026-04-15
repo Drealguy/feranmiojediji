@@ -112,7 +112,7 @@ export default async function Blog() {
         </ScrollReveal>
 
         {/* Posts grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
           {posts.map((post) => (
             <Link
               key={post._id}
@@ -132,18 +132,18 @@ export default async function Blog() {
                     loading="lazy"
                   />
                 ) : (
-                  <div
-                    className="absolute inset-0 flex items-center justify-center"
-                    style={{ background: "var(--surf2)" }}
-                  >
+                  <div className="absolute inset-0 flex items-center justify-center" style={{ background: "var(--surf2)" }}>
                     <span className="text-3xl" style={{ color: "var(--acc)", opacity: 0.3 }}>✦</span>
                   </div>
                 )}
               </div>
 
               {/* Card body */}
-              <div className="flex flex-col flex-1 p-5 gap-3">
-                {/* Category + date row */}
+              <div
+                className="flex flex-col flex-1 px-6 pt-5 pb-6 gap-3"
+                style={{ borderTop: "1px solid var(--bdr)" }}
+              >
+                {/* Category + date */}
                 <div className="flex items-center gap-2 flex-wrap">
                   {post.category && (
                     <span
@@ -170,22 +170,18 @@ export default async function Blog() {
 
                 {/* Excerpt */}
                 {post.excerpt && (
-                  <p
-                    className="text-xs leading-relaxed line-clamp-3 flex-1"
-                    style={{ color: "var(--mut)" }}
-                  >
+                  <p className="text-xs leading-relaxed line-clamp-3 flex-1" style={{ color: "var(--mut)" }}>
                     {post.excerpt}
                   </p>
                 )}
 
-                {/* Read more */}
-                <div className="pt-2 mt-auto">
+                {/* CTA button */}
+                <div className="mt-2">
                   <span
-                    className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg transition-all duration-200 group-hover:gap-2.5"
-                    style={{ background: "var(--bg)", color: "var(--txt)", border: "1px solid var(--bdr)" }}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium transition-all duration-200 group-hover:opacity-90 group-hover:gap-3"
+                    style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
                   >
-                    Read more
-                    <span className="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
+                    Read more →
                   </span>
                 </div>
               </div>
