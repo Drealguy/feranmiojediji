@@ -10,13 +10,15 @@ import ThemeToggle from "./ThemeToggle";
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
+  { label: "My Works", href: "/works" },
+  { label: "Pricing", href: "/pricing" },
   {
-    label: "Work",
+    label: "Resources",
     dropdown: [
       {
-        label: "My Works",
-        href: "/works",
-        description: "Selected client projects",
+        label: "Blog",
+        href: "/blog",
+        description: "Design & business insights",
       },
       {
         label: "Courses",
@@ -25,8 +27,6 @@ const navLinks = [
       },
     ],
   },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 
