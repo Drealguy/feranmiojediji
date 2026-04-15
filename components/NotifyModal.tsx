@@ -20,7 +20,7 @@ function Modal({ courseTitle, onClose }: { courseTitle: string; onClose: () => v
       `Hi Feranmi! I'd like to be notified when "${courseTitle}" goes live.\n\nEmail: ${email}\nWhatsApp: ${whatsapp}`
     );
     // Replace the number below with your real WhatsApp number (digits only, with country code)
-    window.open(`https://wa.me/2348000000000?text=${msg}`, "_blank");
+    window.open(`https://wa.me/2349167802170?text=${msg}`, "_blank");
     setSubmitted(true);
   }
 

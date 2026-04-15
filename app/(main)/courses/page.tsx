@@ -1,4 +1,4 @@
-export const revalidate = 60;
+export const revalidate = 3600;
 
 import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/client";
@@ -58,7 +58,7 @@ export default async function Courses() {
               <span className="italic font-light" style={{ color: "var(--mut)" }}>someone doing it</span>
             </h1>
             <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--mut)" }}>
-              Practical, no-fluff courses built from 8+ years of real client work.
+              Practical, no-fluff courses built from 6+ years of real client work.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: "var(--bdr)" }}>

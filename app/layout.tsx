@@ -19,10 +19,19 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://api.fontshare.com" />
-        {/* Load font early — prevents flash of fallback font */}
+        {/* Preload font — fetched at highest priority before render */}
+        <link
+          rel="preload"
+          as="style"
+          href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&display=swap"
+        />
+        {/* Load non-blocking — onLoad swaps media from print→all after fetch */}
         <link
           rel="stylesheet"
           href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&display=swap"
+          media="print"
+          // @ts-expect-error onLoad not in React's link types but valid HTML
+          onLoad="this.media='all'"
         />
         {/* Preload hero image so LCP fires fast */}
         <link rel="preload" as="image" href="/feranmi.jpg" />

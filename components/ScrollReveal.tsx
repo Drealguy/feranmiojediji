@@ -39,9 +39,10 @@ export default function ScrollReveal({
     const ctx = gsap.context(() => {
       gsap.from(el, {
         ...from,
+        clearProps: "opacity,x,y",
         scrollTrigger: {
           trigger: el,
-          start: "top 88%",
+          start: "top 92%",
           toggleActions: "play none none none",
         },
       });
