@@ -174,13 +174,15 @@ export default function Navbar() {
           {/* Desktop right */}
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
-            <Link
-              href="/contact"
+            <a
+              href="https://wa.me/2349167802170"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:opacity-90 active:scale-95"
               style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
             >
               Let&apos;s Talk
-            </Link>
+            </a>
           </div>
 
           {/* Mobile right */}
@@ -261,14 +263,16 @@ export default function Navbar() {
             </ul>
 
             <div className="mt-3 pt-3" style={{ borderTop: "1px solid var(--bdr)" }}>
-              <Link
-                href="/contact"
+              <a
+                href="https://wa.me/2349167802170"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
                 className="block w-full text-center px-4 py-2.5 rounded-xl text-sm font-medium"
                 style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
               >
                 Let&apos;s Talk
-              </Link>
+              </a>
             </div>
           </div>
         )}
