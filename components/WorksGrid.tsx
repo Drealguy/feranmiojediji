@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { fallbackProjects } from "@/lib/project-data";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -21,30 +23,27 @@ export interface WorkProject {
   liveUrl?: string;
 }
 
-const FALLBACK: WorkProject[] = [
-  { _id: "1", title: "Lumina — Brand Identity", category: "Branding", year: "2025", description: "Full brand identity system for a Lagos-based design studio.", accentColor: "#c8f53c", tags: ["Logo", "Identity", "Guidelines"] },
-  { _id: "2", title: "Revive — SaaS Dashboard", category: "UI/UX Design", year: "2024", description: "End-to-end product design for a health-tech startup.", accentColor: "#a78bfa", tags: ["Product Design", "Figma", "Prototyping"] },
-  { _id: "3", title: "Forma — Agency Website", category: "Website Design", year: "2024", description: "Award-nominated website for a creative agency.", accentColor: "#60a5fa", tags: ["Webflow", "Animation", "CMS"] },
-  { _id: "4", title: "Cleo — E-commerce Store", category: "Website Design", year: "2024", description: "Fashion e-commerce website focused on conversion.", accentColor: "#f472b6", tags: ["E-commerce", "Webflow", "Mobile"] },
-  { _id: "5", title: "AutoFlow — AI Workflow", category: "Social Media Design", year: "2025", description: "AI-powered content and lead generation system.", accentColor: "#34d399", tags: ["Make.com", "AI", "Automation"] },
-  { _id: "6", title: "Meridian — Brand & Web", category: "Branding", year: "2023", description: "Brand identity and marketing site for a fintech company.", accentColor: "#fb923c", tags: ["Branding", "Web", "Fintech"] },
-];
+const WORK_FILTERS = ["All", "Logo & Brand Identity Design", "Business & Corporate Websites", "Ecommerce Websites & Digital Platforms", "Brand Strategy & Content"];
 
-const ALL_CATEGORIES = ["All", "Website Design", "Branding", "UI/UX Design", "Social Media Design"];
-
-export default function WorksGrid({ data }: { data?: WorkProject[] }) {
-  const projects = data?.length ? data : FALLBACK;
-  const [activeFilter, setActiveFilter] = useState("All");
+export default function WorksGrid({ data, initialFilter = "All" }: { data?: WorkProject[]; initialFilter?: string }) {
+  const projects: WorkProject[] = data?.length ? data : fallbackProjects;
+  const [activeFilter, setActiveFilter] = useState(initialFilter);
   const gridRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
 
-  const categories = ["All", ...Array.from(new Set(projects.map((p) => p.category)))];
-  const displayCategories = data?.length ? categories : ALL_CATEGORIES;
+  const displayCategories = WORK_FILTERS;
 
-  const filtered =
-    activeFilter === "All" ? projects : projects.filter((p) => p.category === activeFilter);
+  const filtered = projects.filter((project) => {
+    if (activeFilter === "All") return true;
+    const searchable = `${project.title} ${project.category} ${project.tags?.join(" ") ?? ""}`.toLowerCase();
+    if (activeFilter === "Logo & Brand Identity Design") return ["Branding", "Logo & Brand Identity Design"].includes(project.category);
+    if (activeFilter === "Business & Corporate Websites") return ["Website Design", "UI/UX Design"].includes(project.category);
+    if (activeFilter === "Ecommerce Websites & Digital Platforms") return /e-?commerce|lms|online course|platform|portal/.test(searchable);
+    if (activeFilter === "Brand Strategy & Content") return /social media|strategy|photography|video|content/.test(searchable);
+    return false;
+  });
 
-  // Card scroll animations — each card triggers individually as it enters viewport
+  // Each card triggers its scroll animation when it enters the viewport
   useGSAP(
     () => {
       gsap.utils.toArray<HTMLElement>(".work-card").forEach((card, i) => {
@@ -67,7 +66,7 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
     { scope: gridRef }
   );
 
-  // Filter change — animate out then back in
+  // Animate out and back in when the filter changes
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -117,15 +116,12 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-20">
         {filtered.map((project) => {
-          const accent = project.accentColor ?? "#c8f53c";
-          const Tag = project.liveUrl ? "a" : "div";
-          const linkProps = project.liveUrl
-            ? { href: project.liveUrl, target: "_blank", rel: "noopener noreferrer" }
-            : {};
+          const accent = "var(--txt)";
           return (
-            <Tag
+            <Link
               key={project._id}
-              {...linkProps}
+              href={project.slug ? `/myworks/${project.slug}` : "#"}
+              aria-disabled={!project.slug}
               className="work-card group relative rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 cursor-pointer block"
               style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
             >
@@ -144,7 +140,7 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
                   <div className="absolute inset-0 p-10 flex items-center justify-center">
                     <div
                       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{ background: `radial-gradient(ellipse 80% 80% at 50% 50%, ${accent}18 0%, transparent 70%)` }}
+                      style={{ background: "radial-gradient(ellipse 80% 80% at 50% 50%, color-mix(in srgb, var(--txt) 10%, transparent) 0%, transparent 70%)" }}
                     />
                     <div className="w-full flex flex-col gap-3 relative">
                       <div className="h-1.5 rounded-full w-full opacity-20" style={{ background: accent }} />
@@ -166,8 +162,8 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
 
                 {/* Hover badge */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="px-5 py-2.5 rounded-full text-xs font-medium shadow-lg" style={{ background: accent, color: "#111" }}>
-                    {project.liveUrl ? "View live →" : "View project →"}
+                  <span className="px-5 py-2.5 rounded-full text-xs font-medium shadow-lg" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>
+                    View case study →
                   </span>
                 </div>
               </div>
@@ -195,7 +191,7 @@ export default function WorksGrid({ data }: { data?: WorkProject[] }) {
                   >→</span>
                 </div>
               </div>
-            </Tag>
+            </Link>
           );
         })}
       </div>

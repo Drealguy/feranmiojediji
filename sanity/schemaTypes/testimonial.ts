@@ -35,7 +35,7 @@ export const testimonial = defineType({
       title: "Avatar image",
       type: "image",
       options: { hotspot: true },
-      description: "Optional — initials will be used as fallback",
+      description: "Optional. Initials will be used as fallback",
     }),
     defineField({
       name: "initials",
@@ -47,8 +47,8 @@ export const testimonial = defineType({
       name: "accentColor",
       title: "Accent colour",
       type: "string",
-      description: "Hex code for the avatar background e.g. #c8f53c",
-      initialValue: "#c8f53c",
+      description: "Hex code for the avatar background e.g. #f5f5f5",
+      initialValue: "#f5f5f5",
     }),
     defineField({
       name: "order",

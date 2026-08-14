@@ -2,145 +2,76 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Play } from "lucide-react";
 
-function getYouTubeId(url: string): string | null {
+function getYouTubeId(url?: string) {
+  if (!url) return null;
   try {
-    const u = new URL(url);
-    if (u.hostname.includes("youtube.com")) return u.searchParams.get("v");
-    if (u.hostname === "youtu.be") return u.pathname.slice(1);
-    const match = u.pathname.match(/(?:shorts|embed)\/([^/?]+)/);
-    if (match) return match[1];
-  } catch {}
+    const parsed = new URL(url);
+    if (parsed.hostname.includes("youtube.com")) return parsed.searchParams.get("v") ?? parsed.pathname.split("/").pop() ?? null;
+    if (parsed.hostname === "youtu.be") return parsed.pathname.slice(1);
+  } catch {
+    return null;
+  }
   return null;
 }
 
 export default function VideoSection({
+  videoFile,
   videoUrl,
   videoThumbnail,
   videoLabel,
 }: {
+  videoFile?: string;
   videoUrl?: string;
   videoThumbnail?: string;
   videoLabel?: string;
 }) {
-  const [playing, setPlaying] = useState(false);
-  const label = videoLabel ?? "Watch the process — 4 min";
-  const videoId = videoUrl ? getYouTubeId(videoUrl) : null;
+  const [playingYouTube, setPlayingYouTube] = useState(false);
+  const youtubeId = getYouTubeId(videoUrl);
 
   return (
-    <section className="py-24 overflow-hidden">
+    <section className="py-10 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>
-            Behind the scenes
-          </span>
-          <div className="flex-1 h-px" style={{ background: "var(--bdr)" }} />
+        <div className="mb-6 flex items-end justify-between gap-6">
+          <div>
+            <p className="mb-2 text-xs uppercase tracking-[0.2em]" style={{ color: "var(--mut)" }}>Selected reel</p>
+            <h2 className="text-2xl font-medium sm:text-3xl" style={{ color: "var(--txt)" }}>{videoLabel || "A closer look at how I work"}</h2>
+          </div>
         </div>
 
-        <h2
-          className="text-3xl md:text-4xl font-semibold tracking-tight mb-12 max-w-xl"
-          style={{ color: "var(--txt)" }}
-        >
-          Watch how I craft experiences from idea to launch
-        </h2>
-
-        {/* Video container */}
-        <div
-          className="relative w-full rounded-3xl overflow-hidden cursor-pointer group"
-          style={{
-            background: "var(--surf)",
-            border: "1px solid var(--bdr)",
-            aspectRatio: "16/9",
-          }}
-          onClick={() => videoId && setPlaying(true)}
-        >
-          {playing && videoId ? (
+        <div className="relative aspect-video overflow-hidden rounded-[24px] sm:rounded-[32px]" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}>
+          {videoFile ? (
+            <video className="h-full w-full object-cover" controls playsInline preload="metadata" poster={videoThumbnail}>
+              <source src={videoFile} />
+              Your browser does not support the video element.
+            </video>
+          ) : playingYouTube && youtubeId ? (
             <iframe
-              className="absolute inset-0 w-full h-full"
-              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
-              title="Process video"
+              className="absolute inset-0 h-full w-full"
+              src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
+              title={videoLabel || "Feranmi Ojediji showreel"}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
           ) : (
-            <>
-              {/* Thumbnail or placeholder background */}
+            <button type="button" onClick={() => youtubeId && setPlayingYouTube(true)} className="group absolute inset-0 flex h-full w-full items-center justify-center" aria-label={youtubeId ? "Play video" : "Video placeholder"}>
               {videoThumbnail ? (
-                <Image
-                  src={videoThumbnail}
-                  alt="Video preview"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 1152px"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
+                <Image src={videoThumbnail} alt="Video preview" fill sizes="(max-width: 768px) 100vw, 1152px" className="object-cover grayscale transition-transform duration-500 group-hover:scale-[1.02]" />
               ) : (
-                <>
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(200,245,60,0.05) 0%, transparent 70%)",
-                    }}
-                  />
-                  <div
-                    className="absolute inset-0 opacity-10"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(var(--bdr) 1px, transparent 1px), linear-gradient(90deg, var(--bdr) 1px, transparent 1px)",
-                      backgroundSize: "60px 60px",
-                    }}
-                  />
-                </>
+                <div className="absolute inset-0" style={{ background: "linear-gradient(145deg, var(--surf2), var(--surf))" }} />
               )}
-
-              {/* Dark overlay so play button is always visible over the thumbnail */}
-              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300" />
-
-              {/* Play button */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <button
-                  className="rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-                  style={{ background: "var(--acc)", width: "72px", height: "72px" }}
-                  aria-label="Play video"
-                >
-                  <svg
-                    className="w-6 h-6 translate-x-0.5"
-                    viewBox="0 0 24 24"
-                    style={{ fill: "var(--acc-fg)" }}
-                  >
-                    <polygon points="5,3 19,12 5,21" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Corner badge */}
-              <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6">
-                <span
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs"
-                  style={{
-                    background: "rgba(200,245,60,0.15)",
-                    color: "var(--acc)",
-                    border: "1px solid rgba(200,245,60,0.3)",
-                  }}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--acc)" }} />
-                  Process reel 2025
+              <span className="relative flex h-16 w-16 items-center justify-center rounded-full transition-transform group-hover:scale-105" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>
+                <Play size={20} fill="currentColor" className="translate-x-0.5" />
+              </span>
+              {!youtubeId && (
+                <span className="absolute bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-2 text-xs" style={{ background: "var(--surf2)", color: "var(--mut)", border: "1px solid var(--bdr)" }}>
+                  Upload your video in Sanity Studio
                 </span>
-              </div>
-
-              {!videoId && (
-                <p className="absolute bottom-16 left-0 right-0 text-center text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
-                  Add your YouTube URL in Sanity Studio to enable playback.
-                </p>
               )}
-            </>
+            </button>
           )}
         </div>
-
-        <p className="mt-4 text-sm text-center sm:text-left" style={{ color: "var(--mut)" }}>
-          {label}
-        </p>
       </div>
     </section>
   );

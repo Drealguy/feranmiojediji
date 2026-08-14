@@ -4,39 +4,28 @@ import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/client";
 
 export const metadata: Metadata = {
-  title: "Feranmi Ojediji — Web Designer & Creative",
+  title: "Feranmi Ojediji | Web Designer & Creative",
   description:
     "Web designer crafting purposeful online presence. Specializing in website design, branding, UI/UX, AI automation, and digital strategy.",
   alternates: { canonical: "https://feranmiojediji.com" },
 };
 import {
   homePageQuery,
-  servicesQuery,
   featuredProjectsQuery,
-  testimonialsQuery,
   faqQuery,
 } from "@/sanity/lib/queries";
 import Hero, { type HeroData } from "@/components/home/Hero";
 import VideoSection from "@/components/home/VideoSection";
 import Services from "@/components/home/Services";
 import PortfolioPreview from "@/components/home/PortfolioPreview";
-import Testimonials from "@/components/home/Testimonials";
 import FAQ from "@/components/home/FAQ";
 import ScrollReveal from "@/components/ScrollReveal";
 
-interface HomePageData extends HeroData {
-  videoUrl?: string;
-  videoThumbnail?: string;
-  videoLabel?: string;
-}
-
 export default async function Home() {
-  const [heroData, servicesData, projectsData, testimonialsData, faqData] =
+  const [heroData, projectsData, faqData] =
     await Promise.all([
-      sanityFetch<HomePageData>(homePageQuery).catch(() => null),
-      sanityFetch(servicesQuery).catch(() => []),
+      sanityFetch<HeroData>(homePageQuery).catch(() => null),
       sanityFetch(featuredProjectsQuery).catch(() => []),
-      sanityFetch(testimonialsQuery).catch(() => []),
       sanityFetch(faqQuery).catch(() => []),
     ]);
 
@@ -44,15 +33,17 @@ export default async function Home() {
     <>
       <Hero data={heroData ?? undefined} />
       <ScrollReveal>
-        <VideoSection videoUrl={heroData?.videoUrl} videoThumbnail={heroData?.videoThumbnail} videoLabel={heroData?.videoLabel} />
+        <VideoSection
+          videoFile={heroData?.heroVideo}
+          videoUrl={heroData?.videoUrl}
+          videoThumbnail={heroData?.videoThumbnail}
+          videoLabel={heroData?.videoLabel}
+        />
       </ScrollReveal>
       <ScrollReveal delay={0.05}>
-        <Services data={(servicesData as never[]) ?? []} />
+        <Services />
       </ScrollReveal>
       <PortfolioPreview data={(projectsData as never[]) ?? []} />
-      <ScrollReveal delay={0.05}>
-        <Testimonials data={(testimonialsData as never[]) ?? []} />
-      </ScrollReveal>
       <ScrollReveal delay={0.05}>
         <FAQ data={(faqData as never[]) ?? []} />
       </ScrollReveal>

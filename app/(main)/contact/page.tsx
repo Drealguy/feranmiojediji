@@ -1,30 +1,45 @@
 export const revalidate = 60;
 
 import type { Metadata } from "next";
-import ContactForm from "@/components/ContactForm";
+import ContactForm, { defaultContactContent, type ContactPageContent } from "@/components/ContactForm";
+import { sanityFetch } from "@/sanity/lib/client";
+import { contactPageQuery } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
-  title: "Contact — Feranmi Ojediji",
-  description: "Get in touch to start a project. Web design, branding, UI/UX and AI automation.",
+  title: "Contact | Feranmi Ojediji",
+  description: "Start a logo, brand identity, website, ecommerce, or digital platform project with Feranmi Ojediji.",
   alternates: { canonical: "https://feranmiojediji.com/contact" },
   openGraph: {
-    title: "Contact — Feranmi Ojediji",
-    description: "Get in touch to start a project. Web design, branding, UI/UX and AI automation.",
+    title: "Contact | Feranmi Ojediji",
+    description: "Start a logo, brand identity, website, ecommerce, or digital platform project with Feranmi Ojediji.",
     url: "https://feranmiojediji.com/contact",
     images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }],
   },
-  twitter: { card: "summary_large_image", title: "Contact — Feranmi Ojediji", images: ["/feranmi.jpg"] },
+  twitter: { card: "summary_large_image", title: "Contact | Feranmi Ojediji", images: ["/feranmi.jpg"] },
 };
 
-export default function Contact() {
+export default async function Contact() {
+  let content = defaultContactContent;
+  try {
+    const cmsContent = await sanityFetch<Partial<ContactPageContent> | null>(contactPageQuery);
+    if (cmsContent) {
+      content = Object.fromEntries(
+        Object.entries(defaultContactContent).map(([key, fallback]) => {
+          const value = cmsContent[key as keyof ContactPageContent];
+          return [key, Array.isArray(value) ? (value.length ? value : fallback) : value || fallback];
+        })
+      ) as unknown as ContactPageContent;
+    }
+  } catch {}
+
   return (
-    <div className="pt-36 pb-24">
+    <div className="pb-16 pt-28 sm:pb-20 sm:pt-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Header */}
-        <div className="mb-20">
+        <div className="mb-12 sm:mb-14">
           <div className="flex items-center gap-3 mb-6">
             <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>
-              Contact
+              {content.eyebrow}
             </span>
             <div className="w-12 h-px" style={{ background: "var(--bdr)" }} />
           </div>
@@ -33,17 +48,15 @@ export default function Contact() {
               className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] max-w-lg"
               style={{ color: "var(--txt)" }}
             >
-              Let&apos;s build something{" "}
-              <span className="italic font-light" style={{ color: "var(--mut)" }}>great</span>{" "}
-              together
+              {content.headline}
             </h1>
             <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--mut)" }}>
-              Tell me about your project and I&apos;ll get back to you within 24 hours with a plan.
+              {content.intro}
             </p>
           </div>
         </div>
 
-        <ContactForm />
+        <ContactForm content={content} />
       </div>
     </div>
   );

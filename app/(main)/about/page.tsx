@@ -4,84 +4,97 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { sanityFetch } from "@/sanity/lib/client";
 import { aboutQuery } from "@/sanity/lib/queries";
-import ToolChips from "@/components/ToolChips";
+import AboutTabs from "@/components/AboutTabs";
+import AboutIntro from "@/components/AboutIntro";
 
 export const metadata: Metadata = {
-  title: "About — Feranmi Ojediji",
+  title: "About | Feranmi Ojediji",
   description: "Learn more about Feranmi Ojediji, web designer and digital creative based in Akure, Nigeria.",
   alternates: { canonical: "https://feranmiojediji.com/about" },
   openGraph: {
-    title: "About — Feranmi Ojediji",
+    title: "About | Feranmi Ojediji",
     description: "Learn more about Feranmi Ojediji, web designer and digital creative based in Akure, Nigeria.",
     url: "https://feranmiojediji.com/about",
     images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }],
   },
-  twitter: { card: "summary_large_image", title: "About — Feranmi Ojediji", images: ["/feranmi.jpg"] },
+  twitter: { card: "summary_large_image", title: "About | Feranmi Ojediji", images: ["/feranmi.jpg"] },
 };
 
 interface AboutData {
+  introHeading?: string;
   headline?: string;
   headlineAccent?: string;
   headlineSuffix?: string;
   bio?: string[];
   photo?: string;
+  gallery?: { url: string }[];
   timeline?: { year: string; event: string }[];
+  aboutSectionHeading?: string;
+  ventures?: { name: string; description?: string; url?: string }[];
   tools?: string[];
+  stackHeading?: string;
   ctaText?: string;
   ctaSubtext?: string;
 }
 
 const DEFAULTS = {
+  introHeading: "Who really is Feranmi?",
   headline: "Designer by craft,",
   headlineAccent: "builder",
   headlineSuffix: "by nature",
   bio: [
-    "I'm Feranmi Ojediji — a web designer and digital creative helping brands show up powerfully online. I've spent the past 8+ years working at the intersection of design, technology, and strategy.",
-    "My work isn't just about making things look good — it's about making things work. Every project is rooted in purpose, built to convert, and designed to last.",
+    "I'm Feranmi Ojediji, a designer and developer with about six years of experience working across branding, websites, and digital products.",
+    "I started with design because I loved the idea of being able to take something that only existed in someone's head and give it a visual form. At first, that meant learning how to make things look better: logos, graphics, layouts, and brand identities. But as I worked on more projects, I started paying more attention to the thinking behind the work: why a brand should look a certain way, how people interact with a website, what makes a product easy to understand, and how good design can actually support a business.",
+    "That curiosity eventually pushed me into development. I didn't want to stop at designing an interface and handing it off. I wanted to understand how the product worked behind the screen and be able to take an idea from the first sketch all the way to something people could actually use.",
+    "Over the years, I've worked on brand identities, campaign websites, ecommerce stores, learning platforms, real estate products, invoicing software, and other digital experiences. Working across different types of projects and industries has taught me to think beyond just the visuals. I think about the business, the user, the message, and the system behind what I'm building.",
+    "More recently, AI has become another big part of how I work. I use it to explore ideas, speed up development, research, test different directions, and improve my workflow, but I still believe the most important part is knowing what you're trying to create and why.",
+    "Today, I sit somewhere between design, development, and strategy. I like taking rough ideas, asking the right questions, finding a clear direction, and turning them into brands and digital products that actually make sense.",
+    "And I'm still learning, experimenting, and building as I go.",
   ],
   photo: "/feranmi.jpg",
+  gallery: [{ url: "/feranmi.jpg" }, { url: "/feranmi.jpg" }, { url: "/feranmi.jpg" }],
   timeline: [
-    { year: "2016", event: "Started freelancing — first logo for a family business." },
+    { year: "2016", event: "Started freelancing with a first logo for a family business." },
     { year: "2018", event: "Landed first brand identity project for a tech startup." },
     { year: "2020", event: "Transitioned fully to web design and digital product work." },
     { year: "2022", event: "Expanded into AI automation and digital strategy consulting." },
     { year: "2025", event: "120+ projects delivered. Still going." },
   ],
+  aboutSectionHeading: "A designer focused on useful work and lasting business value.",
+  ventures: [],
   tools: ["Figma", "Webflow", "Framer", "Adobe Creative Suite", "ChatGPT / Claude", "Make.com", "Notion", "Lottie"],
+  stackHeading: "The tools I use to move from idea to launch.",
   ctaText: "Ready to build something great?",
-  ctaSubtext: "I'm selective about the projects I take on — so if we're a good fit, let's talk.",
+  ctaSubtext: "I'm selective about the projects I take on. If we're a good fit, let's talk.",
 };
 
 export default async function About() {
   const raw = await sanityFetch<AboutData>(aboutQuery).catch(() => null);
   const d = { ...DEFAULTS, ...raw };
+  const bio = d.bio?.length ? d.bio : DEFAULTS.bio;
+  const timeline = d.timeline?.length ? d.timeline : DEFAULTS.timeline;
+  const gallery = d.gallery?.length ? d.gallery : DEFAULTS.gallery;
+  const tools = d.tools?.length ? d.tools : DEFAULTS.tools;
+  const ventures = d.ventures?.length ? d.ventures : DEFAULTS.ventures;
 
   return (
-    <div className="pt-36 pb-24">
+    <div className="pb-16 pt-28 sm:pb-20 sm:pt-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
 
         {/* Hero */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-28 items-start">
+        <div className="mb-16 grid grid-cols-1 items-start gap-10 sm:mb-20 lg:grid-cols-2 lg:gap-14">
           <div>
             <div className="flex items-center gap-3 mb-6">
               <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>About me</span>
               <div className="w-12 h-px" style={{ background: "var(--bdr)" }} />
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8" style={{ color: "var(--txt)" }}>
-              {d.headline}{" "}
-              <span className="italic font-light" style={{ color: "var(--mut)" }}>{d.headlineAccent}</span>{" "}
-              {d.headlineSuffix}
-            </h1>
-            {d.bio.map((para, i) => (
-              <p key={i} className="text-base leading-relaxed mb-4 last:mb-0" style={{ color: "var(--mut)" }}>
-                {para}
-              </p>
-            ))}
+            <h1 className="mb-8 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl" style={{ color: "var(--txt)" }}>{d.introHeading || DEFAULTS.introHeading}</h1>
+            <AboutIntro paragraphs={bio} />
           </div>
 
           <div className="relative">
             <div
-              className="relative rounded-3xl overflow-hidden aspect-square max-w-sm mx-auto lg:mx-0 lg:ml-auto"
+              className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-3xl lg:ml-auto lg:mr-0 lg:max-w-[520px]"
               style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
             >
               <Image
@@ -94,46 +107,10 @@ export default async function About() {
               />
               <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: "var(--acc)" }} />
             </div>
-            <div
-              className="absolute -bottom-5 left-4 lg:left-auto lg:-right-5 rounded-2xl px-4 py-3"
-              style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
-            >
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "var(--acc)" }} />
-                <span className="text-sm" style={{ color: "var(--txt)" }}>Open to projects</span>
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* Timeline */}
-        {d.timeline.length > 0 && (
-          <div className="mb-28">
-            <div className="flex items-center gap-3 mb-10">
-              <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>Journey</span>
-              <div className="flex-1 h-px" style={{ background: "var(--bdr)" }} />
-            </div>
-            <div style={{ borderTop: "1px solid var(--bdr)" }}>
-              {d.timeline.map((item) => (
-                <div key={item.year} className="grid grid-cols-[60px_1fr] sm:grid-cols-[80px_1fr] gap-4 sm:gap-6 py-6" style={{ borderBottom: "1px solid var(--bdr)" }}>
-                  <span className="text-xs font-mono pt-0.5" style={{ color: "var(--acc)" }}>{item.year}</span>
-                  <span className="text-sm" style={{ color: "var(--mut)" }}>{item.event}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Tools */}
-        {d.tools.length > 0 && (
-          <div className="mb-28">
-            <div className="flex items-center gap-3 mb-10">
-              <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>Toolkit</span>
-              <div className="flex-1 h-px" style={{ background: "var(--bdr)" }} />
-            </div>
-            <ToolChips tools={d.tools} />
-          </div>
-        )}
+        <AboutTabs aboutHeading={d.aboutSectionHeading || DEFAULTS.aboutSectionHeading} timeline={timeline} ventures={ventures} gallery={gallery} stackHeading={d.stackHeading || DEFAULTS.stackHeading} tools={tools} />
 
         {/* CTA */}
         <div className="rounded-3xl p-6 sm:p-10 md:p-12 text-center" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}>

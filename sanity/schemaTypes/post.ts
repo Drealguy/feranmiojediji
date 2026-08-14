@@ -19,7 +19,7 @@ export const post = defineType({
       type: "slug",
       options: { source: "title", maxLength: 96 },
       validation: (R) => R.required(),
-      description: "Auto-generated from title — forms the URL: /blog/your-slug",
+      description: "Auto-generated from title. Forms the URL: /blog/your-slug",
     }),
     defineField({
       name: "publishedAt",

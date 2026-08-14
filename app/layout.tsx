@@ -1,8 +1,17 @@
 import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-poppins",
+});
+
 export const metadata: Metadata = {
-  title: "Feranmi Ojediji — Web Designer & Creative",
+  title: "Feranmi Ojediji | Web Designer & Creative",
   description:
     "Web designer crafting purposeful online presence. Specializing in website design, branding, UI/UX, AI automation, and digital strategy.",
   icons: {
@@ -13,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Feranmi Ojediji",
-    title: "Feranmi Ojediji — Web Designer & Creative",
+    title: "Feranmi Ojediji | Web Designer & Creative",
     description:
       "Web designer crafting purposeful online presence. Specializing in website design, branding, UI/UX, AI automation, and digital strategy.",
     url: "https://feranmiojediji.com",
@@ -21,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Feranmi Ojediji — Web Designer & Creative",
+    title: "Feranmi Ojediji | Web Designer & Creative",
     description:
       "Web designer crafting purposeful online presence. Specializing in website design, branding, UI/UX, AI automation, and digital strategy.",
     images: ["/feranmi.jpg"],
@@ -32,24 +41,17 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="h-full" suppressHydrationWarning>
+    <html lang="en" className={`${poppins.variable} h-full`} suppressHydrationWarning>
       <head>
         {/* Anti-FOUC: runs synchronously before paint, sets data-theme from localStorage */}
-        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
           }}
         />
-        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://api.fontshare.com" />
-        <link
-          rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&display=swap"
-        />
         <link rel="preload" as="image" href="/feranmi.jpg" />
       </head>
-      <body className="min-h-full flex flex-col antialiased" style={{ background: "var(--bg)", color: "var(--txt)" }}>
+      <body className="min-h-full flex flex-col antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

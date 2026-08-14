@@ -80,7 +80,7 @@ export const course = defineType({
       name: "accentColor",
       title: "Accent colour",
       type: "string",
-      initialValue: "#c8f53c",
+      initialValue: "#f5f5f5",
     }),
     defineField({
       name: "purchaseUrl",

@@ -6,16 +6,16 @@ import { coursesQuery } from "@/sanity/lib/queries";
 import NotifyModal from "@/components/NotifyModal";
 
 export const metadata: Metadata = {
-  title: "Courses — Feranmi Ojediji",
+  title: "Courses | Feranmi Ojediji",
   description: "Learn web design, branding, and digital strategy directly from Feranmi Ojediji.",
   alternates: { canonical: "https://feranmiojediji.com/courses" },
   openGraph: {
-    title: "Courses — Feranmi Ojediji",
+    title: "Courses | Feranmi Ojediji",
     description: "Learn web design, branding, and digital strategy directly from Feranmi Ojediji.",
     url: "https://feranmiojediji.com/courses",
     images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }],
   },
-  twitter: { card: "summary_large_image", title: "Courses — Feranmi Ojediji", images: ["/feranmi.jpg"] },
+  twitter: { card: "summary_large_image", title: "Courses | Feranmi Ojediji", images: ["/feranmi.jpg"] },
 };
 
 interface Course {
@@ -34,15 +34,15 @@ interface Course {
 }
 
 const FALLBACK: Course[] = [
-  { _id: "1", title: "Design Systems That Scale", category: "UI/UX Design", level: "Intermediate", duration: "6 hrs", lessons: 24, price: "$149", accentColor: "#c8f53c", description: "Build robust design systems in Figma from scratch. Covers tokens, components, auto-layout, documentation, and handoff to developers.", topics: ["Design tokens", "Component architecture", "Auto-layout mastery", "Dev handoff", "Documentation"], available: true },
+  { _id: "1", title: "Design Systems That Scale", category: "UI/UX Design", level: "Intermediate", duration: "6 hrs", lessons: 24, price: "$149", accentColor: "#f5f5f5", description: "Build robust design systems in Figma from scratch. Covers tokens, components, auto-layout, documentation, and handoff to developers.", topics: ["Design tokens", "Component architecture", "Auto-layout mastery", "Dev handoff", "Documentation"], available: true },
   { _id: "2", title: "Web Design Fundamentals", category: "Website Design", level: "Beginner", duration: "4 hrs", lessons: 16, price: "$99", accentColor: "#60a5fa", description: "Everything you need to start designing websites that convert. Layout, typography, colour theory, and UX principles all in one place.", topics: ["Grid & layout", "Typography", "Colour theory", "UX principles", "Webflow basics"], available: true },
-  { _id: "3", title: "Brand Identity from Zero", category: "Branding", level: "Beginner – Intermediate", duration: "5 hrs", lessons: 20, price: "$129", accentColor: "#f472b6", description: "A complete guide to building brand identities — from strategy and research through to logo design, colour systems, and final delivery.", topics: ["Brand strategy", "Logo design", "Colour & typography", "Brand guidelines", "Client delivery"], available: true },
-  { _id: "4", title: "Social Media Design for Creatives", category: "Social Media Design", level: "All levels", duration: "3 hrs", lessons: 12, price: "$89", accentColor: "#34d399", description: "Use AI tools to automate your creative workflow. Content creation, lead generation, client onboarding — all on autopilot.", topics: ["Make.com workflows", "AI content pipelines", "Lead generation", "Client onboarding", "Prompt engineering"], available: false },
+  { _id: "3", title: "Brand Identity from Zero", category: "Logo & Brand Identity Design", level: "Beginner – Intermediate", duration: "5 hrs", lessons: 20, price: "$129", accentColor: "#f472b6", description: "A complete guide to building brand identities, from strategy and research through to logo design, colour systems, and final delivery.", topics: ["Brand strategy", "Logo design", "Colour & typography", "Brand guidelines", "Client delivery"], available: true },
+  { _id: "4", title: "Social Media Design for Creatives", category: "Social Media Design", level: "All levels", duration: "3 hrs", lessons: 12, price: "$89", accentColor: "#34d399", description: "Use AI tools to automate your creative workflow, including content creation, lead generation, and client onboarding.", topics: ["Make.com workflows", "AI content pipelines", "Lead generation", "Client onboarding", "Prompt engineering"], available: false },
 ];
 
 const LEVEL_COLORS: Record<string, string> = {
   Beginner: "#34d399",
-  Intermediate: "#c8f53c",
+  Intermediate: "#f5f5f5",
   "Beginner – Intermediate": "#60a5fa",
   "All levels": "#a78bfa",
 };
@@ -53,9 +53,9 @@ export default async function Courses() {
   const totalLessons = courses.reduce((sum, c) => sum + (c.lessons ?? 0), 0);
 
   return (
-    <div className="pt-36 pb-24">
+    <div className="pb-16 pt-28 sm:pb-20 sm:pt-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mb-20">
+        <div className="mb-12 sm:mb-14">
           <div className="flex items-center gap-3 mb-6">
             <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>Courses</span>
             <div className="w-12 h-px" style={{ background: "var(--bdr)" }} />
@@ -79,16 +79,16 @@ export default async function Courses() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-5 mb-20">
+        <div className="mb-14 flex flex-col gap-5 sm:mb-16">
           {courses.map((course) => {
-            const accent = course.accentColor ?? "#c8f53c";
+            const accent = "var(--txt)";
             const levelColor = LEVEL_COLORS[course.level] ?? "var(--mut)";
             return (
               <div key={course._id} className="rounded-2xl overflow-hidden" style={{ background: "var(--surf)", border: "1px solid var(--bdr)", opacity: course.available ? 1 : 0.6 }}>
                 <div className="grid grid-cols-1 md:grid-cols-[1fr_280px]">
                   <div className="p-8 md:p-10">
                     <div className="flex flex-wrap items-center gap-2 mb-5">
-                      <span className="px-3 py-1 rounded-full text-xs font-medium" style={{ background: `${accent}18`, color: accent, border: `1px solid ${accent}30` }}>{course.category}</span>
+                      <span className="px-3 py-1 rounded-full text-xs font-medium" style={{ background: "color-mix(in srgb, var(--txt) 10%, transparent)", color: accent, border: "1px solid var(--bdr)" }}>{course.category}</span>
                       <span className="px-3 py-1 rounded-full text-xs" style={{ background: `${levelColor}15`, color: levelColor, border: `1px solid ${levelColor}25` }}>{course.level}</span>
                       {!course.available && <span className="px-3 py-1 rounded-full text-xs" style={{ background: "var(--surf2)", color: "var(--mut)", border: "1px solid var(--bdr)" }}>Coming soon</span>}
                     </div>

@@ -1,282 +1,128 @@
 "use client";
 
-import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
-const navLinks = [
+const primaryLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "My Works", href: "/works" },
+  { label: "Works", href: "/works" },
   { label: "Pricing", href: "/pricing" },
-  {
-    label: "Resources",
-    dropdown: [
-      {
-        label: "Blog",
-        href: "/blog",
-        description: "Design & business insights",
-      },
-      {
-        label: "Courses",
-        href: "/courses",
-        description: "Learn design & strategy",
-      },
-    ],
-  },
   { label: "Contact", href: "/contact" },
 ];
 
-function DropdownMenu({
-  items,
-  onClose,
-}: {
-  items: { label: string; href: string; description: string }[];
-  onClose: () => void;
-}) {
-  return (
-    <div
-      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-52 rounded-2xl overflow-hidden z-[60]"
-      style={{
-        background: "var(--surf)",
-        border: "1px solid var(--bdr)",
-        boxShadow: "0 16px 40px rgba(0,0,0,0.25)",
-      }}
-    >
-      {items.map((item, i) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          onClick={onClose}
-          className="nav-link flex flex-col gap-0.5 px-4 py-3.5 group"
-          style={{
-            borderBottom: i < items.length - 1 ? "1px solid var(--bdr)" : "none",
-          }}
-        >
-          <span className="text-sm font-medium transition-colors duration-150" style={{ color: "var(--txt)" }}>
-            {item.label}
-          </span>
-          <span className="text-xs" style={{ color: "var(--mut)" }}>
-            {item.description}
-          </span>
-        </Link>
-      ))}
-    </div>
-  );
-}
+const resourceLinks = [
+  { label: "Blog", href: "/blog", description: "Ideas on design and business" },
+  { label: "Courses", href: "/courses", description: "Practical creative learning" },
+];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLLIElement>(null);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
+  const resourcesRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    const closeResources = (event: MouseEvent) => {
+      if (resourcesRef.current && !resourcesRef.current.contains(event.target as Node)) setResourcesOpen(false);
+    };
+    document.addEventListener("mousedown", closeResources);
+    return () => document.removeEventListener("mousedown", closeResources);
   }, []);
 
-  // Close dropdown on route change
-  useEffect(() => {
-    setDropdownOpen(false);
+  const closeMenus = () => {
     setMobileOpen(false);
-  }, [pathname]);
+    setResourcesOpen(false);
+  };
+
+  const isActive = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4">
-        <nav
-          className="flex items-center justify-between rounded-2xl px-6 py-3"
-          style={{
-            background: "var(--nav-bg)",
-            backdropFilter: "blur(20px)",
-            border: "1px solid var(--bdr)",
-          }}
-        >
-          {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/feranmilogo.png"
-              alt="Feranmi Ojediji"
-              width={36}
-              height={36}
-              sizes="36px"
-              className="object-contain"
-              priority
-            />
-          </Link>
-
-          {/* Desktop links */}
-          <ul className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => {
-              // Dropdown item
-              if ("dropdown" in link && link.dropdown) {
-                const dropdownActive = link.dropdown.some((d) => pathname === d.href);
-                return (
-                  <li key={link.label} className="relative" ref={dropdownRef}>
-                    <button
-                      onClick={() => setDropdownOpen((v) => !v)}
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm transition-all duration-200"
-                      style={{
-                        color: dropdownActive || dropdownOpen ? "var(--txt)" : "var(--mut)",
-                        background:
-                          dropdownActive || dropdownOpen
-                            ? "rgba(128,128,128,0.08)"
-                            : "transparent",
-                      }}
-                    >
-                      {link.label}
-                      <ChevronDown
-                        size={13}
-                        className="transition-transform duration-200"
-                        style={{
-                          transform: dropdownOpen ? "rotate(180deg)" : "rotate(0deg)",
-                        }}
-                      />
-                    </button>
-
-                    {dropdownOpen && (
-                      <div className="dropdown-enter">
-                        <DropdownMenu
-                          items={link.dropdown}
-                          onClose={() => setDropdownOpen(false)}
-                        />
-                      </div>
-                    )}
-                  </li>
-                );
-              }
-
-              // Regular link
-              const active = pathname === link.href;
-              return (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={`nav-link px-4 py-2 rounded-lg text-sm${active ? " active" : ""}`}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-
-          {/* Desktop right */}
-          <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle />
-            <a
-              href="https://wa.me/2349167802170"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:opacity-90 active:scale-95"
-              style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
-            >
-              Let&apos;s Talk
-            </a>
+    <header className="fixed inset-x-0 top-0 z-50" style={{ background: "var(--nav-bg)", backdropFilter: "blur(18px)", borderBottom: "1px solid var(--bdr)" }}>
+      <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6" aria-label="Main navigation">
+        <Link href="/" onClick={closeMenus} className="flex min-w-0 items-center gap-3">
+          <Image src="/feranmilogo.png" alt="" width={34} height={34} sizes="34px" className="shrink-0 object-contain" priority />
+          <div className="hidden min-w-0 sm:block">
+            <p className="truncate text-sm font-semibold leading-none" style={{ color: "var(--txt)" }}>Feranmi Ojediji</p>
+            <p className="mt-1 truncate text-[10px] uppercase tracking-[0.16em]" style={{ color: "var(--dim)" }}>Designer & developer</p>
           </div>
+        </Link>
 
-          {/* Mobile right */}
-          <div className="md:hidden flex items-center gap-2">
-            <ThemeToggle />
-            <button
-              className="p-2 rounded-lg"
-              style={{ color: "var(--mut)" }}
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
-            >
-              {mobileOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
-          </div>
-        </nav>
-
-        {/* Mobile menu */}
-        {mobileOpen && (
-          <div
-            className="mt-2 rounded-2xl p-3 md:hidden"
-            style={{
-              background: "var(--nav-bg)",
-              backdropFilter: "blur(20px)",
-              border: "1px solid var(--bdr)",
-            }}
-          >
-            <ul className="flex flex-col">
-              {navLinks.map((link) => {
-                if ("dropdown" in link && link.dropdown) {
-                  return (
-                    <li key={link.label}>
-                      <p
-                        className="px-3 pt-2 pb-1 text-[10px] uppercase tracking-widest font-medium"
-                        style={{ color: "var(--dim)" }}
-                      >
-                        {link.label}
-                      </p>
-                      {link.dropdown.map((sub) => {
-                        const active = pathname === sub.href;
-                        return (
-                          <Link
-                            key={sub.href}
-                            href={sub.href}
-                            onClick={() => setMobileOpen(false)}
-                            className="flex items-center gap-2 px-3 pl-5 py-2 rounded-xl text-sm transition-all"
-                            style={{
-                              color: active ? "var(--txt)" : "var(--mut)",
-                              background: active ? "rgba(128,128,128,0.07)" : "transparent",
-                            }}
-                          >
-                            <span className="w-1 h-1 rounded-full shrink-0" style={{ background: "var(--bdr)" }} />
-                            {sub.label}
-                          </Link>
-                        );
-                      })}
-                    </li>
-                  );
-                }
-
-                const active = pathname === link.href;
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="block px-3 py-2.5 rounded-xl text-sm transition-all"
-                      style={{
-                        color: active ? "var(--txt)" : "var(--mut)",
-                        background: active ? "rgba(128,128,128,0.07)" : "transparent",
-                        fontWeight: active ? 500 : 400,
-                      }}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-
-            <div className="mt-3 pt-3" style={{ borderTop: "1px solid var(--bdr)" }}>
-              <a
-                href="https://wa.me/2349167802170"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMobileOpen(false)}
-                className="block w-full text-center px-4 py-2.5 rounded-xl text-sm font-medium"
-                style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
+        <div className="hidden items-center gap-1 lg:flex">
+          {primaryLinks.map((link) => {
+            const active = isActive(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="relative rounded-lg px-4 py-2 text-sm transition-colors"
+                style={{ color: active ? "var(--txt)" : "var(--mut)", background: active ? "color-mix(in srgb, var(--txt) 7%, transparent)" : "transparent" }}
               >
-                Let&apos;s Talk
-              </a>
-            </div>
+                {link.label}
+              </Link>
+            );
+          })}
+
+          <div ref={resourcesRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setResourcesOpen((open) => !open)}
+              className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm transition-colors"
+              style={{ color: resourceLinks.some((link) => isActive(link.href)) || resourcesOpen ? "var(--txt)" : "var(--mut)" }}
+              aria-expanded={resourcesOpen}
+            >
+              Resources
+              <ChevronDown size={13} className={`transition-transform ${resourcesOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {resourcesOpen && (
+              <div className="absolute left-1/2 top-full mt-3 w-64 -translate-x-1/2 overflow-hidden rounded-2xl p-1.5" style={{ background: "var(--surf2)", border: "1px solid var(--bdr)", boxShadow: "0 20px 55px rgba(0,0,0,.22)" }}>
+                {resourceLinks.map((link) => (
+                  <Link key={link.href} href={link.href} onClick={closeMenus} className="block rounded-xl px-4 py-3 transition-colors hover:bg-white/[0.04]">
+                    <p className="text-sm font-medium" style={{ color: "var(--txt)" }}>{link.label}</p>
+                    <p className="mt-1 text-xs" style={{ color: "var(--mut)" }}>{link.description}</p>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Link href="/contact" className="hidden rounded-xl px-4 py-2.5 text-sm font-semibold transition-opacity hover:opacity-75 sm:inline-flex" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>
+            Start a project
+          </Link>
+          <button type="button" onClick={() => setMobileOpen((open) => !open)} className="flex h-10 w-10 items-center justify-center rounded-xl lg:hidden" style={{ color: "var(--txt)", border: "1px solid var(--bdr)" }} aria-label="Toggle navigation" aria-expanded={mobileOpen}>
+            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+      </nav>
+
+      {mobileOpen && (
+        <div className="border-t px-4 py-4 lg:hidden sm:px-6" style={{ background: "var(--surf2)", borderColor: "var(--bdr)" }}>
+          <div className="mx-auto grid max-w-7xl gap-1">
+            {primaryLinks.map((link) => (
+              <Link key={link.href} href={link.href} onClick={closeMenus} className="rounded-xl px-4 py-3 text-sm" style={{ color: isActive(link.href) ? "var(--txt)" : "var(--mut)", background: isActive(link.href) ? "color-mix(in srgb, var(--txt) 7%, transparent)" : "transparent" }}>
+                {link.label}
+              </Link>
+            ))}
+            <p className="px-4 pb-1 pt-4 text-[10px] uppercase tracking-[0.18em]" style={{ color: "var(--dim)" }}>Resources</p>
+            {resourceLinks.map((link) => (
+              <Link key={link.href} href={link.href} onClick={closeMenus} className="rounded-xl px-4 py-3 text-sm" style={{ color: isActive(link.href) ? "var(--txt)" : "var(--mut)" }}>
+                {link.label}
+              </Link>
+            ))}
+            <Link href="/contact" onClick={closeMenus} className="mt-3 rounded-xl px-4 py-3 text-center text-sm font-semibold sm:hidden" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>
+              Start a project
+            </Link>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

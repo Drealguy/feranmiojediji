@@ -8,12 +8,16 @@ import { course } from "./course";
 import { pricingPlan } from "./pricingPlan";
 import { about } from "./about";
 import { post } from "./post";
+import { contactPage } from "./contactPage";
+import { pricingPage } from "./pricingPage";
 
 export const schemaTypes = [
   // Singletons
   siteSettings,
   homePage,
   about,
+  contactPage,
+  pricingPage,
   // Collections
   project,
   post,

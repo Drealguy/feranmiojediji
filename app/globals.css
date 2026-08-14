@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 * {
-  font-family: "Clash Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-family: var(--font-poppins), ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
 /* ── Dark theme (default) ── */
@@ -13,10 +13,10 @@
   --txt:      #efefef;
   --mut:      #787878;
   --dim:      #444444;
-  --acc:      #c8f53c;
+  --acc:      #f5f5f5;
   --acc-fg:   #0a0a0a;
   --nav-bg:   rgba(14, 14, 14, 0.88);
-  --shadow:   0 0 40px -10px rgba(200, 245, 60, 0.15);
+  --shadow:   0 0 40px -10px rgba(255, 255, 255, 0.10);
 }
 
 /* ── Light theme ── */
@@ -28,8 +28,8 @@
   --txt:      #111111;
   --mut:      #666666;
   --dim:      #aaaaaa;
-  --acc:      #c8f53c;
-  --acc-fg:   #111111;
+  --acc:      #111111;
+  --acc-fg:   #ffffff;
   --nav-bg:   rgba(248, 248, 245, 0.90);
   --shadow:   0 0 40px -10px rgba(0, 0, 0, 0.08);
 }
@@ -45,7 +45,7 @@
   --color-dim:    var(--dim);
   --color-acc:    var(--acc);
   --color-acc-fg: var(--acc-fg);
-  --font-sans:    var(--font-geist-sans);
+  --font-sans:    var(--font-poppins);
 }
 
 * { box-sizing: border-box; }
@@ -55,10 +55,34 @@ html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   background-color: var(--bg);
   color: var(--txt);
-  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-poppins), -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.05em;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
+}
+
+h1 {
+  letter-spacing: -0.08em !important;
+  line-height: 0.95 !important;
+  overflow-wrap: anywhere;
+}
+
+h2 {
+  letter-spacing: -0.04em;
+  line-height: 1.05 !important;
+}
+
+h3 {
+  letter-spacing: -0.04em;
+}
+
+/* Consistent pill treatment for interactive buttons and CTA links. */
+button,
+a.inline-flex,
+a.flex.items-center.justify-center,
+a.block.text-center {
+  border-radius: 100px !important;
 }
 
 ::selection {

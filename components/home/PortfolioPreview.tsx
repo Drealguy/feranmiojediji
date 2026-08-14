@@ -20,15 +20,16 @@ export interface ProjectItem {
 }
 
 const FALLBACK: ProjectItem[] = [
-  { _id: "1", title: "Lumina — Brand Identity", category: "Branding", year: "2025", accentColor: "#c8f53c" },
-  { _id: "2", title: "Revive — SaaS Dashboard", category: "UI/UX Design", year: "2024", accentColor: "#a78bfa" },
-  { _id: "3", title: "Forma — Agency Website", category: "Website Design", year: "2024", accentColor: "#60a5fa" },
+  { _id: "1", slug: "lumina-brand-identity", title: "Lumina: Brand Identity", category: "Logo & Brand Identity Design", year: "2025", accentColor: "#f5f5f5" },
+  { _id: "2", slug: "revive-saas-dashboard", title: "Revive: SaaS Dashboard", category: "UI/UX Design", year: "2024", accentColor: "#a78bfa" },
+  { _id: "3", slug: "forma-agency-website", title: "Forma: Agency Website", category: "Website Design", year: "2024", accentColor: "#60a5fa" },
 ];
 
 function ProjectCard({ project }: { project: ProjectItem }) {
-  const accent = project.accentColor ?? "#c8f53c";
+  const accent = "var(--txt)";
   return (
-    <div
+    <Link
+      href={project.slug ? `/myworks/${project.slug}` : "/works"}
       className="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:-translate-y-1"
       style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
     >
@@ -39,7 +40,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
           <div className="absolute inset-0 p-8 flex items-center justify-center">
             <div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: `radial-gradient(ellipse 60% 60% at 50% 50%, ${accent}12 0%, transparent 70%)` }}
+              style={{ background: "radial-gradient(ellipse 60% 60% at 50% 50%, color-mix(in srgb, var(--txt) 8%, transparent) 0%, transparent 70%)" }}
             />
             <div className="w-full flex flex-col gap-3 relative">
               <div className="h-1.5 rounded-full w-full opacity-25" style={{ background: accent }} />
@@ -68,7 +69,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
           >→</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -111,7 +112,7 @@ export default function PortfolioPreview({ data }: { data?: ProjectItem[] }) {
   );
 
   return (
-    <section ref={sectionRef} className="py-24">
+    <section ref={sectionRef} className="py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="portfolio-heading flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>

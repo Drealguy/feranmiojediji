@@ -8,11 +8,11 @@ import { postsQuery } from "@/sanity/lib/queries";
 import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "Blog — Feranmi Ojediji",
+  title: "Blog | Feranmi Ojediji",
   description:
-    "Design insights, business strategy, and creative tips from Feranmi Ojediji — web designer and creative director based in Akure, Nigeria.",
+    "Design insights, business strategy, and creative tips from Feranmi Ojediji, a web designer and creative director based in Akure, Nigeria.",
   openGraph: {
-    title: "Blog — Feranmi Ojediji",
+    title: "Blog | Feranmi Ojediji",
     description: "Design insights, business strategy, and creative tips.",
     url: "https://feranmiojediji.com/blog",
     type: "website",
@@ -51,12 +51,12 @@ export const FALLBACK_POSTS: Post[] = [
     slug: "brand-identity-checklist-nigerian-business",
     publishedAt: "2025-02-20T00:00:00Z",
     excerpt:
-      "Logos alone don't make a brand. This checklist covers everything — from colour psychology to typography — that makes your brand instantly recognisable and trustworthy.",
+      "Logos alone don't make a brand. This checklist covers everything from colour psychology to typography that makes your brand instantly recognisable and trustworthy.",
     coverImage:
       "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80",
     coverImageAlt: "Brand identity design materials",
-    category: "Branding",
-    tags: ["Branding", "Identity", "Nigeria"],
+    category: "Logo & Brand Identity Design",
+    tags: ["Brand Identity", "Identity", "Nigeria"],
   },
   {
     _id: "3",
@@ -64,7 +64,7 @@ export const FALLBACK_POSTS: Post[] = [
     slug: "ai-tools-for-better-design",
     publishedAt: "2025-01-15T00:00:00Z",
     excerpt:
-      "AI isn't replacing designers — it's separating the good ones from the great ones. Here are the exact tools and workflows I use to save hours every week without sacrificing quality.",
+      "AI isn't replacing designers. It's separating the good ones from the great ones. Here are the exact tools and workflows I use to save hours every week without sacrificing quality.",
     coverImage:
       "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&q=80",
     coverImageAlt: "AI interface on a screen",
@@ -86,11 +86,11 @@ export default async function Blog() {
   const posts = fetched.length ? fetched : FALLBACK_POSTS;
 
   return (
-    <div className="pt-36 pb-24">
+    <div className="pb-16 pt-28 sm:pb-20 sm:pt-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
 
         {/* Header */}
-        <ScrollReveal className="mb-16 sm:mb-20">
+        <ScrollReveal className="mb-12 sm:mb-14">
           <div className="flex items-center gap-3 mb-5">
             <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>
               Blog
@@ -112,7 +112,7 @@ export default async function Blog() {
         </ScrollReveal>
 
         {/* Posts grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
+        <div className="mb-14 grid grid-cols-1 gap-5 sm:mb-16 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <Link
               key={post._id}
@@ -148,7 +148,7 @@ export default async function Blog() {
                   {post.category && (
                     <span
                       className="px-2.5 py-0.5 rounded-md text-xs font-medium"
-                      style={{ background: "rgba(200,245,60,0.12)", color: "var(--acc)" }}
+                      style={{ background: "color-mix(in srgb, var(--txt) 10%, transparent)", color: "var(--txt)" }}
                     >
                       {post.category}
                     </span>

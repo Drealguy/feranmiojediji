@@ -7,25 +7,34 @@ import WorksGrid from "@/components/WorksGrid";
 import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "Works — Feranmi Ojediji",
-  description: "Selected projects by Feranmi Ojediji — web design, branding, UI/UX, and digital strategy.",
+  title: "Works | Feranmi Ojediji",
+  description: "Selected projects by Feranmi Ojediji across web design, branding, UI/UX, and digital strategy.",
   alternates: { canonical: "https://feranmiojediji.com/works" },
   openGraph: {
-    title: "Works — Feranmi Ojediji",
-    description: "Selected projects by Feranmi Ojediji — web design, branding, UI/UX, and digital strategy.",
+    title: "Works | Feranmi Ojediji",
+    description: "Selected projects by Feranmi Ojediji across web design, branding, UI/UX, and digital strategy.",
     url: "https://feranmiojediji.com/works",
     images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }],
   },
-  twitter: { card: "summary_large_image", title: "Works — Feranmi Ojediji", images: ["/feranmi.jpg"] },
+  twitter: { card: "summary_large_image", title: "Works | Feranmi Ojediji", images: ["/feranmi.jpg"] },
 };
 
-export default async function Works() {
+const serviceFilters: Record<string, string> = {
+  branding: "Logo & Brand Identity Design",
+  "website-design": "Business & Corporate Websites",
+  ecommerce: "Ecommerce Websites & Digital Platforms",
+  "brand-strategy-content": "Brand Strategy & Content",
+};
+
+export default async function Works({ searchParams }: { searchParams: Promise<{ service?: string }> }) {
+  const { service } = await searchParams;
+  const initialFilter = service ? serviceFilters[service] ?? "All" : "All";
   const projects = await sanityFetch(projectsQuery).catch(() => []);
 
   return (
-    <div className="pt-36 pb-24">
+    <div className="pb-16 pt-28 sm:pb-20 sm:pt-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <ScrollReveal className="mb-20">
+        <ScrollReveal className="mb-12 sm:mb-14">
           <div className="flex items-center gap-3 mb-6">
             <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>Portfolio</span>
             <div className="w-12 h-px" style={{ background: "var(--bdr)" }} />
@@ -40,7 +49,7 @@ export default async function Works() {
           </div>
         </ScrollReveal>
 
-        <WorksGrid data={projects as never[]} />
+        <WorksGrid data={projects as never[]} initialFilter={initialFilter} />
 
         <div className="text-center">
           <p className="text-sm mb-6" style={{ color: "var(--dim)" }}>Have a project in mind?</p>

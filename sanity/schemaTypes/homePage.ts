@@ -18,7 +18,7 @@ export const homePage = defineType({
       name: "headline",
       title: "Headline",
       type: "string",
-      description: "Main headline — the normal (non-italic) part",
+      description: "Main headline, the normal non-italic part",
       initialValue: "Web designer crafting",
     }),
     defineField({
@@ -41,7 +41,7 @@ export const homePage = defineType({
       type: "text",
       rows: 3,
       initialValue:
-        "I help brands grow through strategic design — from websites to full brand identities. Clean, fast, and built to convert.",
+        "I help brands grow through strategic design, from websites to full brand identities. Clean, fast, and built to convert.",
     }),
     defineField({
       name: "primaryCtaText",
@@ -73,6 +73,13 @@ export const homePage = defineType({
       type: "image",
       options: { hotspot: true },
       description: "Your portrait or a hero visual",
+    }),
+    defineField({
+      name: "heroVideo",
+      title: "Hero video upload",
+      type: "file",
+      options: { accept: "video/*" },
+      description: "Upload the landscape video shown beneath the hero introduction.",
     }),
     defineField({
       name: "stats",
@@ -112,7 +119,7 @@ export const homePage = defineType({
       name: "videoLabel",
       title: "Video section label",
       type: "string",
-      initialValue: "Watch the process — 4 min",
+      initialValue: "Watch the process, 4 min",
     }),
   ],
   preview: { prepare: () => ({ title: "Home Page" }) },

@@ -54,7 +54,7 @@ function Modal({ courseTitle, onClose }: { courseTitle: string; onClose: () => v
           <div className="flex flex-col items-center text-center py-6 gap-4">
             <div
               className="w-14 h-14 rounded-full flex items-center justify-center text-2xl"
-              style={{ background: "rgba(200,245,60,0.12)", color: "var(--acc)" }}
+              style={{ background: "color-mix(in srgb, var(--txt) 10%, transparent)", color: "var(--txt)" }}
             >
               ✓
             </div>
@@ -78,7 +78,7 @@ function Modal({ courseTitle, onClose }: { courseTitle: string; onClose: () => v
               <h3 className="text-xl font-semibold mb-1" style={{ color: "var(--txt)" }}>Get notified first</h3>
               <p className="text-sm" style={{ color: "var(--mut)" }}>
                 Be the first to know when{" "}
-                <strong style={{ color: "var(--txt)" }}>{courseTitle}</strong> launches — and get early-bird pricing.
+                <strong style={{ color: "var(--txt)" }}>{courseTitle}</strong> launches and get early-bird pricing.
               </p>
             </div>
 

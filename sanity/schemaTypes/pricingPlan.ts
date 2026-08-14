@@ -1,70 +1,37 @@
-import { defineType, defineField } from "sanity";
+import { defineField, defineType } from "sanity";
 import { TagIcon } from "@sanity/icons";
 
 export const pricingPlan = defineType({
   name: "pricingPlan",
-  title: "Pricing Plans",
+  title: "Pricing Packages",
   type: "document",
   icon: TagIcon,
   fields: [
+    defineField({ name: "name", title: "Package name", type: "string", validation: (R) => R.required() }),
     defineField({
-      name: "name",
-      title: "Plan name",
+      name: "category",
+      title: "Service category",
       type: "string",
       validation: (R) => R.required(),
+      options: { list: [
+        { title: "Logo & Brand Identity Design", value: "branding" },
+        { title: "Business & Corporate Websites", value: "website-design" },
+        { title: "Ecommerce Websites", value: "ecommerce" },
+        { title: "Online Course Platforms", value: "lms-platforms" },
+        { title: "Brand + Website Bundles", value: "brand-website-bundles" },
+      ] },
     }),
-    defineField({
-      name: "tagline",
-      title: "Tagline",
-      type: "string",
-    }),
-    defineField({
-      name: "price",
-      title: "Price (USD)",
-      type: "string",
-      description: 'Numeric part only, e.g. "1,500"',
-    }),
-    defineField({
-      name: "priceNGN",
-      title: "Price (NGN / Naira)",
-      type: "string",
-      description: 'Numeric part only, e.g. "2,400,000"',
-    }),
-    defineField({
-      name: "featured",
-      title: "Most popular / featured?",
-      type: "boolean",
-      initialValue: false,
-    }),
-    defineField({
-      name: "accentColor",
-      title: "Accent colour",
-      type: "string",
-      initialValue: "#c8f53c",
-    }),
-    defineField({
-      name: "features",
-      title: "Included features",
-      type: "array",
-      of: [{ type: "string" }],
-    }),
-    defineField({
-      name: "notIncluded",
-      title: "Not included",
-      type: "array",
-      of: [{ type: "string" }],
-    }),
-    defineField({
-      name: "order",
-      title: "Display order",
-      type: "number",
-      initialValue: 99,
-    }),
+    defineField({ name: "price", title: "Displayed price", type: "string", description: "Enter the complete text, for example ₦250,000 or Custom pricing", validation: (R) => R.required() }),
+    defineField({ name: "bestFor", title: "Best for", type: "text", rows: 3, validation: (R) => R.required() }),
+    defineField({ name: "deliverables", title: "Complete deliverables", type: "array", of: [{ type: "string" }], validation: (R) => R.required().min(1) }),
+    defineField({ name: "revisions", title: "Revisions", type: "string" }),
+    defineField({ name: "support", title: "Post-launch support", type: "string" }),
+    defineField({ name: "thirdPartyCosts", title: "Third-party costs", type: "text", rows: 3 }),
+    defineField({ name: "notes", title: "Important notes", type: "array", of: [{ type: "string" }] }),
+    defineField({ name: "cta", title: "Primary button text", type: "string", validation: (R) => R.required(), initialValue: "Start Your Project" }),
+    defineField({ name: "recommended", title: "Recommended package", type: "boolean", initialValue: false }),
+    defineField({ name: "order", title: "Display order", type: "number", initialValue: 99 }),
   ],
-  orderings: [
-    { title: "Order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] },
-  ],
-  preview: {
-    select: { title: "name", subtitle: "price" },
-  },
+  orderings: [{ title: "Display order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] }],
+  preview: { select: { title: "name", subtitle: "category" } },
 });

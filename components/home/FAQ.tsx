@@ -10,11 +10,11 @@ export interface FaqItem {
 }
 
 const FALLBACK: FaqItem[] = [
-  { _id: "1", question: "What does your design process look like?", answer: "I start with a discovery call to understand your goals, audience, and vision. From there I move through research, moodboards, wireframes, high-fidelity design, and handoff — keeping you in the loop at every stage." },
+  { _id: "1", question: "What does your design process look like?", answer: "I start with a discovery call to understand your goals, audience, and vision. From there I move through research, moodboards, wireframes, high-fidelity design, and handoff while keeping you in the loop at every stage." },
   { _id: "2", question: "How long does a typical project take?", answer: "It depends on scope. A landing page takes 1–2 weeks. A full website or brand identity is usually 3–6 weeks. Larger projects are planned in sprints and scoped before we start." },
   { _id: "3", question: "Do you work with startups or only established businesses?", answer: "Both. I've worked with early-stage founders building their first brand and scaling companies refreshing an existing one. If you have a clear vision (or need help finding one), we can work together." },
   { _id: "4", question: "What do I need to prepare before we start working?", answer: "Ideally: a clear brief, examples of styles you like, your brand assets (if any), and access to any existing accounts. We'll walk through everything in the kickoff call." },
-  { _id: "5", question: "Do you offer revisions?", answer: "Yes — all packages include revision rounds. I work iteratively so by the time we reach the final delivery, the design is already close to what you envisioned." },
+  { _id: "5", question: "Do you offer revisions?", answer: "Yes. All packages include revision rounds. I work iteratively so by the time we reach the final delivery, the design is already close to what you envisioned." },
   { _id: "6", question: "Can you build the website as well, or just design it?", answer: "I do both. I design and build in Webflow for most client sites. For custom dev needs, I collaborate with trusted development partners." },
 ];
 
@@ -47,7 +47,7 @@ export default function FAQ({ data }: { data?: FaqItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-24">
+    <section className="py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-16">
           <div>

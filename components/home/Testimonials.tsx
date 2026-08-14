@@ -12,8 +12,8 @@ export interface TestimonialItem {
 }
 
 const FALLBACK: TestimonialItem[] = [
-  { _id: "1", quote: "Feranmi completely transformed how our brand looks and feels online. We saw a 40% increase in leads within the first month after the redesign.", name: "Adaeze Okonkwo", role: "CEO", company: "Zenta Digital", initials: "AO", accentColor: "#c8f53c" },
-  { _id: "2", quote: "The attention to detail is unmatched. Every screen felt purposeful. Our users couldn't believe the app was the same product — in the best way.", name: "Marcus Reid", role: "Product Lead", company: "Stackly", initials: "MR", accentColor: "#a78bfa" },
+  { _id: "1", quote: "Feranmi completely transformed how our brand looks and feels online. We saw a 40% increase in leads within the first month after the redesign.", name: "Adaeze Okonkwo", role: "CEO", company: "Zenta Digital", initials: "AO", accentColor: "#f5f5f5" },
+  { _id: "2", quote: "The attention to detail is unmatched. Every screen felt purposeful. Our users couldn't believe the app was the same product, in the best way.", name: "Marcus Reid", role: "Product Lead", company: "Stackly", initials: "MR", accentColor: "#a78bfa" },
   { _id: "3", quote: "Working with Feranmi felt like having an in-house designer who understood our business from day one. Fast, communicative, and brilliant.", name: "Sade Williams", role: "Founder", company: "Lumen Studio", initials: "SW", accentColor: "#60a5fa" },
 ];
 
@@ -21,19 +21,19 @@ export default function Testimonials({ data }: { data?: TestimonialItem[] }) {
   const testimonials = data?.length ? data : FALLBACK;
 
   return (
-    <section className="py-24">
+    <section className="py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>Testimonials</span>
           <div className="flex-1 h-px" style={{ background: "var(--bdr)" }} />
         </div>
-        <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-16 max-w-xl" style={{ color: "var(--txt)" }}>
+        <h2 className="mb-10 max-w-xl text-3xl font-semibold tracking-tight sm:mb-12 md:text-4xl" style={{ color: "var(--txt)" }}>
           What clients say about working together
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {testimonials.map((t) => {
-            const accent = t.accentColor ?? "#c8f53c";
+            const accent = "var(--txt)";
             return (
               <div
                 key={t._id}

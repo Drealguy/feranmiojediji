@@ -17,7 +17,7 @@ export async function sanityFetch<T>(
   params?: Record<string, unknown>
 ): Promise<T> {
   if (!configured) {
-    throw new Error("Sanity not configured — using fallback data");
+    throw new Error("Sanity not configured. Using fallback data");
   }
   return client.fetch<T>(query, params ?? {}, {
     next: { revalidate: 30 },

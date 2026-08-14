@@ -11,6 +11,7 @@ export const homePageQuery = groq`*[_type == "homePage"][0]{
   secondaryCtaText,
   secondaryCtaHref,
   "heroImage": heroImage.asset->url,
+  "heroVideo": heroVideo.asset->url,
   stats,
   videoUrl,
   "videoThumbnail": videoThumbnail.asset->url,
@@ -38,6 +39,28 @@ export const projectsQuery = groq`*[_type == "project"] | order(order asc){
   featured,
   liveUrl
 }`;
+
+export const projectQuery = groq`*[_type == "project" && slug.current == $slug][0]{
+  _id,
+  title,
+  "slug": slug.current,
+  category,
+  year,
+  description,
+  clientName,
+  overview,
+  challenge,
+  contributions,
+  solution,
+  results,
+  tags,
+  "coverImage": coverImage.asset->url,
+  "gallery": gallery[]{"url": asset->url},
+  testimonial,
+  liveUrl
+}`;
+
+export const projectSlugsQuery = groq`*[_type == "project" && defined(slug.current)]{ "slug": slug.current }`;
 
 export const featuredProjectsQuery = groq`*[_type == "project" && featured == true] | order(order asc)[0...3]{
   _id,
@@ -87,13 +110,47 @@ export const coursesQuery = groq`*[_type == "course"] | order(order asc){
 export const pricingQuery = groq`*[_type == "pricingPlan"] | order(order asc){
   _id,
   name,
-  tagline,
+  category,
   price,
-  priceNGN,
-  featured,
-  accentColor,
-  features,
-  notIncluded
+  bestFor,
+  deliverables,
+  revisions,
+  support,
+  thirdPartyCosts,
+  notes,
+  cta,
+  recommended
+}`;
+
+export const pricingPageQuery = groq`*[_type == "pricingPage"][0]{
+  eyebrow,
+  headline,
+  intro,
+  brandingLabel,
+  websiteLabel,
+  ecommerceLabel,
+  coursePlatformLabel,
+  bundleLabel,
+  brandingAddons,
+  ctaTitle,
+  ctaText,
+  ctaButton
+}`;
+
+export const contactPageQuery = groq`*[_type == "contactPage"][0]{
+  eyebrow,
+  headline,
+  intro,
+  formLabel,
+  services,
+  budgets,
+  timelines,
+  whatsappNumber,
+  email,
+  location,
+  responseTime,
+  helpTitle,
+  helpText
 }`;
 
 export const postsQuery = groq`*[_type == "post"] | order(publishedAt desc){
@@ -132,13 +189,18 @@ export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{
 export const postSlugsQuery = groq`*[_type == "post"]{ "slug": slug.current }`;
 
 export const aboutQuery = groq`*[_type == "about"][0]{
+  introHeading,
   headline,
   headlineAccent,
   headlineSuffix,
   bio,
   "photo": photo.asset->url,
+  "gallery": gallery[]{"url": asset->url},
   timeline,
+  aboutSectionHeading,
+  ventures,
   tools,
+  stackHeading,
   ctaText,
   ctaSubtext
 }`;
