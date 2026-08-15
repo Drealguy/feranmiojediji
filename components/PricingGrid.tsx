@@ -208,7 +208,7 @@ export default function PricingGrid({ categories = pricingCategories, packages =
         </div>
       </div>
       <div className="mb-12 hidden sm:block">
-        <div role="tablist" aria-label="Pricing service categories" className="mx-auto flex w-fit max-w-full flex-wrap justify-center gap-1 rounded-2xl p-1.5" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}>
+        <div role="tablist" aria-label="Pricing service categories" className="mx-auto flex w-fit max-w-full flex-wrap justify-center gap-1 rounded-full p-1.5" style={{ background: "var(--surf)", border: "1px solid var(--bdr)", borderRadius: "9999px" }}>
           {categories.map((category) => {
             const isActive = activeCategory === category.id;
             return (
