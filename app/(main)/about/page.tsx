@@ -22,10 +22,7 @@ export const metadata: Metadata = {
 
 interface AboutData {
   introHeading?: string;
-  headline?: string;
-  headlineAccent?: string;
-  headlineSuffix?: string;
-  bio?: string[];
+  story?: string[];
   photo?: string;
   gallery?: { url: string }[];
   timeline?: { year: string; event: string }[];
@@ -39,10 +36,7 @@ interface AboutData {
 
 const DEFAULTS = {
   introHeading: "Who really is Feranmi?",
-  headline: "Designer by craft,",
-  headlineAccent: "builder",
-  headlineSuffix: "by nature",
-  bio: [
+  story: [
     "I'm Feranmi Ojediji, a designer and developer with about six years of experience working across branding, websites, and digital products.",
     "I started with design because I loved the idea of being able to take something that only existed in someone's head and give it a visual form. At first, that meant learning how to make things look better: logos, graphics, layouts, and brand identities. But as I worked on more projects, I started paying more attention to the thinking behind the work: why a brand should look a certain way, how people interact with a website, what makes a product easy to understand, and how good design can actually support a business.",
     "That curiosity eventually pushed me into development. I didn't want to stop at designing an interface and handing it off. I wanted to understand how the product worked behind the screen and be able to take an idea from the first sketch all the way to something people could actually use.",
@@ -71,7 +65,7 @@ const DEFAULTS = {
 export default async function About() {
   const raw = await sanityFetch<AboutData>(aboutQuery).catch(() => null);
   const d = { ...DEFAULTS, ...raw };
-  const bio = d.bio?.length ? d.bio : DEFAULTS.bio;
+  const story = d.story?.length ? d.story : DEFAULTS.story;
   const timeline = d.timeline?.length ? d.timeline : DEFAULTS.timeline;
   const gallery = d.gallery?.length ? d.gallery : DEFAULTS.gallery;
   const tools = d.tools?.length ? d.tools : DEFAULTS.tools;
@@ -89,7 +83,7 @@ export default async function About() {
               <div className="w-12 h-px" style={{ background: "var(--bdr)" }} />
             </div>
             <h1 className="mb-8 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl" style={{ color: "var(--txt)" }}>{d.introHeading || DEFAULTS.introHeading}</h1>
-            <AboutIntro paragraphs={bio} />
+            <AboutIntro paragraphs={story} />
           </div>
 
           <div className="relative">

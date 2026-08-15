@@ -9,26 +9,8 @@ export const about = defineType({
   fields: [
     defineField({ name: "introHeading", title: "Personal introduction heading", type: "string", initialValue: "Who really is Feranmi?" }),
     defineField({
-      name: "headline",
-      title: "Headline",
-      type: "string",
-      initialValue: "Designer by craft,",
-    }),
-    defineField({
-      name: "headlineAccent",
-      title: "Headline accent word (italic)",
-      type: "string",
-      initialValue: "builder",
-    }),
-    defineField({
-      name: "headlineSuffix",
-      title: "Headline suffix",
-      type: "string",
-      initialValue: "by nature",
-    }),
-    defineField({
-      name: "bio",
-      title: "Bio paragraphs",
+      name: "story",
+      title: "My story paragraphs",
       type: "array",
       of: [{ type: "text" }],
       description: "Each item becomes a paragraph",

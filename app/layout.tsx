@@ -46,7 +46,7 @@ export default function RootLayout({
         {/* Anti-FOUC: runs synchronously before paint, sets data-theme from localStorage */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch{document.documentElement.setAttribute('data-theme','light')}})();`,
           }}
         />
         <link rel="preload" as="image" href="/feranmi.jpg" />

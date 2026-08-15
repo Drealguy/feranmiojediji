@@ -1,11 +1,10 @@
 import { groq } from "next-sanity";
 
 export const homePageQuery = groq`*[_type == "homePage"][0]{
-  badgeText,
-  headline,
-  headlineAccent,
-  headlineSuffix,
-  subtitle,
+  roleLabel,
+  heroHeadline,
+  introText,
+  availabilityText,
   primaryCtaText,
   primaryCtaHref,
   secondaryCtaText,
@@ -190,10 +189,7 @@ export const postSlugsQuery = groq`*[_type == "post"]{ "slug": slug.current }`;
 
 export const aboutQuery = groq`*[_type == "about"][0]{
   introHeading,
-  headline,
-  headlineAccent,
-  headlineSuffix,
-  bio,
+  story,
   "photo": photo.asset->url,
   "gallery": gallery[]{"url": asset->url},
   timeline,

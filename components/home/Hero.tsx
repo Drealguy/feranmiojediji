@@ -2,11 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export interface HeroData {
-  badgeText?: string;
-  headline?: string;
-  headlineAccent?: string;
-  headlineSuffix?: string;
-  subtitle?: string;
+  roleLabel?: string;
+  heroHeadline?: string;
+  introText?: string;
+  availabilityText?: string;
   primaryCtaText?: string;
   primaryCtaHref?: string;
   secondaryCtaText?: string;
@@ -20,11 +19,10 @@ export interface HeroData {
 }
 
 const DEFAULTS = {
-  badgeText: "Designer & Developer",
-  headline: "I design digital experiences",
-  headlineAccent: "built for",
-  headlineSuffix: "clarity and growth.",
-  subtitle: "I help businesses turn ideas into clear brands and high-performing digital experiences, from identity and websites to ecommerce and custom platforms.",
+  roleLabel: "Designer & Developer",
+  heroHeadline: "I design brands and websites that help businesses look better and sell better.",
+  introText: "I help businesses turn ideas into clear brands and high-performing digital experiences, from identity and websites to ecommerce and custom platforms.",
+  availabilityText: "Available for branding, website & digital product projects.",
   primaryCtaText: "See my work",
   primaryCtaHref: "/works",
   secondaryCtaText: "Book a call",
@@ -33,7 +31,18 @@ const DEFAULTS = {
 };
 
 export default function Hero({ data }: { data?: HeroData }) {
-  const d = { ...DEFAULTS, ...data };
+  const d = {
+    ...data,
+    roleLabel: data?.roleLabel || DEFAULTS.roleLabel,
+    heroHeadline: data?.heroHeadline || DEFAULTS.heroHeadline,
+    introText: data?.introText || DEFAULTS.introText,
+    availabilityText: data?.availabilityText || DEFAULTS.availabilityText,
+    primaryCtaText: data?.primaryCtaText || DEFAULTS.primaryCtaText,
+    primaryCtaHref: data?.primaryCtaHref || DEFAULTS.primaryCtaHref,
+    secondaryCtaText: data?.secondaryCtaText || DEFAULTS.secondaryCtaText,
+    secondaryCtaHref: data?.secondaryCtaHref || DEFAULTS.secondaryCtaHref,
+    heroImage: data?.heroImage || DEFAULTS.heroImage,
+  };
 
   return (
     <section className="pb-14 pt-28 sm:pb-18 sm:pt-32">
@@ -43,14 +52,14 @@ export default function Hero({ data }: { data?: HeroData }) {
             <div className="mb-8 flex flex-wrap items-center gap-4">
               <span className="text-xs font-medium uppercase tracking-[0.2em]" style={{ color: "var(--txt)" }}>Feranmi Ojediji</span>
               <span className="hidden h-px w-14 sm:block" style={{ background: "var(--bdr)" }} />
-              <span className="text-xs uppercase tracking-[0.2em]" style={{ color: "var(--mut)" }}>{d.badgeText}</span>
+              <span className="text-xs uppercase tracking-[0.2em]" style={{ color: "var(--mut)" }}>{d.roleLabel}</span>
             </div>
 
             <h1 className="max-w-3xl text-4xl font-medium leading-[0.98] sm:text-5xl lg:text-[56px]" style={{ color: "var(--txt)" }}>
-              I design brands and websites that help businesses look better and sell better.
+              {d.heroHeadline}
             </h1>
 
-            <p className="mt-8 max-w-2xl text-base leading-relaxed sm:text-lg" style={{ color: "var(--mut)" }}>{d.subtitle}</p>
+            <p className="mt-8 max-w-2xl text-base leading-relaxed sm:text-lg" style={{ color: "var(--mut)" }}>{d.introText}</p>
 
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Link href={d.primaryCtaHref || "/works"} className="inline-flex items-center justify-center rounded-xl px-6 py-3.5 text-sm font-semibold transition-opacity hover:opacity-75" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>
@@ -61,7 +70,7 @@ export default function Hero({ data }: { data?: HeroData }) {
               </Link>
             </div>
 
-            <p className="mt-8 text-sm" style={{ color: "var(--dim)" }}>Available for branding, website &amp; digital product projects.</p>
+            <p className="mt-8 text-sm" style={{ color: "var(--dim)" }}>{d.availabilityText}</p>
           </div>
 
           <div className="mx-auto w-full max-w-md lg:mx-0 lg:justify-self-end">

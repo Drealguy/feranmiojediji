@@ -8,7 +8,7 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
 
 export default defineConfig({
   name: "feranmi-portfolio",
-  title: "Feranmi Portfolio — CMS",
+  title: "Feranmi Portfolio CMS",
   projectId,
   dataset,
   basePath: "/studio",
@@ -34,6 +34,16 @@ export default defineConfig({
               .id("about")
               .child(S.document().schemaType("about").documentId("about")),
 
+            S.listItem()
+              .title("Contact Page")
+              .id("contactPage")
+              .child(S.document().schemaType("contactPage").documentId("contactPage")),
+
+            S.listItem()
+              .title("Pricing Page")
+              .id("pricingPage")
+              .child(S.document().schemaType("pricingPage").documentId("pricingPage")),
+
             S.divider(),
 
             // ── Collections ──────────────────────────────
@@ -43,7 +53,7 @@ export default defineConfig({
             S.documentTypeListItem("course").title("Courses"),
             S.documentTypeListItem("testimonial").title("Testimonials"),
             S.documentTypeListItem("faqItem").title("FAQ"),
-            S.documentTypeListItem("pricingPlan").title("Pricing Plans"),
+            S.documentTypeListItem("pricingPlan").title("Pricing Packages"),
           ]),
     }),
     visionTool(),
