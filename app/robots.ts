@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/studio/",
     },
-    sitemap: "https://feranmiojediji.com/sitemap.xml",
+    sitemap: "https://www.feranmiojediji.com/sitemap.xml",
   };
 }

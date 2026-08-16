@@ -8,8 +8,8 @@ import { coursesQuery } from "@/sanity/lib/queries";
 export const metadata: Metadata = {
   title: "Courses | Feranmi Ojediji",
   description: "Learn web design, branding, and digital strategy directly from Feranmi Ojediji.",
-  alternates: { canonical: "https://feranmiojediji.com/courses" },
-  openGraph: { title: "Courses | Feranmi Ojediji", description: "Learn web design, branding, and digital strategy directly from Feranmi Ojediji.", url: "https://feranmiojediji.com/courses", images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }] },
+  alternates: { canonical: "https://www.feranmiojediji.com/courses" },
+  openGraph: { title: "Courses | Feranmi Ojediji", description: "Learn web design, branding, and digital strategy directly from Feranmi Ojediji.", url: "https://www.feranmiojediji.com/courses", images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }] },
   twitter: { card: "summary_large_image", title: "Courses | Feranmi Ojediji", images: ["/feranmi.jpg"] },
 };
 

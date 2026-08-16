@@ -12,6 +12,7 @@ import { FALLBACK_POSTS } from "../page";
 /* ─── Types ──────────────────────────────────────────────────────────────── */
 interface Post {
   _id: string;
+  _updatedAt?: string;
   title: string;
   slug: string;
   publishedAt: string;
@@ -147,7 +148,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description,
     openGraph: {
       title, description,
-      url: `https://feranmiojediji.com/blog/${slug}`,
+      url: `https://www.feranmiojediji.com/blog/${slug}`,
       type: "article",
       publishedTime: post.publishedAt,
       ...(post.coverImage ? { images: [{ url: post.coverImage, alt: post.coverImageAlt ?? title }] } : {}),
@@ -156,7 +157,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       card: "summary_large_image", title, description,
       ...(post.coverImage ? { images: [post.coverImage] } : {}),
     },
-    alternates: { canonical: `https://feranmiojediji.com/blog/${slug}` },
+    alternates: { canonical: `https://www.feranmiojediji.com/blog/${slug}` },
   };
 }
 
@@ -270,9 +271,26 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   if (!post) notFound();
 
   const body = ("body" in post && post.body) ? post.body : (DEMO_BODY[slug] ?? null);
+  const articleUrl = `https://www.feranmiojediji.com/blog/${slug}`;
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.seoDescription ?? post.excerpt,
+    url: articleUrl,
+    mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
+    datePublished: post.publishedAt,
+    dateModified: post._updatedAt ?? post.publishedAt,
+    author: { "@type": "Person", name: "Feranmi Ojediji", url: "https://www.feranmiojediji.com/about" },
+    publisher: { "@type": "Person", name: "Feranmi Ojediji", url: "https://www.feranmiojediji.com" },
+    ...(post.coverImage ? { image: [post.coverImage] } : {}),
+    ...(post.category ? { articleSection: post.category } : {}),
+    ...(post.tags?.length ? { keywords: post.tags.join(", ") } : {}),
+  };
 
   return (
     <div className="pb-16 pt-28 sm:pb-20 sm:pt-32">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema).replace(/</g, "\\u003c") }} />
       <div className="mx-auto max-w-2xl px-4 sm:px-6">
 
         {/* Back link */}

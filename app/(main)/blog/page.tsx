@@ -11,10 +11,11 @@ export const metadata: Metadata = {
   title: "Blog | Feranmi Ojediji",
   description:
     "Design insights, business strategy, and creative tips from Feranmi Ojediji, a web designer and creative director based in Akure, Nigeria.",
+  alternates: { canonical: "https://www.feranmiojediji.com/blog" },
   openGraph: {
     title: "Blog | Feranmi Ojediji",
     description: "Design insights, business strategy, and creative tips.",
-    url: "https://feranmiojediji.com/blog",
+    url: "https://www.feranmiojediji.com/blog",
     type: "website",
   },
 };

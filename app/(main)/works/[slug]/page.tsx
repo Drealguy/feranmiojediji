@@ -46,11 +46,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${project.title} | Case Study`,
     description: project.overview || project.description,
-    alternates: { canonical: `https://feranmiojediji.com/myworks/${slug}` },
+    alternates: { canonical: `https://www.feranmiojediji.com/works/${slug}` },
     openGraph: {
       title: project.title,
       description: project.overview || project.description,
-      url: `https://feranmiojediji.com/myworks/${slug}`,
+      url: `https://www.feranmiojediji.com/works/${slug}`,
       ...(project.coverImage ? { images: [{ url: project.coverImage }] } : {}),
     },
   };

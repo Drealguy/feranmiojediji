@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: PricingCategoryPageProps): Pr
   if (!category) return {};
 
   const title = `${category.label} Pricing | Feranmi Ojediji`;
-  const url = `https://feranmiojediji.com/pricing/${slug}`;
+  const url = `https://www.feranmiojediji.com/pricing/${slug}`;
   return {
     title,
     description: `View transparent pricing and packages for ${category.label.toLowerCase()}.`,

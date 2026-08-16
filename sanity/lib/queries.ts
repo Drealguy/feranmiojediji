@@ -167,6 +167,7 @@ export const postsQuery = groq`*[_type == "post"] | order(publishedAt desc){
 
 export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{
   _id,
+  _updatedAt,
   title,
   "slug": slug.current,
   publishedAt,
@@ -187,6 +188,12 @@ export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{
 }`;
 
 export const postSlugsQuery = groq`*[_type == "post"]{ "slug": slug.current }`;
+
+export const postSitemapQuery = groq`*[_type == "post" && defined(slug.current)]{
+  "slug": slug.current,
+  publishedAt,
+  _updatedAt
+}`;
 
 export const aboutQuery = groq`*[_type == "about"][0]{
   introHeading,

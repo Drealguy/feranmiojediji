@@ -30,11 +30,11 @@ const categoryFields: Record<PricingCategoryId, keyof PricingPageContent> = {
 export const metadata: Metadata = {
   title: "Pricing | Feranmi Ojediji",
   description: "Transparent pricing for web design, branding, and digital strategy. Find the right plan for your project.",
-  alternates: { canonical: "https://feranmiojediji.com/pricing" },
+  alternates: { canonical: "https://www.feranmiojediji.com/pricing" },
   openGraph: {
     title: "Pricing | Feranmi Ojediji",
     description: "Transparent pricing for web design, branding, and digital strategy.",
-    url: "https://feranmiojediji.com/pricing",
+    url: "https://www.feranmiojediji.com/pricing",
     images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }],
   },
   twitter: { card: "summary_large_image", title: "Pricing | Feranmi Ojediji", images: ["/feranmi.jpg"] },

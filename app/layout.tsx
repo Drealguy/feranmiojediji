@@ -11,6 +11,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.feranmiojediji.com"),
   title: "Feranmi Ojediji | Web Designer & Creative",
   description:
     "Web designer crafting purposeful online presence. Specializing in website design, branding, UI/UX, AI automation, and digital strategy.",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     title: "Feranmi Ojediji | Web Designer & Creative",
     description:
       "Web designer crafting purposeful online presence. Specializing in website design, branding, UI/UX, AI automation, and digital strategy.",
-    url: "https://feranmiojediji.com",
+    url: "https://www.feranmiojediji.com",
     images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }],
   },
   twitter: {
@@ -59,8 +60,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Feranmi Ojediji",
-              url: "https://feranmiojediji.com",
-              image: "https://feranmiojediji.com/feranmi.jpg",
+              url: "https://www.feranmiojediji.com",
+              image: "https://www.feranmiojediji.com/feranmi.jpg",
               jobTitle: "Web Designer & Creative Director",
               description: "Web designer crafting purposeful online presence. Specializing in website design, branding, UI/UX, AI automation, and digital strategy.",
               address: { "@type": "PostalAddress", addressLocality: "Akure", addressCountry: "NG" },

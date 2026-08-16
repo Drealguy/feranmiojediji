@@ -8,11 +8,11 @@ import { contactPageQuery } from "@/sanity/lib/queries";
 export const metadata: Metadata = {
   title: "Contact | Feranmi Ojediji",
   description: "Start a logo, brand identity, website, ecommerce, or digital platform project with Feranmi Ojediji.",
-  alternates: { canonical: "https://feranmiojediji.com/contact" },
+  alternates: { canonical: "https://www.feranmiojediji.com/contact" },
   openGraph: {
     title: "Contact | Feranmi Ojediji",
     description: "Start a logo, brand identity, website, ecommerce, or digital platform project with Feranmi Ojediji.",
-    url: "https://feranmiojediji.com/contact",
+    url: "https://www.feranmiojediji.com/contact",
     images: [{ url: "/feranmi.jpg", width: 1200, height: 630, alt: "Feranmi Ojediji" }],
   },
   twitter: { card: "summary_large_image", title: "Contact | Feranmi Ojediji", images: ["/feranmi.jpg"] },
