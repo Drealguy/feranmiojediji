@@ -47,18 +47,20 @@ export default function CourseDetailModal({ course, onClose }: { course: Course;
 
   return createPortal(
     <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/70 p-0 backdrop-blur-sm sm:items-center sm:p-6" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-      <div role="dialog" aria-modal="true" aria-labelledby="course-detail-title" className="relative max-h-[94dvh] w-full max-w-3xl overflow-y-auto rounded-t-3xl sm:rounded-3xl" style={{ background: "var(--surf2)", border: "1px solid var(--bdr)" }}>
-        <button ref={closeButtonRef} type="button" onClick={onClose} aria-label="Close course details" className="absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md"><X size={18} /></button>
+      <div role="dialog" aria-modal="true" aria-labelledby="course-detail-title" className="relative flex h-[100dvh] w-full max-w-3xl flex-col overflow-hidden sm:h-auto sm:max-h-[92dvh] sm:rounded-3xl" style={{ background: "var(--surf2)", border: "1px solid var(--bdr)" }}>
+        <button ref={closeButtonRef} type="button" onClick={onClose} aria-label="Close course details" className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white shadow-lg backdrop-blur-md sm:right-5 sm:top-5"><X size={18} /></button>
 
-        <div className="p-6 sm:p-8">
-          <div className="mb-3 flex flex-wrap items-center gap-2 text-xs" style={{ color: "var(--mut)" }}>
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom)]">
+
+        <div className="px-5 pb-6 pt-20 sm:p-8">
+          <div className="mb-3 flex max-w-[calc(100%-3rem)] flex-wrap items-center gap-2 text-xs sm:max-w-none" style={{ color: "var(--mut)" }}>
             <span className="rounded-full px-3 py-1" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}>{course.category}</span>
             <span>{course.level}</span>
           </div>
           <h2 id="course-detail-title" className="max-w-2xl text-2xl font-semibold sm:text-3xl">{course.title}</h2>
           <p className="mt-4 max-w-2xl text-sm leading-7" style={{ color: "var(--mut)" }}>{course.description}</p>
 
-          <div className="mt-6 grid grid-cols-3 gap-3">
+          <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="rounded-2xl p-4" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}><BookOpen size={16} className="mb-3" /><p className="text-sm font-semibold">{course.lessons}</p><p className="text-xs" style={{ color: "var(--mut)" }}>Lessons</p></div>
             <div className="rounded-2xl p-4" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}><Clock3 size={16} className="mb-3" /><p className="text-sm font-semibold">{course.duration}</p><p className="text-xs" style={{ color: "var(--mut)" }}>Duration</p></div>
             <div className="rounded-2xl p-4" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}><Star size={16} className="mb-3" /><p className="text-sm font-semibold">{course.price}</p><p className="text-xs" style={{ color: "var(--mut)" }}>One-time</p></div>
@@ -67,10 +69,10 @@ export default function CourseDetailModal({ course, onClose }: { course: Course;
           {course.available && <a href={course.purchaseUrl ?? "/contact"} {...(course.purchaseUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="mt-6 flex w-full items-center justify-center gap-2 px-5 py-3.5 text-sm font-semibold" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>Enrol in this course <ArrowUpRight size={16} /></a>}
         </div>
 
-        <section className="border-t p-6 sm:p-8" style={{ borderColor: "var(--bdr)" }}>
-          <div className="mb-5 flex items-center justify-between gap-4">
+        <section className="border-t px-5 py-6 sm:p-8" style={{ borderColor: "var(--bdr)" }}>
+          <div className="mb-5 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div><p className="text-xs uppercase tracking-[0.15em]" style={{ color: "var(--mut)" }}>Student stories</p><h3 className="mt-1 text-xl font-semibold">Testimonials</h3></div>
-            <button type="button" onClick={() => { setShowTestimonialForm((shown) => !shown); setStatus("idle"); }} className="px-4 py-2 text-xs font-semibold" style={{ border: "1px solid var(--bdr)", color: "var(--txt)" }}>Share yours</button>
+            <button type="button" onClick={() => { setShowTestimonialForm((shown) => !shown); setStatus("idle"); }} className="w-full px-4 py-2.5 text-xs font-semibold sm:w-auto" style={{ border: "1px solid var(--bdr)", color: "var(--txt)" }}>Share yours</button>
           </div>
 
           {course.testimonials?.length ? (
@@ -103,6 +105,7 @@ export default function CourseDetailModal({ course, onClose }: { course: Course;
             </div>
           )}
         </section>
+        </div>
       </div>
     </div>,
     document.body,
