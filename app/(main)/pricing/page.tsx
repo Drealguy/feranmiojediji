@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: "Pricing | Feranmi Ojediji", images: ["/feranmi.jpg"] },
 };
 
-export default async function Pricing() {
+export default async function Pricing({ activeCategory = "branding" }: { activeCategory?: PricingCategoryId }) {
   let pageContent: PricingPageContent = {};
   let plans = pricingPackages;
   try {
@@ -79,7 +79,7 @@ export default async function Pricing() {
         </div>
 
         {/* Grid with toggle client component */}
-        <PricingGrid categories={categories} packages={plans} addons={addons} />
+        <PricingGrid categories={categories} packages={plans} addons={addons} activeCategory={activeCategory} />
 
         {/* CTA */}
         <div

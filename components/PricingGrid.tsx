@@ -6,6 +6,7 @@ import { ArrowRight, Check, ChevronDown, X } from "lucide-react";
 import {
   brandingAddons,
   pricingCategories,
+  pricingCategoryPaths,
   pricingPackages,
   type PricingCategory,
   type PricingCategoryId,
@@ -123,23 +124,12 @@ function PackageModal({ plan, onClose }: { plan: PricingPackage; onClose: () => 
   );
 }
 
-export default function PricingGrid({ categories = pricingCategories, packages = pricingPackages, addons = brandingAddons }: { categories?: PricingCategory[]; packages?: PricingPackage[]; addons?: string[] }) {
-  const [activeCategory, setActiveCategory] = useState<PricingCategoryId>("branding");
+export default function PricingGrid({ categories = pricingCategories, packages = pricingPackages, addons = brandingAddons, activeCategory = "branding" }: { categories?: PricingCategory[]; packages?: PricingPackage[]; addons?: string[]; activeCategory?: PricingCategoryId }) {
   const [selectedPlan, setSelectedPlan] = useState<PricingPackage | null>(null);
   const [categoryMenuOpen, setCategoryMenuOpen] = useState(false);
   const categoryMenuRef = useRef<HTMLDivElement>(null);
   const visiblePlans = packages.filter((plan) => plan.category === activeCategory);
   const activeCategoryLabel = categories.find((category) => category.id === activeCategory)?.label;
-
-  useEffect(() => {
-    const syncCategoryFromHash = () => {
-      const category = window.location.hash.slice(1) as PricingCategoryId;
-      if (categories.some((item) => item.id === category)) setActiveCategory(category);
-    };
-    syncCategoryFromHash();
-    window.addEventListener("hashchange", syncCategoryFromHash);
-    return () => window.removeEventListener("hashchange", syncCategoryFromHash);
-  }, [categories]);
 
   useEffect(() => {
     const closeMenu = (event: MouseEvent) => {
@@ -185,22 +175,18 @@ export default function PricingGrid({ categories = pricingCategories, packages =
               {categories.map((category) => {
                 const isActive = category.id === activeCategory;
                 return (
-                  <button
+                  <Link
                     key={category.id}
-                    type="button"
                     role="option"
                     aria-selected={isActive}
-                    onClick={() => {
-                      setActiveCategory(category.id);
-                      setCategoryMenuOpen(false);
-                      window.history.replaceState(null, "", `#${category.id}`);
-                    }}
+                    href={pricingCategoryPaths[category.id]}
+                    onClick={() => setCategoryMenuOpen(false)}
                     className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm transition-colors"
                     style={isActive ? { background: "var(--acc)", color: "var(--acc-fg)" } : { color: "var(--mut)" }}
                   >
                     <span>{category.label}</span>
                     {isActive && <Check size={15} />}
-                  </button>
+                  </Link>
                 );
               })}
             </div>
@@ -212,20 +198,16 @@ export default function PricingGrid({ categories = pricingCategories, packages =
           {categories.map((category) => {
             const isActive = activeCategory === category.id;
             return (
-              <button
+              <Link
                 key={category.id}
-                type="button"
                 role="tab"
                 aria-selected={isActive}
-                onClick={() => {
-                  setActiveCategory(category.id);
-                  window.history.replaceState(null, "", `#${category.id}`);
-                }}
+                href={pricingCategoryPaths[category.id]}
                 className="shrink-0 whitespace-nowrap rounded-xl px-4 py-2.5 text-xs font-medium transition-colors duration-200 sm:px-5 sm:text-sm"
                 style={isActive ? { background: "var(--acc)", color: "var(--acc-fg)" } : { color: "var(--mut)" }}
               >
                 {category.label}
-              </button>
+              </Link>
             );
           })}
         </div>

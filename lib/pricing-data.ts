@@ -33,6 +33,22 @@ export const pricingCategories: PricingCategory[] = [
   { id: "brand-website-bundles", label: "Brand + Website Bundles" },
 ];
 
+export const pricingCategoryPaths: Record<PricingCategoryId, string> = {
+  branding: "/pricing/branding",
+  "website-design": "/pricing/websites",
+  ecommerce: "/pricing/ecommerce",
+  "lms-platforms": "/pricing/lms",
+  "brand-website-bundles": "/pricing/bundles",
+};
+
+export const pricingCategoryBySlug: Record<string, PricingCategoryId> = {
+  branding: "branding",
+  websites: "website-design",
+  ecommerce: "ecommerce",
+  lms: "lms-platforms",
+  bundles: "brand-website-bundles",
+};
+
 export const pricingPackages: PricingPackage[] = [
   {
     id: "logo-design",
