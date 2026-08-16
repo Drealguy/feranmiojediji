@@ -103,6 +103,7 @@ export const coursesQuery = groq`*[_type == "course"] | order(order asc){
   topics,
   accentColor,
   purchaseUrl,
+  testimonials[]{name, role, quote, rating},
   available
 }`;
 

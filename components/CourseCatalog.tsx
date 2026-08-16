@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
-import { ArrowUpRight, BookOpen, Clock3, Layers3, Search, Sparkles } from "lucide-react";
+import { ArrowUpRight, BookOpen, Clock3, Layers3, Sparkles } from "lucide-react";
 import NotifyModal from "@/components/NotifyModal";
+import CourseRequestModal from "@/components/CourseRequestModal";
+import CourseDetailModal from "@/components/CourseDetailModal";
 
 export interface Course {
   _id: string;
@@ -19,6 +20,7 @@ export interface Course {
   description: string;
   purchaseUrl?: string;
   available: boolean;
+  testimonials?: Array<{ name: string; role?: string; quote: string; rating?: number }>;
 }
 
 type CourseTab = "available" | "coming-soon";
@@ -43,6 +45,7 @@ function CourseCover({ course, index }: { course: Course; index: number }) {
 
 export default function CourseCatalog({ courses }: { courses: Course[] }) {
   const [activeTab, setActiveTab] = useState<CourseTab>("available");
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const availableCount = courses.filter((course) => course.available).length;
   const comingSoonCount = courses.length - availableCount;
   const visibleCourses = courses.filter((course) => activeTab === "available" ? course.available : !course.available);
@@ -60,9 +63,7 @@ export default function CourseCatalog({ courses }: { courses: Course[] }) {
               Practical, self-paced lessons built from real design and development work.
             </p>
           </div>
-          <Link href="/contact?subject=Course%20request" className="inline-flex w-fit items-center gap-2 px-5 py-3 text-sm font-medium transition-opacity hover:opacity-80" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>
-            <Search size={16} /> Request a course
-          </Link>
+          <CourseRequestModal />
         </div>
 
         <div className="mb-7 flex gap-7 border-b" style={{ borderColor: "var(--bdr)" }} role="tablist" aria-label="Course availability">
@@ -83,7 +84,7 @@ export default function CourseCatalog({ courses }: { courses: Course[] }) {
         {visibleCourses.length ? (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" role="tabpanel">
             {visibleCourses.map((course, index) => (
-              <article key={course._id} className="group flex min-h-[430px] flex-col overflow-hidden rounded-2xl transition-transform duration-300 hover:-translate-y-1" style={{ background: "var(--surf2)", border: "1px solid var(--bdr)", boxShadow: "var(--shadow)" }}>
+              <article key={course._id} role="button" tabIndex={0} aria-label={`View details for ${course.title}`} onClick={() => setSelectedCourse(course)} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") setSelectedCourse(course); }} className="group flex min-h-[430px] cursor-pointer flex-col overflow-hidden rounded-2xl transition-transform duration-300 hover:-translate-y-1" style={{ background: "var(--surf2)", border: "1px solid var(--bdr)", boxShadow: "var(--shadow)" }}>
                 <div className="relative m-3 mb-0 aspect-[16/9] overflow-hidden rounded-xl">
                   <CourseCover course={course} index={index} />
                   <span className="absolute left-3 top-3 rounded-full bg-black/60 px-2.5 py-1 text-[10px] font-medium text-white backdrop-blur-md">{course.category}</span>
@@ -108,7 +109,7 @@ export default function CourseCatalog({ courses }: { courses: Course[] }) {
                     </div>
                   </div>
 
-                  <div className="mt-auto flex items-center justify-between gap-3 pt-6">
+                  <div className="mt-auto flex items-center justify-between gap-3 pt-6" onClick={(event) => event.stopPropagation()} onKeyDown={(event) => event.stopPropagation()}>
                     <p className="text-lg font-semibold" style={{ color: "var(--txt)" }}>{course.price}</p>
                     {course.available ? (
                       <a href={course.purchaseUrl ?? "/contact"} {...(course.purchaseUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>
@@ -127,6 +128,7 @@ export default function CourseCatalog({ courses }: { courses: Course[] }) {
             <p className="mt-2 text-sm" style={{ color: "var(--mut)" }}>New courses will appear here as soon as they are announced.</p>
           </div>
         )}
+        {selectedCourse && <CourseDetailModal course={selectedCourse} onClose={() => setSelectedCourse(null)} />}
       </div>
     </div>
   );

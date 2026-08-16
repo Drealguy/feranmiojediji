@@ -89,6 +89,23 @@ export const course = defineType({
       description: "External link where students can buy this course (e.g. Selar, Gumroad, Udemy). Leave blank to use the contact page.",
     }),
     defineField({
+      name: "testimonials",
+      title: "Approved testimonials",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "name", title: "Student name", type: "string", validation: (R) => R.required() }),
+            defineField({ name: "role", title: "Role or company", type: "string" }),
+            defineField({ name: "quote", title: "Testimonial", type: "text", rows: 3, validation: (R) => R.required() }),
+            defineField({ name: "rating", title: "Rating", type: "number", validation: (R) => R.min(1).max(5) }),
+          ],
+          preview: { select: { title: "name", subtitle: "quote" } },
+        },
+      ],
+    }),
+    defineField({
       name: "available",
       title: "Live / available to enrol?",
       type: "boolean",
