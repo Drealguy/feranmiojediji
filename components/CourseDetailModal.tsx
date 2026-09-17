@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { createPortal } from "react-dom";
-import { ArrowUpRight, BookOpen, Check, Clock3, Send, Star, X } from "lucide-react";
+import { ArrowUpRight, BookOpen, Check, Clock3, FileText, Send, Star, X } from "lucide-react";
 import type { Course } from "@/components/CourseCatalog";
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkjwqgop";
@@ -12,6 +12,9 @@ export default function CourseDetailModal({ course, onClose }: { course: Course;
   const [showTestimonialForm, setShowTestimonialForm] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const isEbook = course.contentType === "ebook";
+  const isFree = course.isFree || course.price?.trim().toLowerCase() === "free";
+  const ctaLabel = isEbook ? (isFree ? "Download free ebook" : "Get this ebook") : (isFree ? "Start free course" : "Enrol in this course");
 
   useEffect(() => setMounted(true), []);
   useEffect(() => {
@@ -55,18 +58,20 @@ export default function CourseDetailModal({ course, onClose }: { course: Course;
         <div className="px-5 pb-6 pt-20 sm:p-8">
           <div className="mb-3 flex max-w-[calc(100%-3rem)] flex-wrap items-center gap-2 text-xs sm:max-w-none" style={{ color: "var(--mut)" }}>
             <span className="rounded-full px-3 py-1" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}>{course.category}</span>
+            <span className="rounded-full px-3 py-1 font-medium" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>{isEbook ? "Ebook / PDF" : "Video course"}</span>
+            {isFree && <span className="rounded-full px-3 py-1 font-medium" style={{ background: "#dcfce7", color: "#166534" }}>Free</span>}
             <span>{course.level}</span>
           </div>
           <h2 id="course-detail-title" className="max-w-2xl text-2xl font-semibold sm:text-3xl">{course.title}</h2>
           <p className="mt-4 max-w-2xl text-sm leading-7" style={{ color: "var(--mut)" }}>{course.description}</p>
 
           <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <div className="rounded-2xl p-4" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}><BookOpen size={16} className="mb-3" /><p className="text-sm font-semibold">{course.lessons}</p><p className="text-xs" style={{ color: "var(--mut)" }}>Lessons</p></div>
-            <div className="rounded-2xl p-4" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}><Clock3 size={16} className="mb-3" /><p className="text-sm font-semibold">{course.duration}</p><p className="text-xs" style={{ color: "var(--mut)" }}>Duration</p></div>
-            <div className="rounded-2xl p-4" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}><Star size={16} className="mb-3" /><p className="text-sm font-semibold">{course.price}</p><p className="text-xs" style={{ color: "var(--mut)" }}>One-time</p></div>
+            <div className="rounded-2xl p-4" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}>{isEbook ? <FileText size={16} className="mb-3" /> : <BookOpen size={16} className="mb-3" />}<p className="text-sm font-semibold">{isEbook ? (course.pages ? `${course.pages} pages` : "PDF") : `${course.lessons || 0} lessons`}</p><p className="text-xs" style={{ color: "var(--mut)" }}>{isEbook ? "Digital ebook" : "Video lessons"}</p></div>
+            <div className="rounded-2xl p-4" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}>{isEbook ? <FileText size={16} className="mb-3" /> : <Clock3 size={16} className="mb-3" />}<p className="text-sm font-semibold">{isEbook ? "Instant access" : course.duration || "Self-paced"}</p><p className="text-xs" style={{ color: "var(--mut)" }}>{isEbook ? "Download" : "Duration"}</p></div>
+            <div className="rounded-2xl p-4" style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}><Star size={16} className="mb-3" /><p className="text-sm font-semibold">{isFree ? "Free" : course.price}</p><p className="text-xs" style={{ color: "var(--mut)" }}>{isFree ? "No payment" : "One-time"}</p></div>
           </div>
 
-          {course.available && <a href={course.purchaseUrl ?? "/contact"} {...(course.purchaseUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="mt-6 flex w-full items-center justify-center gap-2 px-5 py-3.5 text-sm font-semibold" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>Enrol in this course <ArrowUpRight size={16} /></a>}
+          {course.available && <a href={course.purchaseUrl ?? "/contact"} {...(course.purchaseUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="mt-6 flex w-full items-center justify-center gap-2 px-5 py-3.5 text-sm font-semibold" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>{ctaLabel} <ArrowUpRight size={16} /></a>}
         </div>
 
         <section className="border-t px-5 py-6 sm:p-8" style={{ borderColor: "var(--bdr)" }}>
