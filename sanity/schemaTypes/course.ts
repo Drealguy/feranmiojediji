@@ -53,33 +53,6 @@ export const course = defineType({
       options: { hotspot: true },
     }),
     defineField({
-      name: "contentType",
-      title: "Content format",
-      type: "string",
-      initialValue: "video-course",
-      options: {
-        layout: "radio",
-        list: [
-          { title: "Video course", value: "video-course" },
-          { title: "Ebook / PDF", value: "ebook" },
-        ],
-      },
-      validation: (R) => R.required(),
-    }),
-    defineField({
-      name: "isFree",
-      title: "Free resource?",
-      type: "boolean",
-      initialValue: false,
-    }),
-    defineField({
-      name: "pages",
-      title: "Number of pages",
-      type: "number",
-      description: "For ebooks and PDF resources.",
-      hidden: ({ parent }) => parent?.contentType !== "ebook",
-    }),
-    defineField({
       name: "duration",
       title: "Duration",
       type: "string",
@@ -111,9 +84,9 @@ export const course = defineType({
     }),
     defineField({
       name: "purchaseUrl",
-      title: "Access, purchase or download link",
+      title: "Purchase / enrol link",
       type: "url",
-      description: "Use the video enrolment, ebook purchase, or free download URL. Leave blank to use the contact page.",
+      description: "External link where students can buy this course (e.g. Selar, Gumroad, Udemy). Leave blank to use the contact page.",
     }),
     defineField({
       name: "testimonials",

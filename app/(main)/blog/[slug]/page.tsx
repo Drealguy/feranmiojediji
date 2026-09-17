@@ -271,7 +271,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   if (!post) notFound();
 
   const body = ("body" in post && post.body) ? post.body : (DEMO_BODY[slug] ?? null);
-  const readingMinutes = Math.max(1, Math.ceil(JSON.stringify(body ?? post.excerpt ?? "").split(/\s+/).length / 220));
   const articleUrl = `https://www.feranmiojediji.com/blog/${slug}`;
   const articleSchema = {
     "@context": "https://schema.org",
@@ -290,26 +289,25 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   };
 
   return (
-    <div className="min-h-screen px-0 pb-0 pt-[72px] sm:px-5 sm:pb-12 sm:pt-28 lg:px-8 lg:pb-16" style={{ background: "radial-gradient(circle at 12% 18%, #ffd49e 0, transparent 34%), radial-gradient(circle at 88% 72%, #ff956f 0, transparent 38%), linear-gradient(145deg, #fff0dc 0%, #ffc68f 48%, #ffb185 100%)" }}>
+    <div className="pb-16 pt-28 sm:pb-20 sm:pt-32">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema).replace(/</g, "\\u003c") }} />
-      <div className="mx-auto max-w-5xl overflow-hidden bg-[var(--surf2)] sm:rounded-[2rem] sm:border sm:border-black/5 sm:shadow-[0_30px_90px_rgba(118,53,12,0.16)]">
-      <div className="mx-auto max-w-3xl px-5 py-8 sm:px-10 sm:py-12 lg:px-0 lg:py-16">
+      <div className="mx-auto max-w-2xl px-4 sm:px-6">
 
         {/* Back link */}
         <Link
           href="/blog"
-          className="mb-9 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-opacity hover:opacity-70"
+          className="inline-flex items-center gap-1.5 text-xs font-medium mb-10 transition-colors duration-150 hover:text-[var(--txt)]"
           style={{ color: "var(--mut)" }}
         >
           ← Back to Blog
         </Link>
 
         {/* Category + date */}
-        <div className="mb-5 flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 mb-4">
           {post.category && (
             <span
-              className="rounded-full px-3 py-1 text-[11px] font-medium"
-              style={{ background: "var(--surf)", color: "var(--txt)", border: "1px solid var(--bdr)" }}
+              className="px-2.5 py-0.5 rounded-md text-xs font-medium"
+              style={{ background: "color-mix(in srgb, var(--txt) 10%, transparent)", color: "var(--txt)" }}
             >
               {post.category}
             </span>
@@ -323,30 +321,22 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
         {/* Title */}
         <h1
-          className="max-w-3xl text-3xl font-medium sm:text-5xl lg:text-[3.5rem]"
-          style={{ color: "var(--txt)", lineHeight: 1.08, letterSpacing: "-0.055em" }}
+          className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight leading-[1.2] mb-4"
+          style={{ color: "var(--txt)" }}
         >
           {post.title}
         </h1>
 
-        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-xs" style={{ color: "var(--mut)" }}>
-          <span>{readingMinutes} min read</span>
-          <span className="flex items-center gap-2">
-            <Image src="/feranmi.jpg" alt="Feranmi Ojediji" width={24} height={24} className="h-6 w-6 rounded-full object-cover" />
-            Feranmi Ojediji
-          </span>
-        </div>
-
         {/* Excerpt / lead */}
         {post.excerpt && (
-          <p className="mb-8 mt-6 text-sm leading-7 sm:text-base" style={{ color: "var(--mut)" }}>
+          <p className="text-sm sm:text-base leading-relaxed mb-8" style={{ color: "var(--mut)" }}>
             {post.excerpt}
           </p>
         )}
 
         {/* Cover image */}
         {post.coverImage && (
-          <div className="relative mb-8 mt-8 w-full overflow-hidden rounded-2xl" style={{ aspectRatio: "16/9" }}>
+          <div className="relative w-full rounded-xl overflow-hidden mb-8" style={{ aspectRatio: "16/9" }}>
             <Image
               src={post.coverImage}
               alt={post.coverImageAlt ?? post.title}
@@ -359,25 +349,25 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         )}
 
         {/* Divider */}
-        <div className="mb-8 h-px w-full" style={{ background: "var(--bdr)" }} />
+        <div className="h-px w-full mb-8" style={{ background: "var(--bdr)" }} />
 
         {/* Body */}
         {body && (
-          <article className="mb-12">
+          <article className="mb-10">
             <PortableText value={body} components={ptComponents} />
           </article>
         )}
 
         {/* Tags */}
         {post.tags && post.tags.length > 0 && (
-          <div className="mb-10 flex flex-wrap gap-2 border-t pt-6" style={{ borderColor: "var(--bdr)" }}>
+          <div className="flex flex-wrap gap-2 pb-10 mb-10" style={{ borderBottom: "1px solid var(--bdr)" }}>
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full px-3 py-1.5 text-xs"
-                style={{ color: "var(--mut)", border: "1px solid var(--bdr)" }}
+                className="px-3 py-1 rounded-lg text-xs"
+                style={{ color: "var(--dim)", border: "1px solid var(--bdr)" }}
               >
-                #{tag}
+                {tag}
               </span>
             ))}
           </div>
@@ -385,28 +375,27 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
         {/* CTA */}
         <div
-          className="rounded-3xl p-7 sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-9 sm:text-left"
+          className="rounded-2xl p-7 sm:p-8 text-center"
           style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
         >
-          <div><p className="mb-2 text-xs uppercase tracking-widest" style={{ color: "var(--mut)" }}>
+          <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "var(--acc)" }}>
             Work with me
           </p>
           <h2 className="text-lg font-semibold mb-2" style={{ color: "var(--txt)" }}>
             Ready to bring your vision to life?
           </h2>
-          <p className="mb-5 text-xs sm:mb-0 sm:text-sm" style={{ color: "var(--mut)" }}>
+          <p className="text-xs sm:text-sm mb-5" style={{ color: "var(--mut)" }}>
             Let&apos;s design something that actually moves the needle.
-          </p></div>
+          </p>
           <Link
             href="/contact"
-            className="inline-flex shrink-0 items-center gap-2 px-6 py-3 text-sm font-medium transition-all duration-200 hover:opacity-90"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover:opacity-90"
             style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
           >
             Start a project →
           </Link>
         </div>
 
-      </div>
       </div>
     </div>
   );

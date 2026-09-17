@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { ArrowUpRight, BookOpen, Clock3, FileText, Layers3, Sparkles } from "lucide-react";
+import { ArrowUpRight, BookOpen, Clock3, Layers3, Sparkles } from "lucide-react";
 import NotifyModal from "@/components/NotifyModal";
 import CourseRequestModal from "@/components/CourseRequestModal";
 import CourseDetailModal from "@/components/CourseDetailModal";
@@ -12,12 +12,9 @@ export interface Course {
   title: string;
   category: string;
   level: string;
-  duration?: string;
-  lessons?: number;
-  price?: string;
-  contentType?: "video-course" | "ebook";
-  isFree?: boolean;
-  pages?: number;
+  duration: string;
+  lessons: number;
+  price: string;
   accentColor?: string;
   coverImage?: string;
   description: string;
@@ -86,16 +83,11 @@ export default function CourseCatalog({ courses }: { courses: Course[] }) {
 
         {visibleCourses.length ? (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" role="tabpanel">
-            {visibleCourses.map((course, index) => {
-              const isEbook = course.contentType === "ebook";
-              const isFree = course.isFree || course.price?.trim().toLowerCase() === "free";
-              const ctaLabel = isEbook ? (isFree ? "Download free" : "Get ebook") : (isFree ? "Start free" : "Enrol");
-              return (
+            {visibleCourses.map((course, index) => (
               <article key={course._id} role="button" tabIndex={0} aria-label={`View details for ${course.title}`} onClick={() => setSelectedCourse(course)} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") setSelectedCourse(course); }} className="group flex min-h-[430px] cursor-pointer flex-col overflow-hidden rounded-2xl transition-transform duration-300 hover:-translate-y-1" style={{ background: "var(--surf2)", border: "1px solid var(--bdr)", boxShadow: "var(--shadow)" }}>
                 <div className="relative m-3 mb-0 aspect-[16/9] overflow-hidden rounded-xl">
                   <CourseCover course={course} index={index} />
                   <span className="absolute left-3 top-3 rounded-full bg-black/60 px-2.5 py-1 text-[10px] font-medium text-white backdrop-blur-md">{course.category}</span>
-                  <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-semibold text-black backdrop-blur-md">{isFree ? "Free · " : ""}{isEbook ? "Ebook" : "Video"}</span>
                 </div>
 
                 <div className="flex flex-1 flex-col p-5">
@@ -104,13 +96,13 @@ export default function CourseCatalog({ courses }: { courses: Course[] }) {
                   <p className="mt-3 line-clamp-2 text-xs leading-5" style={{ color: "var(--mut)" }}>{course.description}</p>
 
                   <div className="mt-5 flex items-center gap-5 text-xs" style={{ color: "var(--mut)" }}>
-                    {isEbook ? <span className="flex items-center gap-1.5"><FileText size={14} /> {course.pages ? `${course.pages} pages` : "PDF ebook"}</span> : <span className="flex items-center gap-1.5"><BookOpen size={14} /> {course.lessons || 0} lessons</span>}
-                    {!isEbook && course.duration && <span className="flex items-center gap-1.5"><Clock3 size={14} /> {course.duration}</span>}
+                    <span className="flex items-center gap-1.5"><BookOpen size={14} /> {course.lessons} lessons</span>
+                    <span className="flex items-center gap-1.5"><Clock3 size={14} /> {course.duration}</span>
                   </div>
 
                   <div className="mt-5">
                     <div className="mb-2 flex items-center justify-between text-[11px]" style={{ color: "var(--dim)" }}>
-                      <span>{isEbook ? "Digital resource" : "Course content"}</span><span>{course.available ? "Ready" : "In progress"}</span>
+                      <span>Course content</span><span>{course.lessons} lessons</span>
                     </div>
                     <div className="h-1.5 overflow-hidden rounded-full" style={{ background: "var(--surf)" }}>
                       <div className="h-full rounded-full" style={{ width: course.available ? "100%" : "35%", background: course.accentColor || "var(--txt)" }} />
@@ -118,17 +110,16 @@ export default function CourseCatalog({ courses }: { courses: Course[] }) {
                   </div>
 
                   <div className="mt-auto flex items-center justify-between gap-3 pt-6" onClick={(event) => event.stopPropagation()} onKeyDown={(event) => event.stopPropagation()}>
-                    <p className="text-lg font-semibold" style={{ color: "var(--txt)" }}>{isFree ? "Free" : course.price}</p>
+                    <p className="text-lg font-semibold" style={{ color: "var(--txt)" }}>{course.price}</p>
                     {course.available ? (
                       <a href={course.purchaseUrl ?? "/contact"} {...(course.purchaseUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold" style={{ background: "var(--acc)", color: "var(--acc-fg)" }}>
-                        {ctaLabel} <ArrowUpRight size={14} />
+                        Enrol <ArrowUpRight size={14} />
                       </a>
                     ) : <NotifyModal courseTitle={course.title} />}
                   </div>
                 </div>
               </article>
-              );
-            })}
+            ))}
           </div>
         ) : (
           <div className="flex min-h-72 flex-col items-center justify-center rounded-2xl border px-6 text-center" style={{ borderColor: "var(--bdr)", background: "var(--surf2)" }} role="tabpanel">
