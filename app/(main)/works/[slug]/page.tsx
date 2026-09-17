@@ -18,14 +18,9 @@ interface ProjectCaseStudy {
   description?: string;
   clientName?: string;
   overview?: string;
-  challenge?: string;
   contributions?: string[];
-  solution?: string;
-  results?: string[];
   tags?: string[];
   coverImage?: string;
-  gallery?: { url: string }[];
-  testimonial?: { quote?: string; name?: string; role?: string };
   liveUrl?: string;
 }
 
@@ -78,7 +73,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {project.clientName && <p className="text-base font-medium" style={{ color: "var(--txt)" }}>{project.clientName}</p>}
             {project.liveUrl && (
               <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-medium" style={{ color: "var(--txt)" }}>
-                Visit live project <ArrowUpRight size={15} />
+                Visit Site <ArrowUpRight size={15} />
               </a>
             )}
           </div>
@@ -96,16 +91,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <p className="text-base leading-[1.8] sm:text-lg" style={{ color: "var(--mut)" }}>{project.overview || project.description}</p>
           </section>
 
-          {project.challenge && (
-            <section className="grid gap-8 py-10 md:grid-cols-[0.55fr_1fr] sm:py-14" style={{ borderTop: "1px solid var(--bdr)" }}>
-              <h2 className="text-2xl font-medium sm:text-3xl" style={{ color: "var(--txt)" }}>The challenge</h2>
-              <p className="text-base leading-[1.8] sm:text-lg" style={{ color: "var(--mut)" }}>{project.challenge}</p>
-            </section>
-          )}
-
           {(project.contributions?.length || project.tags?.length) && (
             <section className="grid gap-8 py-10 md:grid-cols-[0.55fr_1fr] sm:py-14" style={{ borderTop: "1px solid var(--bdr)" }}>
-              <h2 className="text-2xl font-medium sm:text-3xl" style={{ color: "var(--txt)" }}>What I did</h2>
+              <h2 className="text-2xl font-medium sm:text-3xl" style={{ color: "var(--txt)" }}>Tools used</h2>
               <ul className="grid gap-3 sm:grid-cols-2">
                 {(project.contributions?.length ? project.contributions : project.tags)?.map((item) => (
                   <li key={item} className="flex items-start gap-3 rounded-xl p-4 text-sm" style={{ color: "var(--mut)", background: "var(--surf)", border: "1px solid var(--bdr)" }}>
@@ -113,42 +101,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   </li>
                 ))}
               </ul>
-            </section>
-          )}
-
-          {project.solution && (
-            <section className="grid gap-8 py-10 md:grid-cols-[0.55fr_1fr] sm:py-14" style={{ borderTop: "1px solid var(--bdr)" }}>
-              <h2 className="text-2xl font-medium sm:text-3xl" style={{ color: "var(--txt)" }}>The solution</h2>
-              <p className="text-base leading-[1.8] sm:text-lg" style={{ color: "var(--mut)" }}>{project.solution}</p>
-            </section>
-          )}
-        </div>
-
-        {project.gallery?.length ? (
-          <section className="my-12 grid gap-4 sm:my-20 sm:grid-cols-2">
-            {project.gallery.map((image, index) => (
-              <div key={`${image.url}-${index}`} className={`relative overflow-hidden rounded-2xl ${index % 3 === 0 ? "sm:col-span-2 aspect-video" : "aspect-[4/3]"}`} style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}>
-                <Image src={image.url} alt={`${project.title} project image ${index + 1}`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
-              </div>
-            ))}
-          </section>
-        ) : null}
-
-        <div className="mx-auto max-w-5xl">
-          {project.results?.length ? (
-            <section className="grid gap-8 py-10 md:grid-cols-[0.55fr_1fr] sm:py-14" style={{ borderTop: "1px solid var(--bdr)" }}>
-              <h2 className="text-2xl font-medium sm:text-3xl" style={{ color: "var(--txt)" }}>The outcome</h2>
-              <ul className="space-y-3">
-                {project.results.map((result) => <li key={result} className="text-base leading-relaxed" style={{ color: "var(--mut)" }}>• {result}</li>)}
-              </ul>
-            </section>
-          ) : null}
-
-          {project.testimonial?.quote && (
-            <section className="my-10 rounded-[24px] bg-black p-7 text-white sm:my-16 sm:p-12">
-              <p className="mb-8 max-w-3xl text-2xl font-medium leading-snug sm:text-4xl">“{project.testimonial.quote}”</p>
-              <p className="text-sm font-semibold">{project.testimonial.name}</p>
-              {project.testimonial.role && <p className="mt-1 text-sm text-white/55">{project.testimonial.role}</p>}
             </section>
           )}
 

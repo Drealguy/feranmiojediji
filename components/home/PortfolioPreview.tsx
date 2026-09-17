@@ -3,6 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowUpRight } from "lucide-react";
+import LiveSitePreview from "@/components/LiveSitePreview";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -17,6 +20,7 @@ export interface ProjectItem {
   year: string;
   accentColor?: string;
   coverImage?: string;
+  liveUrl?: string;
 }
 
 const FALLBACK: ProjectItem[] = [
@@ -27,14 +31,23 @@ const FALLBACK: ProjectItem[] = [
 
 function ProjectCard({ project }: { project: ProjectItem }) {
   const accent = "var(--txt)";
+  const router = useRouter();
+  const href = project.slug ? `/myworks/${project.slug}` : "/works";
   return (
-    <Link
-      href={project.slug ? `/myworks/${project.slug}` : "/works"}
+    <div
+      role="link"
+      tabIndex={0}
+      onClick={() => router.push(href)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") router.push(href);
+      }}
       className="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:-translate-y-1"
       style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
     >
       <div className="relative aspect-[4/3] overflow-hidden">
-        {project.coverImage ? (
+        {project.liveUrl ? (
+          <LiveSitePreview url={project.liveUrl} className="absolute inset-0" />
+        ) : project.coverImage ? (
           <Image src={project.coverImage} alt={project.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
         ) : (
           <div className="absolute inset-0 p-8 flex items-center justify-center">
@@ -62,6 +75,18 @@ function ProjectCard({ project }: { project: ProjectItem }) {
               {project.category} · {project.year}
             </p>
             <h3 className="text-sm font-medium" style={{ color: "var(--txt)" }}>{project.title}</h3>
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium hover:opacity-70 transition-opacity"
+                style={{ color: "var(--txt)" }}
+              >
+                Visit Site <ArrowUpRight size={12} />
+              </a>
+            )}
           </div>
           <span
             className="text-lg opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200"
@@ -69,7 +94,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
           >→</span>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 
