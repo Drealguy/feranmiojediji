@@ -2,10 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import { fallbackProjects } from "@/lib/project-data";
-import LiveSitePreview from "@/components/LiveSitePreview";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -32,7 +30,6 @@ export default function WorksGrid({ data, initialFilter = "All" }: { data?: Work
   const [activeFilter, setActiveFilter] = useState(initialFilter);
   const gridRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
-  const router = useRouter();
 
   const displayCategories = WORK_FILTERS;
 
@@ -121,22 +118,16 @@ export default function WorksGrid({ data, initialFilter = "All" }: { data?: Work
         {filtered.map((project) => {
           const accent = "var(--txt)";
           return (
-            <div
+            <Link
               key={project._id}
-              role={project.slug ? "link" : undefined}
-              tabIndex={project.slug ? 0 : undefined}
-              onClick={() => project.slug && router.push(`/myworks/${project.slug}`)}
-              onKeyDown={(e) => {
-                if (project.slug && (e.key === "Enter" || e.key === " ")) router.push(`/myworks/${project.slug}`);
-              }}
-              className="work-card group relative rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+              href={project.slug ? `/myworks/${project.slug}` : "#"}
+              aria-disabled={!project.slug}
+              className="work-card group relative rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 cursor-pointer block"
               style={{ background: "var(--surf)", border: "1px solid var(--bdr)" }}
             >
               {/* Visual */}
               <div className="relative aspect-[16/9] overflow-hidden">
-                {project.liveUrl ? (
-                  <LiveSitePreview url={project.liveUrl} className="absolute inset-0" />
-                ) : project.coverImage ? (
+                {project.coverImage ? (
                   <Image
                     src={project.coverImage}
                     alt={project.title}
@@ -193,18 +184,6 @@ export default function WorksGrid({ data, initialFilter = "All" }: { data?: Work
                         </span>
                       ))}
                     </div>
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium hover:opacity-70 transition-opacity"
-                        style={{ color: "var(--txt)" }}
-                      >
-                        Visit Site <ArrowUpRight size={13} />
-                      </a>
-                    )}
                   </div>
                   <span
                     className="shrink-0 mt-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 text-lg"
@@ -212,7 +191,7 @@ export default function WorksGrid({ data, initialFilter = "All" }: { data?: Work
                   >→</span>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

@@ -48,9 +48,14 @@ export const projectQuery = groq`*[_type == "project" && slug.current == $slug][
   description,
   clientName,
   overview,
+  challenge,
   contributions,
+  solution,
+  results,
   tags,
   "coverImage": coverImage.asset->url,
+  "gallery": gallery[]{"url": asset->url},
+  testimonial,
   liveUrl
 }`;
 
@@ -65,8 +70,7 @@ export const featuredProjectsQuery = groq`*[_type == "project" && featured == tr
   description,
   tags,
   accentColor,
-  "coverImage": coverImage.asset->url,
-  liveUrl
+  "coverImage": coverImage.asset->url
 }`;
 
 export const testimonialsQuery = groq`*[_type == "testimonial"] | order(order asc){
@@ -93,9 +97,6 @@ export const coursesQuery = groq`*[_type == "course"] | order(order asc){
   level,
   description,
   "coverImage": coverImage.asset->url,
-  contentType,
-  isFree,
-  pages,
   duration,
   lessons,
   price,
