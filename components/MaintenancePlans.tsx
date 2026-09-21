@@ -152,10 +152,11 @@ function PlanCard({ plan }: { plan: MaintenancePlan }) {
 
   return (
     <article
-      className="relative flex h-full flex-col rounded-2xl p-5 sm:p-7"
+      className={`relative flex h-full flex-col rounded-2xl p-5 transition-transform duration-300 sm:p-7 ${plan.recommended ? "hover:-translate-y-1" : ""}`}
       style={{
         background: plan.recommended ? "var(--surf2)" : "var(--surf)",
         border: `1px solid ${plan.recommended ? "var(--acc)" : "var(--bdr)"}`,
+        boxShadow: plan.recommended ? "var(--shadow)" : "none",
       }}
     >
       {plan.recommended && (
@@ -220,16 +221,28 @@ function PlanCard({ plan }: { plan: MaintenancePlan }) {
       </div>
 
       <ul role="tabpanel" className="mb-6 flex flex-1 flex-col gap-2.5 sm:mb-7 sm:gap-3">
-        {(view === "included" ? plan.included : notIncludedEither).map((item) => (
-          <li key={item} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: "var(--mut)" }}>
-            {view === "included" ? (
-              <Check size={15} className="mt-1 shrink-0" style={{ color: "var(--acc)" }} aria-hidden="true" />
-            ) : (
-              <X size={15} className="mt-1 shrink-0" style={{ color: "var(--dim)" }} aria-hidden="true" />
-            )}
-            <span>{item}</span>
-          </li>
-        ))}
+        {(view === "included" ? plan.included : notIncludedEither).map((item, index) => {
+          const isExclusiveHighlight = view === "included" && plan.recommended && index > 0;
+          return (
+            <li key={item} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: "var(--mut)" }}>
+              {view === "included" ? (
+                isExclusiveHighlight ? (
+                  <span
+                    className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
+                    style={{ background: "var(--acc)", color: "var(--acc-fg)" }}
+                  >
+                    <Check size={12} aria-hidden="true" />
+                  </span>
+                ) : (
+                  <Check size={15} className="mt-1 shrink-0" style={{ color: "var(--acc)" }} aria-hidden="true" />
+                )
+              ) : (
+                <X size={15} className="mt-1 shrink-0" style={{ color: "var(--dim)" }} aria-hidden="true" />
+              )}
+              <span style={isExclusiveHighlight ? { color: "var(--txt)", fontWeight: 500 } : undefined}>{item}</span>
+            </li>
+          );
+        })}
       </ul>
 
       <a
