@@ -1,192 +1,86 @@
 @import "tailwindcss";
 
-* {
-  font-family: var(--font-poppins), ui-sans-serif, system-ui, -apple-system, sans-serif;
-}
-
-/* ── Dark theme (default) ── */
-:root {
-  --bg:       #0a0a0a;
-  --surf:     #141414;
-  --surf2:    #111111;
-  --bdr:      #272727;
-  --txt:      #efefef;
-  --mut:      #787878;
-  --dim:      #444444;
-  --acc:      #f5f5f5;
-  --acc-fg:   #0a0a0a;
-  --nav-bg:   rgba(14, 14, 14, 0.88);
-  --shadow:   0 0 40px -10px rgba(255, 255, 255, 0.10);
-}
-
-/* ── Light theme ── */
-[data-theme="light"] {
-  --bg:       #f8f8f5;
-  --surf:     #efefec;
-  --surf2:    #ffffff;
-  --bdr:      #e0e0da;
-  --txt:      #111111;
-  --mut:      #666666;
-  --dim:      #aaaaaa;
-  --acc:      #111111;
-  --acc-fg:   #ffffff;
-  --nav-bg:   rgba(248, 248, 245, 0.90);
-  --shadow:   0 0 40px -10px rgba(0, 0, 0, 0.08);
-}
-
-/* ── Tailwind custom tokens ── */
-/* Light is the fallback before JavaScript runs; dark is opt-in only. */
-:root {
-  --bg:       #f8f8f5;
-  --surf:     #efefec;
-  --surf2:    #ffffff;
-  --bdr:      #e0e0da;
-  --txt:      #111111;
-  --mut:      #666666;
-  --dim:      #aaaaaa;
-  --acc:      #111111;
-  --acc-fg:   #ffffff;
-  --nav-bg:   rgba(248, 248, 245, 0.90);
-  --shadow:   0 0 40px -10px rgba(0, 0, 0, 0.08);
-}
-
-[data-theme="dark"] {
-  --bg:       #0a0a0a;
-  --surf:     #141414;
-  --surf2:    #111111;
-  --bdr:      #272727;
-  --txt:      #efefef;
-  --mut:      #787878;
-  --dim:      #444444;
-  --acc:      #f5f5f5;
-  --acc-fg:   #0a0a0a;
-  --nav-bg:   rgba(14, 14, 14, 0.88);
-  --shadow:   0 0 40px -10px rgba(255, 255, 255, 0.10);
-}
-
 @theme inline {
-  --color-bg:     var(--bg);
-  --color-surf:   var(--surf);
-  --color-surf2:  var(--surf2);
-  --color-bdr:    var(--bdr);
-  --color-txt:    var(--txt);
-  --color-mut:    var(--mut);
-  --color-dim:    var(--dim);
-  --color-acc:    var(--acc);
-  --color-acc-fg: var(--acc-fg);
-  --font-sans:    var(--font-poppins);
+  --font-sans: var(--font-inter-tight);
 }
 
-* { box-sizing: border-box; }
+@theme {
+  --color-canvas: #ffffff;
+  --color-ink: #121212;
+  --color-ink-soft: #5e5e5e;
+  --color-line: #e8e8e6;
+  --color-brand: #23362b;
+  --color-cream: #f2ede4;
+  --color-live: #3ddc84;
 
-html { scroll-behavior: smooth; overflow-x: hidden; }
+  --animate-marquee: marquee 45s linear infinite;
 
-body {
-  background-color: var(--bg);
-  color: var(--txt);
-  font-family: var(--font-poppins), -apple-system, BlinkMacSystemFont, sans-serif;
-  letter-spacing: -0.05em;
-  -webkit-font-smoothing: antialiased;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  overflow-x: hidden;
-}
+  @keyframes photo-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
 
-h1 {
-  letter-spacing: -0.08em !important;
-  line-height: 0.95 !important;
-  overflow-wrap: anywhere;
-}
+  /* Hero portrait outline: drawn from one bottom corner, over the head, to the other. */
+  @keyframes outline-draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
 
-h2 {
-  letter-spacing: -0.04em;
-  line-height: 1.05 !important;
-}
+  /* Single-image slideshow: drifts slowly from top to bottom so it still feels alive. */
+  @keyframes slow-pan {
+    from {
+      object-position: 50% 0%;
+    }
+    to {
+      object-position: 50% 100%;
+    }
+  }
 
-h3 {
-  letter-spacing: -0.04em;
-}
-
-/* Consistent pill treatment for interactive buttons and CTA links. */
-button,
-a.inline-flex,
-a.flex.items-center.justify-center,
-a.block.text-center {
-  border-radius: 100px !important;
-}
-
-::selection {
-  background: var(--acc);
-  color: var(--acc-fg);
-}
-
-/* Footer hover links */
-.footer-link { color: var(--mut); }
-.footer-link:hover { color: var(--txt); }
-
-/* Navbar link hover — CSS-only, no inline handlers needed */
-.nav-link {
-  color: var(--mut);
-  background: transparent;
-  transition: color 0.2s ease, background 0.2s ease;
-}
-.nav-link:hover  { color: var(--txt); background: rgba(128,128,128,0.06); }
-.nav-link.active { color: var(--txt); background: rgba(128,128,128,0.08); }
-
-/* Dropdown fade-in */
-@keyframes dropIn {
-  from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
-  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
-}
-.dropdown-enter { animation: dropIn 0.18s ease forwards; }
-
-/* Reduced motion — disable all GSAP/CSS animations */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
 }
 
-/* Floating card animations — GPU-accelerated via transform only */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-6px); }
+/* Hidden until GSAP splits and animates it, so it doesn't flash first.
+   Never hidden for visitors who prefer reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-split-load] {
+    visibility: hidden;
+  }
 }
 
-@keyframes ping-slow {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(1.5); }
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
 }
 
-/* Promote animated elements to their own compositor layer */
-[style*="animation: float"],
-[style*="animation:float"] {
-  will-change: transform;
-  backface-visibility: hidden;
+/* Faint grid on the hero stage. Decorative only. */
+@utility bg-stage-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 96px 96px;
 }
 
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 3px; }
-
-/* Input placeholder color */
-input::placeholder,
-textarea::placeholder {
-  color: var(--dim);
-  opacity: 1;
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
 }
-
-select option {
-  background: var(--surf);
-  color: var(--txt);
-}
-
-/* Keyboard focus ring — lime accent, hidden for mouse users */
-:focus-visible {
-  outline: 2px solid var(--acc);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-:focus:not(:focus-visible) { outline: none; }
-
