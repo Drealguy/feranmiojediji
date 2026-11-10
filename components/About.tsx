@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { WHATSAPP_URL } from "@/lib/site";
 import { tools, type Tool } from "@/lib/tools";
 
 /** First few tools, shown as an overlapping cluster inside the headline (echoes the photo in the hero). */
@@ -135,11 +134,9 @@ export default function About() {
           </div>
         </div>
 
-        <a
+        <Link
           data-reveal
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noreferrer"
+          href="/contact"
           className="focus-ring group mt-12 inline-flex h-12 items-center gap-2 rounded-lg bg-brand px-5 text-[0.96875rem] font-medium text-cream transition-colors hover:bg-brand/90 sm:mt-14"
         >
           Work with me
@@ -149,7 +146,7 @@ export default function About() {
           >
             →
           </span>
-        </a>
+        </Link>
       </section>
     </div>
   );

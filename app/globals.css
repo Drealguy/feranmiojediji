@@ -147,6 +147,18 @@
   }
 }
 
+/* Contact flow: each new question slides up into place. */
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Hidden until GSAP splits and animates it, so it doesn't flash first.
    Never hidden for visitors who prefer reduced motion. */
 @media (prefers-reduced-motion: no-preference) {

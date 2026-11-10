@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState, useSyncExternalStore } from "react";
+import { imageBlur } from "@/lib/image-blur";
 
 const REDUCED = "(prefers-reduced-motion: reduce)";
 function subscribeReducedMotion(onChange: () => void) {
@@ -106,6 +107,10 @@ export default function Slideshow({ images, title, interval = 2000 }: Props) {
                 alt={`${title}, image ${(i % images.length) + 1}`}
                 fill
                 priority={i === 0}
+                // Off-screen slides sit beside the frame, so lazy loading would leave them blank when they slide in.
+                loading={i === 0 ? undefined : "eager"}
+                placeholder={imageBlur[src] ? "blur" : "empty"}
+                blurDataURL={imageBlur[src]}
                 sizes="(min-width: 1280px) 1200px, 100vw"
                 className={`object-cover ${!many ? "animate-[slow-pan_14s_ease-in-out_infinite_alternate] motion-reduce:animate-none" : ""}`}
               />

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { footerColumns, socials, WHATSAPP_URL, type FooterLink, type SocialName } from "@/lib/site";
+import { footerColumns, socials, type FooterLink, type SocialName } from "@/lib/site";
 
 function SocialIcon({ name }: { name: SocialName }) {
   const common = { viewBox: "0 0 24 24", "aria-hidden": true, className: "size-[1.125rem]" } as const;
@@ -69,14 +69,12 @@ export default function Footer() {
               <span className="sm:block">Let&rsquo;s make it real.</span>
             </h2>
             <div data-reveal className="mt-9 flex flex-wrap justify-center gap-3">
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                href="/contact"
                 className="focus-ring inline-flex h-12 items-center rounded-lg bg-cream px-5 text-[0.96875rem] font-medium text-brand transition-colors hover:bg-cream/85"
               >
                 Start a project
-              </a>
+              </Link>
               <Link
                 href="/projects"
                 className="focus-ring inline-flex h-12 items-center gap-2 rounded-lg border border-cream/30 px-5 text-[0.96875rem] font-medium transition-colors hover:border-cream/70"

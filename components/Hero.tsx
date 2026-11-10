@@ -95,7 +95,7 @@ export default function Hero() {
 
           <div data-hero-fade className="mt-9 flex flex-wrap justify-center gap-3 sm:mt-10">
             <a
-              href="#contact"
+              href="/contact"
               className="focus-ring inline-flex h-12 items-center justify-center rounded-lg bg-brand px-5 text-[0.96875rem] font-medium text-cream transition-colors hover:bg-brand/90"
             >
               Start a project

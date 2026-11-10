@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { WHATSAPP_URL } from "@/lib/site";
 
 const links = [
   { label: "Home", href: "/" },
@@ -94,10 +93,8 @@ const ITEM =
 
 function StartButton({ className = "", onClick }: { className?: string; onClick?: () => void }) {
   return (
-    <a
-      href={WHATSAPP_URL}
-      target="_blank"
-      rel="noreferrer"
+    <Link
+      href="/contact"
       onClick={onClick}
       className={`focus-ring group inline-flex h-10 items-center gap-1.5 rounded-lg bg-brand px-4 text-[0.875rem] font-medium text-cream transition-colors hover:bg-brand/90 ${className}`}
     >
@@ -105,7 +102,7 @@ function StartButton({ className = "", onClick }: { className?: string; onClick?
       <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:transition-none">
         →
       </span>
-    </a>
+    </Link>
   );
 }
 

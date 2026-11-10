@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Award as AwardIcon, BadgeCheck, Camera, Music2 } from "lucide-react";
 import { awards, gallery, playlistNote, spotifyEmbedUrl, spotifyPlaylistUrl, type GalleryPhoto } from "@/lib/about";
 import { experience } from "@/lib/experience";
-import { WHATSAPP_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About | Feranmi Ojediji",
@@ -120,14 +119,12 @@ export default function AboutPage() {
           </p>
         </div>
         <div data-reveal className="mt-9 flex flex-wrap justify-center gap-3 sm:mt-10">
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            href="/contact"
             className="focus-ring inline-flex h-12 items-center rounded-lg bg-brand px-5 text-[0.96875rem] font-medium text-cream transition-colors hover:bg-brand/90"
           >
             Work with me
-          </a>
+          </Link>
           <Link
             href="/projects"
             className="focus-ring group inline-flex h-12 items-center gap-2 rounded-lg border border-line px-5 text-[0.96875rem] font-medium transition-colors hover:border-ink/40"

@@ -43,7 +43,7 @@ export default function ProjectsBrowser({ projects }: { projects: Project[] }) {
           })}
         </div>
       </div>
-      <ProjectGrid items={items} minCells={minCells} />
+      <ProjectGrid items={items} minCells={minCells} priorityCount={2} />
     </section>
   );
 }

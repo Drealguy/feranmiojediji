@@ -1,20 +1,23 @@
 import Link from "next/link";
 import Image from "next/image";
 import ProjectCoverFallback from "@/components/ProjectCoverFallback";
+import { imageBlur } from "@/lib/image-blur";
 import type { Project } from "@/lib/projects";
 
 interface Props {
   items: Project[];
   /** Pads the grid with "coming soon" cards up to this many cells. */
   minCells?: number;
+  /** How many of the first cards are above the fold and should load immediately. */
+  priorityCount?: number;
 }
 
-export default function ProjectGrid({ items, minCells = 0 }: Props) {
+export default function ProjectGrid({ items, minCells = 0, priorityCount = 0 }: Props) {
   const emptySlots = Math.max(0, minCells - items.length);
 
   return (
     <ul data-reveal-stagger className="grid gap-3 p-2 sm:grid-cols-2 sm:p-3">
-      {items.map((p) => (
+      {items.map((p, i) => (
         <li key={p.slug}>
           <Link
             href={`/projects/${p.slug}`}
@@ -27,6 +30,10 @@ export default function ProjectGrid({ items, minCells = 0 }: Props) {
                   alt=""
                   fill
                   sizes="(min-width: 640px) 48vw, 100vw"
+                  priority={i < priorityCount}
+                  // Blurred preview shows instantly while the full image loads.
+                  placeholder={imageBlur[p.image] ? "blur" : "empty"}
+                  blurDataURL={imageBlur[p.image]}
                   style={{ objectPosition: p.imagePosition }}
                   className="object-cover transition duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
                 />
