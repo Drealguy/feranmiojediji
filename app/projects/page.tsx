@@ -1,38 +1,57 @@
 import type { Metadata } from "next";
-import ProjectGrid from "@/components/ProjectGrid";
+import { LayoutGrid } from "lucide-react";
+import ProjectsBrowser from "@/components/ProjectsBrowser";
 import { projects } from "@/lib/projects";
 
 export const metadata: Metadata = {
-  title: "Work | Feranmi Ojediji",
+  title: "Projects | Feranmi Ojediji",
   description: "Selected software, product design, websites and digital platforms by Feranmi Ojediji.",
 };
 
-export default function WorkPage() {
+export default function ProjectsPage() {
   return (
     <>
-      <section aria-labelledby="work-heading" className="text-center px-4 pt-20 pb-16 sm:px-8 sm:pt-28 sm:pb-20 lg:px-12">
-        <p className="text-sm text-ink-soft">Selected work</p>
-        <h1
-          id="work-heading"
-          data-split-lines
-          className="mx-auto mt-5 max-w-[18ch] text-[2.75rem] font-medium leading-[1.02] tracking-[-0.045em] text-balance sm:text-[4.5rem]"
+      <div className="p-2 sm:p-3">
+        <section
+          aria-labelledby="projects-heading"
+          className="rounded-2xl border border-line bg-canvas px-5 py-20 text-center sm:px-10 sm:py-28"
         >
-          Products built around real business problems.
-        </h1>
-        <p data-reveal className="mx-auto mt-6 max-w-[40ch] text-[1.0625rem] leading-relaxed text-ink-soft sm:text-lg">
-          Selected work across software, digital products and business websites, combining strategy,
-          design and development from idea to execution.
-        </p>
-      </section>
+          <p
+            data-reveal
+            className="inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-1.5 text-sm font-medium"
+          >
+            <span aria-hidden className="size-2 rounded-full bg-brand" />
+            Selected work · {projects.length} projects
+          </p>
+          <h1
+            id="projects-heading"
+            data-reveal
+            className="mx-auto mt-8 max-w-[20ch] text-[2.25rem] font-medium leading-[1.04] tracking-[-0.045em] text-balance sm:mt-10 sm:text-[3.5rem] lg:text-[4.5rem]"
+          >
+            Products built{" "}
+            <span className="whitespace-nowrap">
+              around
+              <span
+                aria-hidden
+                className="mx-[0.18em] inline-grid h-[0.86em] w-[1.3em] -translate-y-[0.06em] place-items-center rounded-full bg-cream align-middle text-brand"
+              >
+                <LayoutGrid className="size-[0.5em] animate-[inline-turn_5s_cubic-bezier(0.65,0,0.35,1)_infinite] motion-reduce:animate-none" strokeWidth={2} />
+              </span>
+            </span>
+            <span className="block text-ink-soft">real business problems.</span>
+          </h1>
+          <p
+            data-reveal
+            className="mx-auto mt-6 max-w-[56ch] text-[1.0625rem] leading-relaxed text-ink-soft text-pretty sm:mt-8 sm:text-lg"
+          >
+            Selected work across software, digital products and business websites, combining strategy, design and
+            development from idea to execution.
+          </p>
+        </section>
+      </div>
 
-      <section aria-label="All projects">
-        <div className="flex h-14 items-center justify-between gap-4 border-y border-line px-4 sm:px-7">
-          <h2 className="text-sm text-ink-soft">All projects</h2>
-          <p className="text-sm text-ink-soft">Strategy · Design · Development</p>
-        </div>
-        {/* Fixed 2 × 6 grid: 12 cells, padded with "coming soon" slots. Grows by full rows past 12. */}
-        <ProjectGrid items={projects} minCells={Math.max(12, projects.length + (projects.length % 2))} />
-      </section>
+      <ProjectsBrowser projects={projects} />
+      <div className="h-10 sm:h-16" />
     </>
   );
 }

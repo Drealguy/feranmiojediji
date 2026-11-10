@@ -1,160 +1,111 @@
-const services = [
+import { Bot, Code2, Globe, PenTool, type LucideIcon } from "lucide-react";
+
+const services: { title: string; description: string; icon: LucideIcon }[] = [
   {
     title: "Product design",
     description:
       "Product strategy, user flows and interfaces for web apps and SaaS, shaped around real users and business goals.",
+    icon: PenTool,
   },
   {
     title: "Software development",
     description:
       "Custom web apps and internal tools built from product idea to reliable, launch ready software.",
+    icon: Code2,
   },
   {
     title: "Business websites",
     description:
       "Strategic websites that clarify your offer, strengthen trust and turn the right visitors into enquiries.",
+    icon: Globe,
   },
   {
     title: "AI & automation",
     description:
       "Practical AI features and automated workflows that reduce repetitive work and help your team operate better.",
+    icon: Bot,
   },
 ];
 
-/* Isometric stack of interface layers. Plane coordinates are projected with
-   the matrix on the <g>; each layer is lifted on screen by its `lift`. */
-const layers = [
-  { x: 0, y: 0, w: 230, h: 160, lift: 0 },
-  { x: 16, y: 16, w: 124, h: 84, lift: 36 },
-  { x: 152, y: 16, w: 62, h: 128, lift: 36 },
-  { x: 28, y: 28, w: 100, h: 28, lift: 66 },
-  { x: 28, y: 66, w: 100, h: 24, lift: 66 },
-  { x: 58, y: 36, w: 76, h: 46, lift: 104, top: true },
-];
-
-const ISO = "matrix(0.866 0.5 -0.866 0.5 0 0)";
-
-/* Screen position of a layer's centre, used for the travelling dot's path. */
-function centre(i: number) {
-  const l = layers[i];
-  const cx = l.x + l.w / 2;
-  const cy = l.y + l.h / 2;
-  return [0.866 * (cx - cy), 0.5 * (cx + cy) - l.lift] as const;
-}
-
-/* Base → side panel → content → top card, as one smooth curve. */
-const FLOW = (() => {
-  const pts = [0, 2, 1, 3, 5].map(centre);
-  let d = `M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
-  for (let i = 1; i < pts.length; i++) {
-    const [x0, y0] = pts[i - 1];
-    const [x1, y1] = pts[i];
-    d += ` C${x0.toFixed(1)} ${(y0 - 30).toFixed(1)} ${x1.toFixed(1)} ${(y1 + 30).toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)}`;
-  }
-  return d;
-})();
-
-function LayerStack() {
+/** Three stacked layers, set inside the headline (echoes the photo in the hero and the logos in About). */
+function InlineStack() {
   return (
-    <svg
-      viewBox="-160 -64 380 276"
+    <span
       aria-hidden
-      className="w-full max-w-[16rem] text-ink sm:max-w-[22rem]"
-      fill="none"
-      strokeWidth="1"
+      className="mx-[0.18em] inline-flex h-[0.86em] w-[1.3em] -translate-y-[0.06em] items-center justify-center rounded-full bg-cream align-middle"
     >
-      {layers.map((l, i) => (
-        <g key={i} data-layer={Math.round(l.lift / 26)}>
-          {/* Edge, drawn a few pixels lower to give the layer thickness. */}
-          <g transform={`translate(0 ${6 - l.lift}) ${ISO}`}>
-            <rect
-              x={l.x}
-              y={l.y}
-              width={l.w}
-              height={l.h}
-              rx="8"
-              className="fill-canvas stroke-current opacity-30"
-              vectorEffect="non-scaling-stroke"
-            />
-          </g>
-          <g transform={`translate(0 ${-l.lift}) ${ISO}`}>
-            <rect
-              x={l.x}
-              y={l.y}
-              width={l.w}
-              height={l.h}
-              rx="8"
-              className={l.top ? "fill-canvas stroke-current" : "fill-canvas stroke-current opacity-45"}
-              strokeWidth={l.top ? 1.4 : 1}
-              vectorEffect="non-scaling-stroke"
-            />
-            {l.top && (
-              <rect
-                x={l.x + 22}
-                y={l.y + 16}
-                width={l.w - 44}
-                height="10"
-                rx="5"
-                className="stroke-current"
-                vectorEffect="non-scaling-stroke"
-              />
-            )}
-          </g>
-        </g>
-      ))}
-      {/* A dot travels through the layers along this path (GSAP MotionPath). */}
-      <path
-        data-motion-path
-        d={FLOW}
-        className="stroke-current opacity-35"
-        strokeDasharray="2 4"
-        vectorEffect="non-scaling-stroke"
-      />
-      <circle data-motion-dot r="4" className="fill-brand" cx={centre(0)[0]} cy={centre(0)[1]} />
-    </svg>
+      <svg viewBox="0 0 32 24" className="h-[0.56em] w-auto" fill="none">
+        <path d="M16 16.5 3 10.5l13-6 13 6-13 6Z" className="fill-brand/25 stroke-brand" strokeWidth="1.6" strokeLinejoin="round" />
+        <path d="m3 14.5 13 6 13-6" className="stroke-brand" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16 12.5 3 6.5l13-6 13 6-13 6Z" className="animate-[inline-lift_2.8s_ease-in-out_infinite] fill-brand stroke-brand [transform-box:fill-box] motion-reduce:animate-none" strokeWidth="1.6" strokeLinejoin="round" />
+      </svg>
+    </span>
   );
 }
 
 export default function Expertise() {
   return (
-    <section id="expertise" aria-labelledby="expertise-heading" className="scroll-mt-20">
-      {/* How I think */}
-      <div className="grid items-center gap-14 px-4 py-24 sm:px-8 sm:py-32 lg:grid-cols-2 lg:px-16">
-        <div className="max-w-xl">
-          <p className="text-sm text-ink-soft">How I think</p>
-          <h2
-            id="expertise-heading"
-            data-split-lines
-            className="mt-5 text-[2.25rem] font-medium leading-[1.05] tracking-[-0.04em] sm:text-[2.75rem]"
-          >
-            Every product is a <span className="block text-ink-soft/70">stack of decisions.</span>
-          </h2>
-          <p data-reveal className="mt-6 text-[1.0625rem] leading-relaxed text-ink-soft">
-            Take a product apart and you find its layers: the problem, the flow, the interface and
-            the code underneath. I design and build each one on purpose, and how they fit together,
-            so the product holds up when real people use it every day.
-          </p>
-        </div>
-        <div className="flex justify-center">
-          <LayerStack />
-        </div>
-      </div>
+    <div className="p-2 sm:p-3">
+      <section
+        id="expertise"
+        aria-labelledby="expertise-heading"
+        className="scroll-mt-20 rounded-2xl border border-line bg-canvas px-5 py-20 text-center sm:px-10 sm:py-28"
+      >
+        <p
+          data-reveal
+          className="inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-1.5 text-sm font-medium"
+        >
+          <span aria-hidden className="size-2 rounded-full bg-brand" />
+          What I do
+        </p>
 
-      {/* What I do */}
-      <div className="flex h-14 items-center border-y border-line px-4 sm:px-7">
-        <h3 className="text-sm text-ink-soft">What I do</h3>
-      </div>
-      <ol data-reveal-stagger className="grid sm:grid-cols-2">
-        {services.map((s, i) => (
-          <li key={s.title} className="border-b border-line px-4 py-8 sm:px-7 sm:odd:border-r">
-            <p className="text-sm tabular-nums text-ink-soft">{String(i + 1).padStart(2, "0")}</p>
-            <h4 className="mt-3 text-[1.0625rem] font-medium tracking-[-0.02em]">{s.title}</h4>
-            <p className="mt-1.5 max-w-[44ch] text-[0.9375rem] leading-relaxed text-ink-soft">
-              {s.description}
-            </p>
-          </li>
-        ))}
-      </ol>
-    </section>
+        <h2
+          id="expertise-heading"
+          data-reveal
+          className="mx-auto mt-8 max-w-[16ch] text-[2.25rem] font-medium leading-[1.04] tracking-[-0.045em] text-balance sm:mt-10 sm:text-[3.5rem] lg:text-[4.5rem]"
+        >
+          Every product is a{" "}
+          <span className="whitespace-nowrap">
+            stack
+            <InlineStack />
+          </span>
+          <span className="block text-ink-soft">of decisions.</span>
+        </h2>
+
+        <p
+          data-reveal
+          className="mx-auto mt-6 max-w-[48ch] text-[1.0625rem] leading-relaxed text-ink-soft text-balance sm:mt-8 sm:text-lg"
+        >
+          Take a product apart and you find its layers: the problem, the flow, the interface and the code underneath.
+          I design and build each one on purpose, so the product holds up when real people use it every day.
+        </p>
+
+        {/* Services */}
+        <ol data-reveal-stagger className="mx-auto mt-14 grid max-w-6xl gap-3 text-left sm:mt-16 sm:grid-cols-2 lg:grid-cols-4">
+          {services.map((s, i) => {
+            const Icon = s.icon;
+            return (
+              <li
+                key={s.title}
+                className="group flex flex-col rounded-xl border border-line p-6 transition-colors duration-300 hover:border-brand hover:bg-brand hover:text-cream motion-reduce:transition-none"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="grid size-11 place-items-center rounded-full bg-cream text-brand transition-colors duration-300 group-hover:bg-cream/15 group-hover:text-cream">
+                    <Icon aria-hidden className="size-5" strokeWidth={1.75} />
+                  </span>
+                  <span className="text-sm tabular-nums text-ink-soft transition-colors duration-300 group-hover:text-cream/60">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <h3 className="mt-8 text-lg font-medium tracking-[-0.02em]">{s.title}</h3>
+                <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-soft transition-colors duration-300 group-hover:text-cream/75">
+                  {s.description}
+                </p>
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+    </div>
   );
 }

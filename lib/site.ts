@@ -4,6 +4,9 @@ export interface FooterLink {
   href?: string;
 }
 
+/** Canonical site address, used by the sitemap and robots.txt (keep in sync with metadataBase in app/layout.tsx). */
+export const SITE_URL = "https://www.feranmiojediji.com";
+
 export const WHATSAPP_URL =
   "https://wa.me/2349167802170?text=Hi%20Feranmi%2C%20I%E2%80%99d%20like%20to%20start%20a%20project.";
 

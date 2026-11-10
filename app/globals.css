@@ -56,6 +56,97 @@
   }
 }
 
+/* Plain CSS (outside @theme) so Tailwind always emits these; they are used through animate-[name_…] classes. */
+/* ---- Inline headline icons (the small cream pills inside big headings) ---- */
+
+/* Hero photo: peeks up a little, then settles. */
+@keyframes inline-peek {
+  0%, 60%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  70% {
+    transform: translateY(-10%) scale(1.06);
+  }
+  80% {
+    transform: translateY(2%) scale(1);
+  }
+}
+
+/* Tool logos: bounce one after another (staggered with animation-delay). */
+@keyframes inline-bounce {
+  0%, 50%, 100% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-22%);
+  }
+  35% {
+    transform: translateY(4%);
+  }
+}
+
+/* Layers: the top layer lifts away and settles back. */
+@keyframes inline-lift {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14%);
+  }
+}
+
+/* Grid: quarter turn, pause, quarter turn. */
+@keyframes inline-turn {
+  0%, 35% {
+    transform: rotate(0deg);
+  }
+  50%, 85% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+/* Camera: shutter pop. */
+@keyframes inline-snap {
+  0%, 70%, 100% {
+    transform: scale(1);
+  }
+  76% {
+    transform: scale(0.82);
+  }
+  84% {
+    transform: scale(1.15);
+  }
+}
+
+/* Music note: wiggles to a beat. */
+@keyframes inline-wiggle {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  25% {
+    transform: rotate(-12deg) translateY(-8%);
+  }
+  50% {
+    transform: rotate(0deg) translateY(0);
+  }
+  75% {
+    transform: rotate(12deg) translateY(-8%);
+  }
+}
+
+/* Badge: soft pulse. */
+@keyframes inline-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.14);
+  }
+}
+
 /* Hidden until GSAP splits and animates it, so it doesn't flash first.
    Never hidden for visitors who prefer reduced motion. */
 @media (prefers-reduced-motion: no-preference) {

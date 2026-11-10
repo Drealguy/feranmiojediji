@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { experience } from "@/lib/experience";
-import { portraitOutline as OUTLINE } from "@/lib/portrait-outline";
 
 /* Short, stable "commit hash" from a string. */
 function hash(s: string) {
@@ -13,16 +12,6 @@ function hash(s: string) {
 }
 
 const EASE = "ease-[cubic-bezier(0.65,0,0.35,1)]";
-const NAME_CLASS =
-  "text-[33cqw] font-semibold lowercase leading-[0.82] tracking-[-0.065em] whitespace-nowrap sm:text-[18.4cqw]";
-
-function Name() {
-  return (
-    <>
-      <span className="block sm:inline">Feranmi</span> <span className="block sm:inline">Ojediji</span>
-    </>
-  );
-}
 
 export default function Hero() {
   const [open, setOpen] = useState(false);
@@ -50,126 +39,83 @@ export default function Hero() {
     <div className="p-2 sm:p-3">
       <section
         aria-label="Introduction"
-        className="relative min-h-[calc(100svh-5.25rem)] overflow-hidden rounded-2xl bg-brand text-cream sm:min-h-[calc(100svh-5.75rem)] lg:h-[calc(100svh-5.75rem)] lg:min-h-[36rem] lg:max-h-[56rem]"
+        className="relative overflow-hidden rounded-2xl border border-line bg-canvas"
       >
-        <div aria-hidden className="bg-stage-grid absolute inset-0 opacity-70" />
-
-        {/* Intro: shrinks to the left half when the experience panel opens. */}
+        {/* Intro: a simple, centred statement. Shrinks to the left half when the experience panel opens. */}
         <div
-          className={`@container relative isolate flex min-h-[calc(100svh-5.25rem)] flex-col justify-between p-5 sm:min-h-[calc(100svh-5.75rem)] lg:h-full lg:min-h-0 transition-[width] duration-700 sm:p-8 ${EASE} motion-reduce:transition-none ${
+          className={`relative flex min-h-[calc(100svh-6rem)] flex-col items-center justify-center px-5 py-20 text-center transition-[width] duration-700 sm:min-h-[calc(100svh-6.5rem)] sm:px-10 ${EASE} motion-reduce:transition-none lg:max-h-[56rem] lg:min-h-[40rem] ${
             open ? "w-full lg:w-1/2" : "w-full"
           }`}
         >
-          {/* Top labels with the name right under them; the portrait fills the space below. */}
-          <div>
-          <div data-hero-fade className="flex items-start justify-between gap-4 text-sm font-medium">
-            <p className="leading-snug">
-              Product &amp; software builder
-              <br />
-              <span className="text-cream/60">for ambitious businesses</span>
-            </p>
-            <p className="flex items-center gap-2">
-              <span aria-hidden className="relative flex size-2">
-                <span className="absolute inset-0 animate-ping rounded-full bg-live/70 motion-reduce:animate-none" />
-                <span className="relative size-2 rounded-full bg-live" />
-              </span>
-              <span className="sm:hidden">Available</span>
-              <span className={`hidden sm:inline ${open ? "lg:hidden" : ""}`}>Available for select projects</span>
-            </p>
-          </div>
-
-          <h1 data-split-load className={`mt-8 select-none text-center sm:mt-6 ${NAME_CLASS}`}>
-            <Name />
-          </h1>
-          </div>
-
-          {/* Portrait with a sticker outline that draws itself around it on load.
-              Narrow: sits in the flow between the name and the bottom row, standing on the divider.
-              Wide: stands on the hero's bottom edge, sized by the smaller of height and width so it
-              never crowds the bottom row. */}
-          <div className="relative -mt-4 min-h-[24rem] flex-1 sm:min-h-[30rem] @[56rem]:pointer-events-none @[56rem]:absolute @[56rem]:inset-0 @[56rem]:m-0 @[56rem]:min-h-0">
-          <div
-            aria-hidden
+          <p
             data-hero-fade
-            className="absolute bottom-0 left-1/2 aspect-[853/950] h-[min(100%,105cqw)] -translate-x-1/2 @[56rem]:h-[min(82%,52cqw)]"
+            className="inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-1.5 text-sm font-medium"
           >
-            <Image
-              src="/feranmi-cutout.png"
-              alt=""
-              fill
-              preload
-              sizes="(min-width: 896px) 40vw, 90vw"
-              className="object-contain object-bottom"
-            />
-            {/* Faint scanlines, clipped to the cutout's shape. */}
-            <div
-              className="absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgb(0_0_0/0.16)_0_1px,transparent_1px_3px)]"
-              style={{
-                maskImage: "url(/feranmi-cutout.png)",
-                WebkitMaskImage: "url(/feranmi-cutout.png)",
-                maskSize: "100% 100%",
-                WebkitMaskSize: "100% 100%",
-              }}
-            />
-            <svg
-              viewBox={`0 0 ${OUTLINE.imageWidth + OUTLINE.pad * 2} ${OUTLINE.imageHeight + OUTLINE.pad}`}
-              className="absolute overflow-visible"
-              style={{
-                left: `${(-OUTLINE.pad / OUTLINE.imageWidth) * 100}%`,
-                top: `${(-OUTLINE.pad / OUTLINE.imageHeight) * 100}%`,
-                width: `${((OUTLINE.imageWidth + OUTLINE.pad * 2) / OUTLINE.imageWidth) * 100}%`,
-                height: `${((OUTLINE.imageHeight + OUTLINE.pad) / OUTLINE.imageHeight) * 100}%`,
-              }}
+            <span aria-hidden className="relative flex size-2">
+              <span className="absolute inset-0 animate-ping rounded-full bg-live/70 motion-reduce:animate-none" />
+              <span className="relative size-2 rounded-full bg-live" />
+            </span>
+            Available for select projects
+          </p>
+
+          <h1
+            data-hero-fade
+            className={`mt-8 max-w-[17ch] font-medium leading-[1.04] tracking-[-0.045em] text-balance sm:mt-10 ${
+              open ? "text-[2.25rem] sm:text-[3.5rem]" : "text-[2.25rem] sm:text-[4rem] lg:text-[5.25rem]"
+            }`}
+          >
+            Hi, I&apos;m{" "}
+            {/* Name and portrait stay together on the first line. */}
+            <span className="whitespace-nowrap">
+            Feranmi
+            <span
+              aria-hidden
+              className="relative mx-[0.18em] inline-block h-[0.86em] w-[1.5em] -translate-y-[0.06em] overflow-hidden rounded-full bg-cream align-middle"
             >
-              <path
-                d={OUTLINE.path}
-                pathLength={1}
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                vectorEffect="non-scaling-stroke"
-                className="animate-[outline-draw_1.8s_cubic-bezier(0.65,0,0.35,1)_0.9s_both] text-cream [stroke-dasharray:1] motion-reduce:animate-none"
+              <Image
+                src="/feranmi-cutout.png"
+                alt=""
+                fill
+                preload
+                sizes="10rem"
+                className="object-cover object-[50%_18%] origin-bottom animate-[inline-peek_4.5s_ease-in-out_infinite] motion-reduce:animate-none"
               />
-            </svg>
-          </div>
-          </div>
+            </span>
+            </span>
+            <span className="block text-ink-soft">I turn business problems into useful software.</span>
+          </h1>
 
-          {/* Bottom row */}
-          <div data-hero-fade className="relative z-10 grid items-end gap-6 border-t border-cream/20 pt-5 sm:pt-6 @[46rem]:grid-cols-[1fr_auto] @[56rem]:grid-cols-[1fr_auto_1fr]">
-            <p className="max-w-[26ch] text-lg font-medium leading-snug tracking-[-0.02em] text-balance sm:text-xl">
-              I turn business problems into useful software, thoughtful products and AI-powered systems.
-            </p>
+          <p
+            data-hero-fade
+            className="mt-6 max-w-[44ch] text-[1.0625rem] leading-relaxed text-ink-soft text-balance sm:mt-8 sm:text-lg"
+          >
+            Product and software builder designing thoughtful products, business websites and AI-powered systems
+            for ambitious businesses.
+          </p>
 
-            {/* Keeps the middle column free for the portrait. */}
-            <div aria-hidden className="hidden w-[46cqw] @[56rem]:block" />
-
-            <div className="relative z-10 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap @[46rem]:justify-end">
-              <a
-                href="#contact"
-                className="focus-ring inline-flex h-12 items-center justify-center rounded-lg bg-cream px-4 text-[0.96875rem] font-medium text-brand transition-colors hover:bg-cream/85 sm:px-5"
+          <div data-hero-fade className="mt-9 flex flex-wrap justify-center gap-3 sm:mt-10">
+            <a
+              href="#contact"
+              className="focus-ring inline-flex h-12 items-center justify-center rounded-lg bg-brand px-5 text-[0.96875rem] font-medium text-cream transition-colors hover:bg-brand/90"
+            >
+              Start a project
+            </a>
+            <button
+              ref={trigger}
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-expanded={open}
+              aria-controls="experience-panel"
+              className="focus-ring group inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-line px-5 text-[0.96875rem] font-medium transition-colors hover:border-ink/40"
+            >
+              Professional experience
+              <span
+                aria-hidden
+                className="transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:transition-none"
               >
-                Start a project
-              </a>
-              <button
-                ref={trigger}
-                type="button"
-                onClick={() => setOpen(true)}
-                aria-expanded={open}
-                aria-controls="experience-panel"
-                className="focus-ring group inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-cream/30 px-4 text-[0.96875rem] font-medium transition-colors hover:border-cream/70 sm:px-5"
-              >
-                <span className="sm:hidden">Experience</span>
-                <span className="hidden sm:inline">Professional experience</span>
-                <span
-                  aria-hidden
-                  className="transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:transition-none"
-                >
-                  →
-                </span>
-              </button>
-            </div>
+                →
+              </span>
+            </button>
           </div>
         </div>
 
@@ -178,7 +124,7 @@ export default function Hero() {
           id="experience-panel"
           aria-labelledby="experience-heading"
           inert={!open}
-          className={`absolute inset-y-0 right-0 z-30 flex w-full flex-col overflow-y-auto bg-canvas text-ink transition-transform duration-700 ${EASE} motion-reduce:transition-none lg:w-1/2 lg:rounded-l-2xl ${
+          className={`absolute inset-y-0 right-0 z-30 flex w-full flex-col overflow-y-auto bg-canvas text-ink transition-transform duration-700 ${EASE} motion-reduce:transition-none lg:w-1/2 lg:border-l lg:border-line ${
             open ? "translate-x-0" : "translate-x-[101%]"
           }`}
         >
